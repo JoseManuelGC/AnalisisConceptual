@@ -1,0 +1,39 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport="true"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)">
+    <mat-toolbar color="primary">Menu</mat-toolbar>
+    
+    <mat-nav-list>
+      <a mat-list-item ><h2>Curso-1</h2></a>
+      <a mat-list-item ><h4>Modelo Profesores</h4>
+      </a>
+      <a mat-list-item href="#"><h4>Modelo Alumnos</h4></a>
+      <a mat-list-item href="#"><h5>Mapa Alumno 1</h5></a>
+      <a mat-list-item href="#"><h5>Mapa Alumno 2</h5></a>
+      <br>
+      <a mat-list-item href="#"><h2>Curso-2</h2></a>
+      <a mat-list-item href="#"><h4>Modelo Profesores</h4></a>
+      <a mat-list-item href="#"><h4>Modelo Alumnos</h4></a>
+      <a mat-list-item href="#"><h5>Mapa Alumno 1</h5></a>
+      <a mat-list-item href="#"><h5>Mapa Alumno 2</h5></a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Análisis de Mapas Conceptuales </span>
+    </mat-toolbar>
+  </mat-sidenav-content>
+</mat-sidenav-container>

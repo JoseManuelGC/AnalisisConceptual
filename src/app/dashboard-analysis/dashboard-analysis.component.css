@@ -1,0 +1,36 @@
+.grid-container {
+  margin: 20px;
+  padding-left: 16%;
+}
+
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.dashboard-card-content {
+  text-align: center;
+}
+
+.custom-component-drop-zone {
+  width: 300px;
+  height: 300px;
+}
+
+.ng2-file-input img {
+  width: 89%;
+}
+h1 {
+  color: #369;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 250%;
+}

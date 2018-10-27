@@ -1,0 +1,140 @@
+<div class="grid-container">
+  <h1 class="mat-h1">Tabla de Trabajo</h1>
+  <mat-grid-list cols="12" rowHeight="350px">
+    <mat-grid-tile *ngFor="let card of cardsDashboard" [colspan]="card.cols" [rowspan]="card.rows">
+      <mat-card *ngIf="card.title === 'Modelo Profesor'" class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+            {{card.title}}
+            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before">
+              <button mat-menu-item>Guardar</button>
+              <button mat-menu-item>Expandir</button>
+              <button mat-menu-item>Eliminar</button>
+            </mat-menu>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <!--ng2-file-input class="input" (onAction)="onAction($event)" ></ng2-file-input-->
+          <div>
+    <app-diagram-editor
+     [model]="model"
+     (nodeSelected)="showDetails($event)"
+     (modelChanged)="onModelChanged($event)">
+    </app-diagram-editor>
+    <form *ngIf="node" #form="ngForm" (ngSubmit)="onCommitDetails()">
+      Node Details:
+      <div><label>Key: </label>{{node.key}}</div>
+      <div><label>Text: </label><input [(ngModel)]="data.text" name="text"></div>
+      <div><label>Color: </label><input [(ngModel)]="data.color" name="color"></div>
+      <div><label>Location: </label>{{node.location.x.toFixed(2)}}, {{node.location.y.toFixed(2)}}</div>
+      <div><label># Links: </label>{{node.linksConnected.count}}</div>
+      <button type="submit">Commit Details</button>
+      <button (click)="onCancelChanges()">Cancel Changes</button>
+    </form>
+  </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card *ngIf="card.title === 'Estadísticas'" class="dashboard-card">
+          <mat-card-header>
+            <mat-card-title>
+              {{card.title}}
+              <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item>Guardar</button>
+                <button mat-menu-item>Eliminar</button>
+              </mat-menu>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="dashboard-card-content">
+            <div>
+                <mat-grid-list cols="2" rowHeight="325px">
+                    <mat-grid-tile *ngFor="let card of cardsEstadisticas" [colspan]="card.cols" [rowspan]="card.rows">
+                      <mat-card class="dashboard-card">
+                        <mat-card-header>
+                          <mat-card-title>
+                            {{card.title}}
+                            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                              <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu" xPosition="before">
+                              <button mat-menu-item>Guardar</button>
+                              <button mat-menu-item>Eliminar</button>
+                            </mat-menu>
+                          </mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content *ngIf="card.title === 'Métricas'" class="dashboard-card-content">
+                          <div class="metricas" style="display: block">
+                              <canvas baseChart
+                                          [data]="doughnutChartData"
+                                          [labels]="doughnutChartLabels"
+                                          [chartType]="doughnutChartType"
+                                          (chartHover)="chartHovered($event)"
+                                          (chartClick)="chartClicked($event)"></canvas>
+                            </div>
+                        </mat-card-content>
+                        <mat-card-content *ngIf="card.title === 'Gráficos comparativa'" class="dashboard-card-content">
+                            <div>
+                                <div style="display: block">
+                                  <canvas baseChart
+                                          [datasets]="barChartData"
+                                          [labels]="barChartLabels"
+                                          [options]="barChartOptions"
+                                          [legend]="barChartLegend"
+                                          [chartType]="barChartType"
+                                          (chartHover)="chartHoveredGrafica($event)"
+                                          (chartClick)="chartClickedGrafica($event)"></canvas>
+                                </div>
+                                <button (click)="randomize()">Actualizar</button>
+                              </div>
+                              
+                          </mat-card-content>
+                      </mat-card>
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </div>
+            
+          </mat-card-content>
+        </mat-card>
+        <mat-card *ngIf="card.title === 'Modelo Alumno'" class="dashboard-card">
+            <mat-card-header>
+              <mat-card-title>
+                {{card.title}}
+                <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" xPosition="before">
+                  <button mat-menu-item>Guardar</button>
+                  <button mat-menu-item>Expandir</button>
+                  <button mat-menu-item>Eliminar</button>
+                </mat-menu>
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="dashboard-card-content">
+              <!--ng2-file-input class="input" (onAction)="onAction($event)" ></ng2-file-input--> 
+              <div>
+                <app-diagram-editor
+                 [model]="model3"
+                 (nodeSelected)="showDetails($event)"
+                 (modelChanged)="onModelChanged($event)">
+                </app-diagram-editor>
+                <form *ngIf="node" #form="ngForm" (ngSubmit)="onCommitDetails()">
+                  Node Details:
+                  <div><label>Key: </label>{{node.key}}</div>
+                  <div><label>Text: </label><input [(ngModel)]="data.text" name="text"></div>
+                  <div><label>Color: </label><input [(ngModel)]="data.color" name="color"></div>
+                  <div><label>Location: </label>{{node.location.x.toFixed(2)}}, {{node.location.y.toFixed(2)}}</div>
+                  <div><label># Links: </label>{{node.linksConnected.count}}</div>
+                  <button type="submit">Commit Details</button>
+                  <button (click)="onCancelChanges()">Cancel Changes</button>
+                </form>
+              </div>
+            </mat-card-content>
+          </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
