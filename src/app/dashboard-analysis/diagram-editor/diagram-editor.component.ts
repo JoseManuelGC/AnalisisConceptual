@@ -50,7 +50,7 @@ export class DiagramEditorComponent implements OnInit {
             fromLinkable: true, toLinkable: true,
             fromLinkableSelfNode: true, toLinkableSelfNode: true,
             fromLinkableDuplicates: true, toLinkableDuplicates: true
-          },
+          }, 
           new go.Binding("fill", "color")),
         $(go.TextBlock,
           { margin: 8, editable: true },
@@ -60,9 +60,9 @@ export class DiagramEditorComponent implements OnInit {
     this.diagram.linkTemplate =
       $(go.Link,
         // allow relinking
-        { relinkableFrom: true, relinkableTo: true },
+        { relinkableFrom: false, relinkableTo: false },
         $(go.Shape),
-        $(go.Shape, { toArrow: "OpenTriangle" })
+        $(go.Shape, { toArrow: "" })
       );
 
     this.palette = new go.Palette();

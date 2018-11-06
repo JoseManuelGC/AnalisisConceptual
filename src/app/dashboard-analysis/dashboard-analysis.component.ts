@@ -1,9 +1,15 @@
+import {split} from 'ts-node';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import * as go from 'gojs';
-
+import {xml} from 'angular-xml';
+import { NgxXml2jsonService } from 'ngx-xml2json';
+import { Ng2FileInputService } from 'ng2-file-input';
+import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
+import { NgForm } from '@angular/forms';
+import * as _ from 'lodash';
 @Component({
   selector: 'dashboard-analysis',
   templateUrl: './dashboard-analysis.component.html',
@@ -18,7 +24,7 @@ export class DashboardAnalysisComponent {
     { title: 'Modelo Alumno', cols: 8, rows: 2 }
   ];
   cardsEstadisticas = [
-    { title: 'Métricas', cols: 2, rows: 1 },
+    { title: 'Métricas', cols: 2, rows: 2 },
     { title: 'Gráficos comparativa', cols: 2, rows: 1}
   ];
 // Doughnut
@@ -32,13 +38,14 @@ public barChartOptions:any = {
 public barChartLabels:string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
 public barChartType:string = 'bar';
 public barChartLegend:boolean = true;
+// public model3:any = new go.GraphLinksModel();
 
 public barChartData:any[] = [
   {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
   {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
 ];
 
-  constructor() {
+  constructor(private ngxXml2jsonService: NgxXml2jsonService, private ng2FileInputService: Ng2FileInputService) {
 
   }
   public chartClickedGrafica(e:any):void {
@@ -77,7 +84,12 @@ public barChartData:any[] = [
     console.log(e);
   }
   onAction($event) {
-    console.log($event);
+    console.log($event.file);
+    const xmlfile = $event.file;
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(xmlfile, 'text/xml');
+    const obj = this.ngxXml2jsonService.xmlToJson(xml);
+    console.log(obj);
   }
 
   title = 'My First GoJS App in Angular';
@@ -90,9 +102,8 @@ public barChartData:any[] = [
       { key: 4, text: "Delta", color: "pink" }
     ],
     [
-      { from: 1, to: 2 },
+      { from: 1, to: 2, text: "represent" },
       { from: 1, to: 3 },
-      { from: 2, to: 2 },
       { from: 3, to: 4 },
       { from: 4, to: 1 }
     ]);
@@ -102,9 +113,22 @@ public barChartData:any[] = [
         { key: 2, text: "Beta", color: "orange" }
       ],
       [
-        { from: 1, to: 2 },
-        { from: 2, to: 2 }
+        { from: 1, to: 2 }
       ]);
+    
+  modelComparador = new go.GraphLinksModel(
+    [
+      { key: 1, text: "Alpha", color: "yellow" },
+      { key: 2, text: "Beta", color: "yellow" },
+      { key: 3, text: "Gamma", color: "red" },
+      { key: 4, text: "Delta", color: "red" }
+    ],
+    [
+      { from: 1, to: 2},
+      { from: 1, to: 3 },
+      { from: 3, to: 4 },
+      { from: 4, to: 1 }
+    ]);
   @ViewChild('text')
   private textField: ElementRef;
 
@@ -144,5 +168,135 @@ public barChartData:any[] = [
   onModelChanged(c: go.ChangedEvent) {
     // who knows what might have changed in the selected node and data?
     this.showDetails(this.node);
+  }
+  addActivity(formulario: NgForm){
+    
+    let fileInput: any = document.getElementById("img");
+    let files = fileInput.files[0];
+    let imgPromise = this.getFileBlob(files);
+    imgPromise.then(blob => {
+      this.asignarMapa(blob);
+    });
+    
+  }
+
+
+  /*
+  *
+  * Método para convertir una URL de un archivo en un
+  * blob
+  * @author: pabhoz
+  *
+  */
+  getFileBlob(file) {
+
+    var reader = new FileReader();
+    return new Promise(function(resolve, reject){
+
+      reader.onload = (function(theFile) {
+        return function(e) {
+             resolve(e.target.result);
+        };
+      })(file);
+
+      reader.readAsDataURL(file);
+
+    });
+ 
+  }
+  asignarMapa(blob) {
+    let json: any;
+    const map = atob(blob.split(',')[1]);
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(map, 'application/xml');
+    json = this.xmlToJson(xml);
+    const link = [];
+    const values = [];
+    const  model4= new go.GraphLinksModel(
+      [
+        { key: 1, text: "Alpha", color: "lightblue" },
+        { key: 2, text: "Beta", color: "orange" }
+      ],
+      [
+        { from: 1, to: 2 },
+        { from: 2, to: 2 }
+      ]);
+
+    const self = this;
+    _.forEach(json.graph.node, element => {
+        const v = '{ key:' + element.attributes.key+', text:'+ element.attributes.text+', color:'+element.attributes.color+ '}';
+        values.push(v);
+    });
+   
+      return model4;
+  }
+  private onDataSuccess(data: any) {
+    if (data) {
+      // Parse content to object
+      const binary = JSON.parse(data._body);
+      const parser = new DOMParser();
+
+      // DECODE UTF-8 and insert <![CDATA[ and ]]> inside tag text
+
+      const xmlString = decodeURIComponent(escape(window.atob(binary.content)))
+        .replace(new RegExp('\<ClinicalDocument.*[^xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"].*\>', 'g'),
+         '<ClinicalDocument xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">')
+        .replace(new RegExp('\<text.*\>\\b|\<text.*\>', 'g'), '<text><![CDATA[')
+        .replace(new RegExp('[\\b]?\<\/text\>', 'g'), ']]></text>')
+        .replace(new RegExp('\<th\/\>', 'g'), '');
+
+      const xml = parser.parseFromString(xmlString, 'application/xml');
+      
+      return this.xmlToJson(xml);
+
+    }
+  }
+
+
+  /**
+   * Create JSON from object XML
+   * @param {*} xml
+   * @returns
+   * @memberof DocumentReferenceService
+   */
+  xmlToJson(xml) {
+
+    // Create the return object
+    let obj = {};
+
+    if (xml.nodeType === 1) { // element
+      // do attributes
+      if (xml.attributes.length > 0) {
+        obj['attributes'] = {};
+        for (let j = 0; j < xml.attributes.length; j++) {
+          const attribute = xml.attributes.item(j);
+          obj['attributes'][attribute.nodeName] = attribute.nodeValue;
+        }
+      }
+    } else if (xml.nodeType === 4 || xml.nodeType === 3) { // cdata section y text
+      obj = xml.nodeValue
+    }
+
+    // do children
+    if (xml.hasChildNodes()) {
+      for (let i = 0; i < xml.childNodes.length; i++) {
+        const item = xml.childNodes.item(i);
+        const nodeName = item.nodeName;
+
+        if (typeof (obj[nodeName]) === 'undefined') {
+          obj[nodeName] = this.xmlToJson(item);
+        } else {
+          if (typeof (obj[nodeName].length) === 'undefined') {
+            const old = obj[nodeName];
+            obj[nodeName] = [];
+            obj[nodeName].push(old);
+          }
+          if (typeof (obj[nodeName]) === 'object') {
+            obj[nodeName].push(this.xmlToJson(item));
+          }
+        }
+      }
+    }
+    return obj;
   }
 }

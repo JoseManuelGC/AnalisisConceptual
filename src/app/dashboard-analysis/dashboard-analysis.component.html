@@ -76,22 +76,27 @@
                                           (chartHover)="chartHovered($event)"
                                           (chartClick)="chartClicked($event)"></canvas>
                             </div>
+                            
+                            <div class="grafico">
+                              <div style="display: block">
+                                <canvas baseChart
+                                        [datasets]="barChartData"
+                                        [labels]="barChartLabels"
+                                        [options]="barChartOptions"
+                                        [legend]="barChartLegend"
+                                        [chartType]="barChartType"
+                                        (chartHover)="chartHoveredGrafica($event)"
+                                        (chartClick)="chartClickedGrafica($event)"></canvas>
+                              </div>
+                              <button (click)="randomize()">Actualizar</button>
+                            </div>
                         </mat-card-content>
                         <mat-card-content *ngIf="card.title === 'Gráficos comparativa'" class="dashboard-card-content">
-                            <div>
-                                <div style="display: block">
-                                  <canvas baseChart
-                                          [datasets]="barChartData"
-                                          [labels]="barChartLabels"
-                                          [options]="barChartOptions"
-                                          [legend]="barChartLegend"
-                                          [chartType]="barChartType"
-                                          (chartHover)="chartHoveredGrafica($event)"
-                                          (chartClick)="chartClickedGrafica($event)"></canvas>
-                                </div>
-                                <button (click)="randomize()">Actualizar</button>
-                              </div>
-                              
+                         <div>
+                          <app-diagram-editor-comparator
+                          [model]="modelComparador">
+                         </app-diagram-editor-comparator>
+                        </div>
                           </mat-card-content>
                       </mat-card>
                     </mat-grid-tile>
@@ -115,8 +120,17 @@
               </mat-card-title>
             </mat-card-header>
             <mat-card-content class="dashboard-card-content">
-              <!--ng2-file-input class="input" (onAction)="onAction($event)" ></ng2-file-input--> 
-              <div>
+              
+              <!--div ng-app="httpApp" ng-controller="httpController">
+                  <ng2-file-input class="input" (onAction)="onAction($event)" ></ng2-file-input>
+              </div-->
+              <form #formulario="ngForm" (ngSubmit)="addActivity(formulario)" autocomplete="off">
+              <div class="form-group">
+                <input type="file" class="form-control" id="img" name="img">
+              </div>
+              <button type="submit" class="btn btn-default">Subir Archivo</button>
+            </form>
+               <div>
                 <app-diagram-editor
                  [model]="model3"
                  (nodeSelected)="showDetails($event)"

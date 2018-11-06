@@ -9,12 +9,13 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule } from '@angular/material';
 import { BackComponent } from './back/back.component';
 import { DashboardAnalysisComponent } from './dashboard-analysis/dashboard-analysis.component';
-import { FileDropDirective, FileSelectDirective } from 'ng2-file-upload';
+import { FileDropDirective, FileSelectDirective, } from 'ng2-file-upload';
 import { Ng2FileInputModule } from 'ng2-file-input';
 import { ChartsModule } from 'ng2-charts';
-
 import { DiagramEditorComponent } from './dashboard-analysis/diagram-editor/diagram-editor.component';
+import { DiagramEditorComponentComparator } from './dashboard-analysis/diagram-editor-comparator/diagram-editor-comparator.component';
 import { FormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +23,8 @@ import { FormsModule } from '@angular/forms';
     DashboardAnalysisComponent,
     FileDropDirective,
     FileSelectDirective,
-    DiagramEditorComponent
+    DiagramEditorComponent,
+    DiagramEditorComponentComparator
     
   ],
   imports: [
