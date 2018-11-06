@@ -118,16 +118,16 @@ public barChartData:any[] = [
     
   modelComparador = new go.GraphLinksModel(
     [
-      { key: 1, text: "Alpha", color: "yellow" },
-      { key: 2, text: "Beta", color: "yellow" },
+      { key: 1, text: "Alpha", color: "green" },
+      { key: 2, text: "Beta", color: "green" },
       { key: 3, text: "Gamma", color: "red" },
       { key: 4, text: "Delta", color: "red" }
     ],
     [
-      { from: 1, to: 2},
-      { from: 1, to: 3 },
-      { from: 3, to: 4 },
-      { from: 4, to: 1 }
+      { from: 1, to: 2, color:"green"},
+      { from: 1, to: 3 , color:"red" },
+      { from: 3, to: 4, color:"red" },
+      { from: 4, to: 1, color:"red" }
     ]);
   @ViewChild('text')
   private textField: ElementRef;

@@ -57,8 +57,9 @@ export class DiagramEditorComponentComparator implements OnInit {
       $(go.Link,
         // allow relinking
         { relinkableFrom: false, relinkableTo: false },
-        $(go.Shape),
-        $(go.Shape, { toArrow: "" })
+        $(go.Shape,
+          new go.Binding("stroke", "color")),
+        $(go.Shape, {toArrow: "" })
       );
   }
 
