@@ -96,7 +96,13 @@
                           <app-diagram-editor-comparator
                           [model]="modelComparador">
                          </app-diagram-editor-comparator>
+                         <div style="display: inline-table; margin-top: 30px;">
+                         <div *ngFor="let l of listaNodos" class="listaNodos" >
+                            <p class= "Nodo">{{l}}</p>
+                         </div>
                         </div>
+                        </div>
+
                           </mat-card-content>
                       </mat-card>
                     </mat-grid-tile>

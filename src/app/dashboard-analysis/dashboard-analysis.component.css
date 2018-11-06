@@ -38,3 +38,16 @@ h1 {
 .grafico{
   padding-top: 20%;
 }
+
+.listaNodos{
+  width: 120px;
+    height: 40px;
+    max-height: 100px;
+    position: relative;
+    text-align: center;
+    background: orange;
+}
+
+.Nodo{
+  padding-top: 12px;
+}

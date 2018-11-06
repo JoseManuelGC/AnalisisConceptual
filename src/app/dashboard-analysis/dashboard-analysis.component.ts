@@ -20,12 +20,12 @@ export class DashboardAnalysisComponent {
   currentProfileImage: any;
   cardsDashboard = [
     { title: 'Modelo Profesor', cols: 8, rows: 2 },
-    { title: 'Estadísticas', cols: 4, rows: 3 },
+    { title: 'Estadísticas', cols: 4, rows: 4 },
     { title: 'Modelo Alumno', cols: 8, rows: 2 }
   ];
   cardsEstadisticas = [
     { title: 'Métricas', cols: 2, rows: 2 },
-    { title: 'Gráficos comparativa', cols: 2, rows: 1}
+    { title: 'Gráficos comparativa', cols: 2, rows: 2}
   ];
 // Doughnut
 public doughnutChartLabels:string[] = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
@@ -129,6 +129,7 @@ public barChartData:any[] = [
       { from: 3, to: 4, color:"red" },
       { from: 4, to: 1, color:"red" }
     ]);
+   listaNodos = ['Alpha','Beta','Gamma','Delta'];
   @ViewChild('text')
   private textField: ElementRef;
 
