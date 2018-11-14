@@ -39,6 +39,7 @@
     "ng2-uploader": "^2.0.0",
     "ngx-file-drop": "^4.0.6",
     "ngx-xml2json": "^1.0.2",
+    "primeng": "^6.1.6",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
   },

@@ -15,7 +15,7 @@ import { ChartsModule } from 'ng2-charts';
 import { DiagramEditorComponent } from './dashboard-analysis/diagram-editor/diagram-editor.component';
 import { DiagramEditorComponentComparator } from './dashboard-analysis/diagram-editor-comparator/diagram-editor-comparator.component';
 import { FormsModule } from '@angular/forms';
-
+import {FileUploadModule, MessageService} from 'primeng/primeng';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +40,7 @@ import { FormsModule } from '@angular/forms';
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
+    FileUploadModule,
     Ng2FileInputModule.forRoot(),
     ChartsModule,
     FormsModule

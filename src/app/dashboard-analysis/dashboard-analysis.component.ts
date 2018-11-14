@@ -1,3 +1,4 @@
+import {MessageService} from 'primeng/primeng';
 import {split} from 'ts-node';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
@@ -39,7 +40,6 @@ public barChartLabels:string[] = ['2006', '2007', '2008', '2009', '2010', '2011'
 public barChartType:string = 'bar';
 public barChartLegend:boolean = true;
 // public model3:any = new go.GraphLinksModel();
-
 public barChartData:any[] = [
   {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
   {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
@@ -209,27 +209,34 @@ public barChartData:any[] = [
     let json: any;
     const map = atob(blob.split(',')[1]);
     const parser = new DOMParser();
-    const xml = parser.parseFromString(map, 'application/xml');
-    json = this.xmlToJson(xml);
+    const fin = JSON.parse(map);
+    /*const xml = parser.parseFromString(map, 'application/xml');
+    json = this.xmlToJson(xml);*/
     const link = [];
     const values = [];
-    const  model4= new go.GraphLinksModel(
+  
+    _.forEach(fin.nodeDataArray, node => {
+      values.push(node);
+    });
+    _.forEach(fin.linkDataArray, lin => {
+      link.push(lin);
+    });
+    this.model3 = new go.GraphLinksModel(
       [
-        { key: 1, text: "Alpha", color: "lightblue" },
-        { key: 2, text: "Beta", color: "orange" }
+        
       ],
       [
-        { from: 1, to: 2 },
-        { from: 2, to: 2 }
+        
       ]);
 
-    const self = this;
+        this.model3.linkDataArray = link;
+        this.model3.nodeDataArray = values;
+    /*const self = this;
     _.forEach(json.graph.node, element => {
         const v = '{ key:' + element.attributes.key+', text:'+ element.attributes.text+', color:'+element.attributes.color+ '}';
         values.push(v);
-    });
-   
-      return model4;
+    });*/
+
   }
   private onDataSuccess(data: any) {
     if (data) {
@@ -300,4 +307,4 @@ public barChartData:any[] = [
     }
     return obj;
   }
-}
+ }
