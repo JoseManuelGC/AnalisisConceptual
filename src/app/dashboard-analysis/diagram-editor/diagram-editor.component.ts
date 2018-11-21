@@ -13,8 +13,8 @@ export class DiagramEditorComponent implements OnInit {
   @ViewChild('diagramDiv')
   private diagramRef: ElementRef;
 
-  @ViewChild('paletteDiv')
-  private paletteRef: ElementRef;
+  /*@ViewChild('paletteDiv')
+  private paletteRef: ElementRef;*/
 
   @Input()
   get model(): go.Model { return this.diagram.model; }
@@ -53,19 +53,30 @@ export class DiagramEditorComponent implements OnInit {
           }, 
           new go.Binding("fill", "color")),
         $(go.TextBlock,
-          { margin: 8, editable: true },
+          { margin: 8, editable: false },
           new go.Binding("text").makeTwoWay())
       );
 
-    this.diagram.linkTemplate =
-      $(go.Link,
-        // allow relinking
-        { relinkableFrom: false, relinkableTo: false },
-        $(go.Shape),
-        $(go.Shape, { toArrow: "" })
-      );
+      this.diagram.linkTemplate =
+      $(go.Link,  // the whole link panel
+        $(go.Shape,  // the link shape
+          { stroke: "black" }),
+        $(go.Shape,  // the arrowhead
+          { toArrow: "", stroke: null }),
+        $(go.Panel, "Auto",
+          $(go.Shape,  // the label background, which becomes transparent around the edges
+            { fill: $(go.Brush, "Radial", { 0: "rgb(240, 240, 240, 0)", 0.3: "rgb(240, 240, 240, 0)", 1: "rgba(240, 240, 240, 0)" }),
+              stroke: null }),
+          $(go.TextBlock,  // the label text
+            { textAlign: "center",
+              font: "10pt helvetica, arial, sans-serif",
+              stroke: "#555555",
+              margin: 4 },
+            new go.Binding("text", "text"))
+        )
+        );
 
-    this.palette = new go.Palette();
+  /*  this.palette = new go.Palette();
     this.palette.nodeTemplateMap = this.diagram.nodeTemplateMap;
 
     // initialize contents of Palette
@@ -76,11 +87,11 @@ export class DiagramEditorComponent implements OnInit {
         { text: "Gamma", color: "lightgreen" },
         { text: "Delta", color: "pink" },
         { text: "Epsilon", color: "yellow" }
-      ];
+      ];*/
   }
 
   ngOnInit() {
     this.diagram.div = this.diagramRef.nativeElement;
-    this.palette.div = this.paletteRef.nativeElement;
+    // this.palette.div = this.paletteRef.nativeElement;
   }
 }
