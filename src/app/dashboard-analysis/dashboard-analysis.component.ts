@@ -19,18 +19,18 @@ import * as _ from 'lodash';
 export class DashboardAnalysisComponent {
   imageShown: boolean;
   public ELEMENT_DATA: any[] = [
-    {position: 1, name: 'Hydrogen'},
-    {position: 2, name: 'Helium'},
-    {position: 3, name: 'Lithium'},
-    {position: 4, name: 'Beryllium'},
-    {position: 5, name: 'Boron'},
-    {position: 6, name: 'Carbon'},
-    {position: 7, name: 'Nitrogen'},
-    {position: 8, name: 'Oxygen'},
-    {position: 9, name: 'Fluorine'},
-    {position: 10, name: 'Neon'},
+    {def: '# Nodos Globales', valor_pro: 0, valor_alu: 0},
+    {def: '# Enlaces Globales', valor_pro: 0, valor_alu: 0},
+    {def: 'Densidad', valor_pro: 0, valor_alu: 0},
+    {def: 'Diámetro', valor_pro: 0, valor_alu: 0},
+    {def: 'Nodo Principal', valor_pro: 0, valor_alu: 0},
+    {def: 'Grado de Enl. Nod. Pric.', valor_pro: 0, valor_alu: 0},
+    {def: '# Nodos Comunes', valor_pro: '', valor_alu: 0},
+    {def: '# Nodos No Comunes', valor_pro: '', valor_alu: 0},
+    {def: '# Enlaces Comunes', valor_pro: '', valor_alu: 0},
+    {def: '# Enlaces No Comunes', valor_pro: '', valor_alu: 0}
   ];
-  displayedColumns: string[] = ['position', 'name'];
+  displayedColumns: string[] = ['def', 'valor_pro', 'valor_alu'];
   dataSource = this.ELEMENT_DATA;
   currentProfileImage: any;
   cardsDashboard = [
@@ -323,7 +323,7 @@ public barChartData:any[] = [
         obj['attributes'] = {};
         for (let j = 0; j < xml.attributes.length; j++) {
           const attribute = xml.attributes.item(j);
-          obj['attributes'][attribute.nodeName] = attribute.nodeValue;
+          obj['attributes'][attribute.nodevalor_pro] = attribute.nodeValue;
         }
       }
     } else if (xml.nodeType === 4 || xml.nodeType === 3) { // cdata section y text
@@ -334,18 +334,18 @@ public barChartData:any[] = [
     if (xml.hasChildNodes()) {
       for (let i = 0; i < xml.childNodes.length; i++) {
         const item = xml.childNodes.item(i);
-        const nodeName = item.nodeName;
+        const nodevalor_pro = item.nodevalor_pro;
 
-        if (typeof (obj[nodeName]) === 'undefined') {
-          obj[nodeName] = this.xmlToJson(item);
+        if (typeof (obj[nodevalor_pro]) === 'undefined') {
+          obj[nodevalor_pro] = this.xmlToJson(item);
         } else {
-          if (typeof (obj[nodeName].length) === 'undefined') {
-            const old = obj[nodeName];
-            obj[nodeName] = [];
-            obj[nodeName].push(old);
+          if (typeof (obj[nodevalor_pro].length) === 'undefined') {
+            const old = obj[nodevalor_pro];
+            obj[nodevalor_pro] = [];
+            obj[nodevalor_pro].push(old);
           }
-          if (typeof (obj[nodeName]) === 'object') {
-            obj[nodeName].push(this.xmlToJson(item));
+          if (typeof (obj[nodevalor_pro]) === 'object') {
+            obj[nodevalor_pro].push(this.xmlToJson(item));
           }
         }
       }
@@ -364,5 +364,67 @@ public barChartData:any[] = [
     } else {
       alert('Introduce un archivo correcto');
     }
+  }
+
+  updateMetrica($event){
+    if (this.model.nodeDataArray.length > 0 && this.model3.nodeDataArray.length > 0) {
+      this.n_nodosGlobales();
+      this.n_linkGlobales();
+      this.densidad();
+      this.diametro();
+      this.nodoPrincipal();
+      this.gradoNodoPrincipal();
+      this.n_nodosComunes();
+      this.n_nodosNoComunes();
+      this.n_enlacesComunes();
+      this.n_enlacesNoComunes();
+    } else {
+      alert('Introduce los grafos para comparar.')
+    }
+  }
+  n_nodosGlobales(){
+    this.ELEMENT_DATA.find(t => t.def === '# Nodos Globales').valor_pro = this.model.nodeDataArray.length;
+    this.ELEMENT_DATA.find(t => t.def === '# Nodos Globales').valor_alu = this.model3.nodeDataArray.length;
+  }
+  n_linkGlobales(){
+    this.ELEMENT_DATA.find(t => t.def === '# Enlaces Globales').valor_pro = this.model.linkDataArray.length;
+    this.ELEMENT_DATA.find(t => t.def === '# Enlaces Globales').valor_alu = this.model3.linkDataArray.length;
+  }
+  densidad(){
+    let pc_prof = 0;
+    let pc_alu = 0;
+    let ac_pro = 0;
+    let ac_alu = 0;
+    pc_prof = (this.model.nodeDataArray.length * (this.model.nodeDataArray.length - 1))/2;
+    ac_pro = (this.model.linkDataArray.length / pc_prof) * 100;
+
+    pc_alu = (this.model3.nodeDataArray.length * (this.model3.nodeDataArray.length - 1))/2;
+    ac_alu = (this.model3.linkDataArray.length / pc_alu) * 100;
+
+
+    this.ELEMENT_DATA.find(t => t.def === 'Densidad').valor_pro = ac_pro + '%';
+    this.ELEMENT_DATA.find(t => t.def === 'Densidad').valor_alu = ac_alu + '%';
+  
+  }
+  diametro(){
+    // Recorre todas las conexiones para ver como de alejados estan dos nodos
+  }
+  nodoPrincipal(){
+  console.log(this.model.linkDataArray);
+  }
+  gradoNodoPrincipal(){
+
+  }
+  n_nodosComunes(){
+
+  }
+  n_nodosNoComunes(){
+
+  }
+  n_enlacesComunes(){
+
+  }
+  n_enlacesNoComunes(){
+
   }
  }
