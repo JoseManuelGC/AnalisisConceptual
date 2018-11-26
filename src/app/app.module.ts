@@ -6,7 +6,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule } from '@angular/material';
 import { BackComponent } from './back/back.component';
 import { DashboardAnalysisComponent } from './dashboard-analysis/dashboard-analysis.component';
 import { FileDropDirective, FileSelectDirective, } from 'ng2-file-upload';
@@ -41,6 +41,7 @@ import {FileUploadModule, MessageService} from 'primeng/primeng';
     MatCardModule,
     MatMenuModule,
     FileUploadModule,
+    MatTableModule,
     Ng2FileInputModule.forRoot(),
     ChartsModule,
     FormsModule

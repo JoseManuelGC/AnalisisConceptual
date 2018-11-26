@@ -1,6 +1,5 @@
 .grid-container {
   margin: 20px;
-  padding-left: 16%;
 }
 
 .dashboard-card {
@@ -50,4 +49,7 @@ h1 {
 
 .Nodo{
   padding-top: 12px;
+}
+table.mat-table {
+  width: 100%;
 }

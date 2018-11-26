@@ -18,6 +18,20 @@ import * as _ from 'lodash';
 })
 export class DashboardAnalysisComponent {
   imageShown: boolean;
+  public ELEMENT_DATA: any[] = [
+    {position: 1, name: 'Hydrogen'},
+    {position: 2, name: 'Helium'},
+    {position: 3, name: 'Lithium'},
+    {position: 4, name: 'Beryllium'},
+    {position: 5, name: 'Boron'},
+    {position: 6, name: 'Carbon'},
+    {position: 7, name: 'Nitrogen'},
+    {position: 8, name: 'Oxygen'},
+    {position: 9, name: 'Fluorine'},
+    {position: 10, name: 'Neon'},
+  ];
+  displayedColumns: string[] = ['position', 'name'];
+  dataSource = this.ELEMENT_DATA;
   currentProfileImage: any;
   cardsDashboard = [
     { title: 'Modelo Profesor', cols: 8, rows: 2 },
@@ -96,24 +110,16 @@ public barChartData:any[] = [
 
   model = new go.GraphLinksModel(
     [
-      { key: 1, text: "Alpha", color: "lightblue" },
-      { key: 2, text: "Beta", color: "orange" },
-      { key: 3, text: "Gamma", color: "lightgreen" },
-      { key: 4, text: "Delta", color: "pink" }
+
     ],
     [
-      { from: 1, to: 2, text: "represent" },
-      { from: 1, to: 3 },
-      { from: 3, to: 4 },
-      { from: 4, to: 1 }
     ]);
     model3= new go.GraphLinksModel(
       [
-        { key: 1, text: "Alpha", color: "lightblue" },
-        { key: 2, text: "Beta", color: "orange" }
+       
       ],
       [
-        { from: 1, to: 2 }
+
       ]);
     
   modelComparador = new go.GraphLinksModel(
@@ -170,14 +176,19 @@ public barChartData:any[] = [
     // who knows what might have changed in the selected node and data?
     this.showDetails(this.node);
   }
-  addActivity(formulario: NgForm){
+  addActivity($event){
     
     let fileInput: any = document.getElementById("img");
     let files = fileInput.files[0];
-    let imgPromise = this.getFileBlob(files);
-    imgPromise.then(blob => {
-      this.asignarMapa(blob);
-    });
+    if (files){
+      let imgPromise = this.getFileBlob(files);
+      imgPromise.then(blob => {
+        this.asignarMapa(blob);
+      });
+    } else {
+      alert('Introduce un archivo correcto');
+    }
+   
     
   }
 
@@ -231,6 +242,40 @@ public barChartData:any[] = [
 
         this.model3.linkDataArray = link;
         this.model3.nodeDataArray = values;
+    /*const self = this;
+    _.forEach(json.graph.node, element => {
+        const v = '{ key:' + element.attributes.key+', text:'+ element.attributes.text+', color:'+element.attributes.color+ '}';
+        values.push(v);
+    });*/
+
+  }
+
+  asignarMapa_2(blob) {
+    let json: any;
+    const map = atob(blob.split(',')[1]);
+    const parser = new DOMParser();
+    const fin = JSON.parse(map);
+    /*const xml = parser.parseFromString(map, 'application/xml');
+    json = this.xmlToJson(xml);*/
+    const link = [];
+    const values = [];
+  
+    _.forEach(fin.nodeDataArray, node => {
+      values.push(node);
+    });
+    _.forEach(fin.linkDataArray, lin => {
+      link.push(lin);
+    });
+    this.model = new go.GraphLinksModel(
+      [
+        
+      ],
+      [
+        
+      ]);
+
+        this.model.linkDataArray = link;
+        this.model.nodeDataArray = values;
     /*const self = this;
     _.forEach(json.graph.node, element => {
         const v = '{ key:' + element.attributes.key+', text:'+ element.attributes.text+', color:'+element.attributes.color+ '}';
@@ -306,5 +351,18 @@ public barChartData:any[] = [
       }
     }
     return obj;
+  }
+
+  importGraph($event){
+    let fileInput: any = document.getElementById("img_2");
+    let files = fileInput.files[0];
+    if (files){
+      let imgPromise = this.getFileBlob(files);
+      imgPromise.then(blob => {
+        this.asignarMapa_2(blob);
+      });
+    } else {
+      alert('Introduce un archivo correcto');
+    }
   }
  }

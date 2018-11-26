@@ -18,7 +18,12 @@
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
           <!--ng2-file-input class="input" (onAction)="onAction($event)" ></ng2-file-input-->
-          <a href="http://localhost:4200/" target="_blank">Ir al Diseñador</a>
+          <div class="row">
+      <div class="col-md-2 col-lg-3">
+      <input type="file" accept=".json" class="btn btn-info import" id="img_2" name="img_2" (change)="importGraph($event)">
+    </div>
+  </div>
+          <button class="btn btn-success"><a href="http://josemanuelgcgn.com/" target="_blank">Ir al Diseñador</a></button>
           <div>
     <app-diagram-editor
      [model]="model"
@@ -70,15 +75,36 @@
                         </mat-card-header>
                         <mat-card-content *ngIf="card.title === 'Métricas'" class="dashboard-card-content">
                           <div class="metricas" style="display: block">
-                              <canvas baseChart
+                              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                                  <!--- Note that these columns can be defined in any order.
+                                        The actual rendered columns are set as a property on the row definition" -->
+                                
+                                  <!-- Position Column -->
+                                  <ng-container matColumnDef="position">
+                                    <th mat-header-cell *matHeaderCellDef> Def. Métrica </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                                  </ng-container>
+                                
+                                  <!-- Name Column -->
+                                  <ng-container matColumnDef="name">
+                                    <th mat-header-cell *matHeaderCellDef> Valor </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                                  </ng-container>
+                              
+                                
+                                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                </table>
+                              <!--canvas baseChart
                                           [data]="doughnutChartData"
                                           [labels]="doughnutChartLabels"
                                           [chartType]="doughnutChartType"
                                           (chartHover)="chartHovered($event)"
-                                          (chartClick)="chartClicked($event)"></canvas>
+                                          (chartClick)="chartClicked($event)"></canvas-->
                             </div>
                             
-                            <div class="grafico">
+                            <!--div class="grafico">
                               <div style="display: block">
                                 <canvas baseChart
                                         [datasets]="barChartData"
@@ -90,7 +116,7 @@
                                         (chartClick)="chartClickedGrafica($event)"></canvas>
                               </div>
                               <button (click)="randomize()">Actualizar</button>
-                            </div>
+                            </div-->
                         </mat-card-content>
                         <mat-card-content *ngIf="card.title === 'Gráficos comparativa'" class="dashboard-card-content">
                          <div>
@@ -131,12 +157,17 @@
               <!--div ng-app="httpApp" ng-controller="httpController">
                   <ng2-file-input class="input" (onAction)="onAction($event)" ></ng2-file-input>
               </div-->
-              <form #formulario="ngForm" (ngSubmit)="addActivity(formulario)" autocomplete="off">
+              <!--form #formulario="ngForm" (ngSubmit)="addActivity(formulario)" autocomplete="off">
               <div class="form-group">
                 <input type="file" class="form-control" id="img" name="img">
               </div>
-              <button type="submit" class="btn btn-default">Subir Archivo</button>
-            </form>
+              <button type="submit" class="btn btn-primary">Subir Archivo</button>
+            </form-->
+            <div class="col-md-2 col-lg-3">
+              <input type="file" accept=".json" class="btn btn-info import" id="img" name="img" (change)="addActivity($event)">
+            </div>
+            <button class="btn btn-success"><a href="http://josemanuelgcgn.com/" target="_blank">Ir al Diseñador</a></button>
+          
           <div>
                 <app-diagram-editor
                  [model]="model3"
