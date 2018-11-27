@@ -369,8 +369,6 @@ public barChartData:any[] = [
       this.gradoNodoPrincipal();
       this.n_nodosComunes();
       this.n_nodosNoComunes();
-      this.n_enlacesComunes();
-      this.n_enlacesNoComunes();
       this.graphComparador();
     } else {
       alert('Introduce los grafos para comparar.')
@@ -402,27 +400,27 @@ public barChartData:any[] = [
   }
   diametro(){
     // Recorre todas las conexiones para ver como de alejados estan dos nodos
+    this.ELEMENT_DATA.find(t => t.def === 'Diámetro').valor_pro = 'NTS';
+    this.ELEMENT_DATA.find(t => t.def === 'Diámetro').valor_alu = 'NTS';
   }
   nodoPrincipal(){
   const countFrom: any = _.countBy(this.model.linkDataArray, 'from');
   const countTo: any = _.countBy(this.model.linkDataArray, 'to');
   const countTotal = _.concat(countFrom, countTo);
   
+  this.ELEMENT_DATA.find(t => t.def === 'Nodo Principal').valor_pro = 'NTS';
+  this.ELEMENT_DATA.find(t => t.def === 'Nodo Principal').valor_alu = 'NTS';
   }
   gradoNodoPrincipal(){
-
+    this.ELEMENT_DATA.find(t => t.def === 'Grado de Enl. Nod. Pric.').valor_pro = 'NTS';
+    this.ELEMENT_DATA.find(t => t.def === 'Grado de Enl. Nod. Pric.').valor_alu = 'NTS';
   }
   n_nodosComunes(){
 
+    this.ELEMENT_DATA.find(t => t.def === '# Nodos Comunes').valor_alu = this.model.nodeDataArray.length;
   }
   n_nodosNoComunes(){
-
-  }
-  n_enlacesComunes(){
-
-  }
-  n_enlacesNoComunes(){
-
+    this.ELEMENT_DATA.find(t => t.def === '# Nodos No Comunes').valor_alu = 0;
   }
   graphComparador(){
     let valueComparador: any = [];
@@ -451,12 +449,15 @@ public barChartData:any[] = [
         linkComparador.push(c);
       } 
     });
+    this.ELEMENT_DATA.find(t => t.def === '# Enlaces Comunes').valor_alu = linkComparador.length;
     _.forEach(linkProfesor, c =>{
       if(!linkComparador.find(obj => obj.from === c.from && obj.to === c.to)){
         c.color="red";
         linkComparador.push(c);
       }
     });
+    const resta = linkComparador.length - this.ELEMENT_DATA.find(t => t.def === '# Enlaces Comunes').valor_alu;
+    this.ELEMENT_DATA.find(t => t.def === '# Enlaces No Comunes').valor_alu = resta ;
     this.modelComparador = new go.GraphLinksModel(
       [
         
