@@ -124,18 +124,11 @@ public barChartData:any[] = [
     
   modelComparador = new go.GraphLinksModel(
     [
-      { key: 1, text: "Alpha", color: "green" },
-      { key: 2, text: "Beta", color: "green" },
-      { key: 3, text: "Gamma", color: "red" },
-      { key: 4, text: "Delta", color: "red" }
+     
     ],
     [
-      { from: 1, to: 2, color:"green"},
-      { from: 1, to: 3 , color:"red" },
-      { from: 3, to: 4, color:"red" },
-      { from: 4, to: 1, color:"red" }
     ]);
-   listaNodos = ['Alpha','Beta','Gamma','Delta'];
+   listaNodos = [];
   @ViewChild('text')
   private textField: ElementRef;
 
@@ -378,6 +371,7 @@ public barChartData:any[] = [
       this.n_nodosNoComunes();
       this.n_enlacesComunes();
       this.n_enlacesNoComunes();
+      this.graphComparador();
     } else {
       alert('Introduce los grafos para comparar.')
     }
@@ -410,7 +404,10 @@ public barChartData:any[] = [
     // Recorre todas las conexiones para ver como de alejados estan dos nodos
   }
   nodoPrincipal(){
-  console.log(this.model.linkDataArray);
+  const countFrom: any = _.countBy(this.model.linkDataArray, 'from');
+  const countTo: any = _.countBy(this.model.linkDataArray, 'to');
+  const countTotal = _.concat(countFrom, countTo);
+  
   }
   gradoNodoPrincipal(){
 
@@ -427,4 +424,50 @@ public barChartData:any[] = [
   n_enlacesNoComunes(){
 
   }
+  graphComparador(){
+    let valueComparador: any = [];
+    let linkComparador: any = [];
+    let valueProfesor: any = [];
+    let linkProfesor: any = [];
+    valueProfesor = this.model.nodeDataArray;
+    linkProfesor = this.model.linkDataArray;
+    let valueAlumno: any = [];
+    let linkAlumno: any = [];
+    valueAlumno = this.model3.nodeDataArray;
+    linkAlumno = this.model3.linkDataArray;
+    const self = this;
+    let listNod: any = [];
+
+    
+    _.forEach(valueProfesor, nod => {
+      nod.color = 'lightgreen';
+      listNod.push(nod.text);
+      valueComparador.push(nod);
+      
+    });
+    _.forEach(linkAlumno, c =>{
+      if(linkProfesor.find(obj => obj.from === c.from && obj.to === c.to)){
+        c.color="ligthgreen";
+        linkComparador.push(c);
+      } 
+    });
+    _.forEach(linkProfesor, c =>{
+      if(!linkComparador.find(obj => obj.from === c.from && obj.to === c.to)){
+        c.color="red";
+        linkComparador.push(c);
+      }
+    });
+    this.modelComparador = new go.GraphLinksModel(
+      [
+        
+      ],
+      [
+        
+      ]);
+        this.modelComparador.nodeDataArray = valueComparador;
+        this.modelComparador.linkDataArray = linkComparador;
+      this.listaNodos = listNod;
+      
+  }
+    
  }
