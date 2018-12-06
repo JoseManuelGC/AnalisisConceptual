@@ -23,13 +23,14 @@
       <input type="file" accept=".json" class="btn btn-info import" id="img_2" name="img_2" (change)="importGraph($event)">
     </div>
   </div>
-           <div>
+          <button class="btn btn-success"><a href="http://diseniador.josemanuelgcgn.com/" target="_blank" style="color:white;">Ir al Diseñador</a></button>
+          <div>
     <app-diagram-editor
      [model]="model"
      (nodeSelected)="showDetails($event)"
      (modelChanged)="onModelChanged($event)">
     </app-diagram-editor>
-    <form *ngIf="node" #form="ngForm" (ngSubmit)="onCommitDetails()">
+    <!--form *ngIf="node" #form="ngForm" (ngSubmit)="onCommitDetails()">
       Node Details:
       <div><label>Key: </label>{{node.key}}</div>
       <div><label>Text: </label><input [(ngModel)]="data.text" name="text"></div>
@@ -38,7 +39,7 @@
       <div><label># Links: </label>{{node.linksConnected.count}}</div>
       <button type="submit">Commit Details</button>
       <button (click)="onCancelChanges()">Cancel Changes</button>
-    </form>
+    </form-->
   </div>
         </mat-card-content>
       </mat-card>
@@ -50,7 +51,7 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu" xPosition="before">
-                <button mat-menu-item>Guardar</button>
+                <button mat-menu-item (click)="updateMetrica($event)">Actualizar Métricas</button>
                 <button mat-menu-item>Eliminar</button>
               </mat-menu>
             </mat-card-title>
@@ -67,7 +68,7 @@
                               <mat-icon>more_vert</mat-icon>
                             </button>
                             <mat-menu #menu="matMenu" xPosition="before">
-                              <button mat-menu-item (click)="updateMetrica($event)">Actualizar Métricas</button>
+                              <button mat-menu-item>Expandir</button>
                               <button mat-menu-item>Eliminar</button>
                             </mat-menu>
                           </mat-card-title>
@@ -169,14 +170,15 @@
             <div class="col-md-2 col-lg-3">
               <input type="file" accept=".json" class="btn btn-info import" id="img" name="img" (change)="addActivity($event)">
             </div>
-            
+            <button class="btn btn-success"><a href="http://diseniador.josemanuelgcgn.com/" target="_blank"  style="color:white;">Ir al Diseñador</a></button>
+         
           <div>
                 <app-diagram-editor
                  [model]="model3"
                  (nodeSelected)="showDetails($event)"
                  (modelChanged)="onModelChanged($event)">
                 </app-diagram-editor>
-                <form *ngIf="node" #form="ngForm" (ngSubmit)="onCommitDetails()">
+                <!--orm *ngIf="node" #form="ngForm" (ngSubmit)="onCommitDetails()">
                   Node Details:
                   <div><label>Key: </label>{{node.key}}</div>
                   <div><label>Text: </label><input [(ngModel)]="data.text" name="text"></div>
@@ -185,7 +187,7 @@
                   <div><label># Links: </label>{{node.linksConnected.count}}</div>
                   <button type="submit">Commit Details</button>
                   <button (click)="onCancelChanges()">Cancel Changes</button>
-                </form>
+                </form-->
               </div>
             </mat-card-content>
           </mat-card>

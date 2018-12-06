@@ -2,7 +2,7 @@ import {MessageService} from 'primeng/primeng';
 import {split} from 'ts-node';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, count } from 'rxjs/operators';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import * as go from 'gojs';
 import {xml} from 'angular-xml';
@@ -34,9 +34,9 @@ export class DashboardAnalysisComponent {
   dataSource = this.ELEMENT_DATA;
   currentProfileImage: any;
   cardsDashboard = [
-    { title: 'Modelo Profesor', cols: 8, rows: 2 },
-    { title: 'Estadísticas', cols: 4, rows: 4 },
-    { title: 'Modelo Alumno', cols: 8, rows: 2 }
+    { title: 'Modelo Profesor', cols: 6, rows: 2 },
+    { title: 'Estadísticas', cols: 6, rows: 4 },
+    { title: 'Modelo Alumno', cols: 6, rows: 2 }
   ];
   cardsEstadisticas = [
     { title: 'Métricas', cols: 2, rows: 2 },
@@ -211,7 +211,9 @@ public barChartData:any[] = [
   }
   asignarMapa(blob) {
     let json: any;
-    const map = atob(blob.split(',')[1]);
+    const map = decodeURIComponent(atob(blob.split(',')[1]).split('').map(function (c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
     const parser = new DOMParser();
     const fin = JSON.parse(map);
     /*const xml = parser.parseFromString(map, 'application/xml');
@@ -245,7 +247,9 @@ public barChartData:any[] = [
 
   asignarMapa_2(blob) {
     let json: any;
-    const map = atob(blob.split(',')[1]);
+    const map = decodeURIComponent(atob(blob.split(',')[1]).split('').map(function (c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
     const parser = new DOMParser();
     const fin = JSON.parse(map);
     /*const xml = parser.parseFromString(map, 'application/xml');
@@ -366,7 +370,6 @@ public barChartData:any[] = [
       this.densidad();
       this.diametro();
       this.nodoPrincipal();
-      this.gradoNodoPrincipal();
       this.n_nodosComunes();
       this.n_nodosNoComunes();
       this.graphComparador();
@@ -388,10 +391,11 @@ public barChartData:any[] = [
     let ac_pro = 0;
     let ac_alu = 0;
     pc_prof = (this.model.nodeDataArray.length * (this.model.nodeDataArray.length - 1))/2;
-    ac_pro = (this.model.linkDataArray.length / pc_prof) * 100;
+    ac_pro = Math.round((this.model.linkDataArray.length / pc_prof) * 100);
+  
 
     pc_alu = (this.model3.nodeDataArray.length * (this.model3.nodeDataArray.length - 1))/2;
-    ac_alu = (this.model3.linkDataArray.length / pc_alu) * 100;
+    ac_alu = Math.round((this.model3.linkDataArray.length / pc_alu)* 100);
 
 
     this.ELEMENT_DATA.find(t => t.def === 'Densidad').valor_pro = ac_pro + '%';
@@ -404,16 +408,43 @@ public barChartData:any[] = [
     this.ELEMENT_DATA.find(t => t.def === 'Diámetro').valor_alu = 'NTS';
   }
   nodoPrincipal(){
-  const countFrom: any = _.countBy(this.model.linkDataArray, 'from');
-  const countTo: any = _.countBy(this.model.linkDataArray, 'to');
-  const countTotal = _.concat(countFrom, countTo);
-  
-  this.ELEMENT_DATA.find(t => t.def === 'Nodo Principal').valor_pro = 'NTS';
-  this.ELEMENT_DATA.find(t => t.def === 'Nodo Principal').valor_alu = 'NTS';
-  }
-  gradoNodoPrincipal(){
-    this.ELEMENT_DATA.find(t => t.def === 'Grado de Enl. Nod. Pric.').valor_pro = 'NTS';
-    this.ELEMENT_DATA.find(t => t.def === 'Grado de Enl. Nod. Pric.').valor_alu = 'NTS';
+  const countFrom: any = _.groupBy(this.model.linkDataArray, 'from');
+  const modelNode: any = this.model.nodeDataArray;
+  let idPrincipal: any = 0;
+  let count: any = 0;
+  let textModel: any;
+  _.forEach(countFrom, t=> {
+    if (count < t.length) {
+      count = t.length;
+      idPrincipal = t[0].from;
+    }
+  });
+ _.forEach(modelNode, n=>{
+   if (n.key === idPrincipal){
+     textModel = n.text;
+   }
+ });
+  this.ELEMENT_DATA.find(t => t.def === 'Nodo Principal').valor_pro = textModel;
+  this.ELEMENT_DATA.find(t => t.def === 'Grado de Enl. Nod. Pric.').valor_pro = count;
+
+  const countFromAlum: any = _.groupBy(this.model3.linkDataArray, 'from');
+  const modelNodeAlum: any = this.model3.nodeDataArray;
+  let idPrincipalAlum: any = 0;
+  let countAlum: any = 0;
+  let textModelAlum: any;
+  _.forEach(countFromAlum, t=> {
+    if (countAlum < t.length) {
+      countAlum = t.length;
+      idPrincipalAlum = t[0].from;
+    }
+  });
+ _.forEach(modelNodeAlum, n=>{
+   if (n.key === idPrincipalAlum){
+     textModelAlum = n.text;
+   }
+ });
+  this.ELEMENT_DATA.find(t => t.def === 'Nodo Principal').valor_alu = textModelAlum;
+  this.ELEMENT_DATA.find(t => t.def === 'Grado de Enl. Nod. Pric.').valor_alu = countAlum;
   }
   n_nodosComunes(){
 
