@@ -10,3 +10,9 @@
     width: 80%;
     height: 240px;
   }
+  .diagramDiv_Expand{
+    display: inline-block;
+    vertical-align: top;
+    width: 80%;
+    height: calc(100vh - 191px);
+  }

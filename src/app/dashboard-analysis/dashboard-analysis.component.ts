@@ -17,6 +17,7 @@ import * as _ from 'lodash';
   styleUrls: ['./dashboard-analysis.component.css']
 })
 export class DashboardAnalysisComponent {
+  public img_comparar: Boolean = false;
   imageShown: boolean;
   public ELEMENT_DATA: any[] = [
     {def: '# Nodos Globales', valor_pro: 0, valor_alu: 0},
@@ -500,6 +501,17 @@ public barChartData:any[] = [
         this.modelComparador.linkDataArray = linkComparador;
       this.listaNodos = listNod;
       
+  }
+  expandGraph($event){
+    if (this.model.nodeDataArray.length > 0 && this.model3.nodeDataArray.length > 0) {
+      this.img_comparar = true;
+    } else {
+      alert('Introduce los grafos para comparar.')
+    }
+    
+  }
+  changeVolver($event){
+    this.img_comparar = false;
   }
     
  }

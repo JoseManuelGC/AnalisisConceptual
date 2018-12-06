@@ -8,7 +8,7 @@ import * as go from 'gojs';
 })
 export class DiagramEditorComponentComparator implements OnInit {
   private diagram: go.Diagram = new go.Diagram();
-
+  @Input() public expand: Boolean;
   @ViewChild('diagramDiv')
   private diagramRef: ElementRef;
 

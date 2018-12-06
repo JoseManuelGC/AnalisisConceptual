@@ -1,6 +1,6 @@
 <div class="grid-container">
   <h1 class="mat-h1">Tabla de Trabajo</h1>
-  <mat-grid-list cols="12" rowHeight="350px">
+  <mat-grid-list *ngIf="!img_comparar" cols="12" rowHeight="350px">
     <mat-grid-tile *ngFor="let card of cardsDashboard" [colspan]="card.cols" [rowspan]="card.rows">
       <mat-card *ngIf="card.title === 'Modelo Profesor'" class="dashboard-card">
         <mat-card-header>
@@ -12,7 +12,6 @@
             <mat-menu #menu="matMenu" xPosition="before">
               <button mat-menu-item >Guardar</button>
               <button mat-menu-item>Expandir</button>
-              <button mat-menu-item>Eliminar</button>
             </mat-menu>
           </mat-card-title>
         </mat-card-header>
@@ -52,7 +51,7 @@
               </button>
               <mat-menu #menu="matMenu" xPosition="before">
                 <button mat-menu-item (click)="updateMetrica($event)">Actualizar Métricas</button>
-                <button mat-menu-item>Eliminar</button>
+                <button mat-menu-item (click)="expandGraph($event)">Expandir Grafo</button>
               </mat-menu>
             </mat-card-title>
           </mat-card-header>
@@ -69,7 +68,6 @@
                             </button>
                             <mat-menu #menu="matMenu" xPosition="before">
                               <button mat-menu-item>Expandir</button>
-                              <button mat-menu-item>Eliminar</button>
                             </mat-menu>
                           </mat-card-title>
                         </mat-card-header>
@@ -125,7 +123,8 @@
                         <mat-card-content *ngIf="card.title === 'Gráficos comparativa'" class="dashboard-card-content">
                          <div>
                           <app-diagram-editor-comparator
-                          [model]="modelComparador">
+                          [model]="modelComparador"
+                          [expand]="false">
                          </app-diagram-editor-comparator>
                          <div style="display: inline-table; margin-top: 30px;">
                          <div *ngFor="let l of listaNodos" class="listaNodos" >
@@ -152,7 +151,6 @@
                 <mat-menu #menu="matMenu" xPosition="before">
                   <button mat-menu-item>Guardar</button>
                   <button mat-menu-item>Expandir</button>
-                  <button mat-menu-item>Eliminar</button>
                 </mat-menu>
               </mat-card-title>
             </mat-card-header>
@@ -193,4 +191,11 @@
           </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
+  <div *ngIf ="img_comparar" class="img_comparador">
+    <button class="btn btn-primary" (click)="changeVolver($event)">Volver a la ventana Principal</button>
+    <app-diagram-editor-comparator
+    [model]="modelComparador"
+    [expand]="true">
+   </app-diagram-editor-comparator>
+  </div>
 </div>
