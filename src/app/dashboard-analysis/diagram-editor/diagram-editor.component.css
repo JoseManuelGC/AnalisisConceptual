@@ -18,3 +18,9 @@
     width: 19%;
     height: 400px;
   }
+  .diagramDiv_Expand{
+    display: inline-block;
+    vertical-align: top;
+    width: 80%;
+    height: calc(100vh - 191px);
+  }

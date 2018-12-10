@@ -17,7 +17,11 @@ import * as _ from 'lodash';
   styleUrls: ['./dashboard-analysis.component.css']
 })
 export class DashboardAnalysisComponent {
+  public  buttonGrafo: Boolean = false;
   public img_comparar: Boolean = false;
+  public comparador: Boolean = false;
+  public editorprofesor: Boolean = false;
+  public editorAlumno: Boolean = false;
   imageShown: boolean;
   public ELEMENT_DATA: any[] = [
     {def: '# Nodos Globales', valor_pro: 0, valor_alu: 0},
@@ -374,6 +378,7 @@ public barChartData:any[] = [
       this.n_nodosComunes();
       this.n_nodosNoComunes();
       this.graphComparador();
+      this.buttonGrafo = true;
     } else {
       alert('Introduce los grafos para comparar.')
     }
@@ -505,6 +510,31 @@ public barChartData:any[] = [
   expandGraph($event){
     if (this.model.nodeDataArray.length > 0 && this.model3.nodeDataArray.length > 0) {
       this.img_comparar = true;
+      this.comparador = true;
+      this.editorAlumno = false;
+      this.editorprofesor = false;
+    } else {
+      alert('Introduce los grafos para comparar.')
+    }
+    
+  }
+  expandGraph_alumno($event){
+    if (this.model.nodeDataArray.length > 0 && this.model3.nodeDataArray.length > 0) {
+      this.img_comparar = true;
+      this.editorAlumno = true;
+      this.editorprofesor = false;
+      this.comparador = false;
+    } else {
+      alert('Introduce los grafos para comparar.')
+    }
+    
+  }
+  expandGraph_profesor($event){
+    if (this.model.nodeDataArray.length > 0 && this.model3.nodeDataArray.length > 0) {
+      this.img_comparar = true;
+      this.editorprofesor = true;
+      this.editorAlumno = false;
+      this.comparador = false;
     } else {
       alert('Introduce los grafos para comparar.')
     }
@@ -512,6 +542,9 @@ public barChartData:any[] = [
   }
   changeVolver($event){
     this.img_comparar = false;
+    this.comparador = false;
+    this.editorAlumno = false;
+    this.editorprofesor = false;
   }
     
  }

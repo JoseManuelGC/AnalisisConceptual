@@ -10,8 +10,8 @@
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu" xPosition="before">
-              <button mat-menu-item >Guardar</button>
-              <button mat-menu-item>Expandir</button>
+              <!--button mat-menu-item >Guardar</button>
+              <button mat-menu-item>Expandir</button-->
             </mat-menu>
           </mat-card-title>
         </mat-card-header>
@@ -27,8 +27,10 @@
     <app-diagram-editor
      [model]="model"
      (nodeSelected)="showDetails($event)"
-     (modelChanged)="onModelChanged($event)">
+     (modelChanged)="onModelChanged($event)"
+     [expand]="false">
     </app-diagram-editor>
+    <button *ngIf="buttonGrafo" class="btn btn-info" (click)="expandGraph_profesor($event)" style="margin-top: 6px;">Expandir Grafo</button>
     <!--form *ngIf="node" #form="ngForm" (ngSubmit)="onCommitDetails()">
       Node Details:
       <div><label>Key: </label>{{node.key}}</div>
@@ -51,7 +53,7 @@
               </button>
               <mat-menu #menu="matMenu" xPosition="before">
                 <button mat-menu-item (click)="updateMetrica($event)">Actualizar Métricas</button>
-                <button mat-menu-item (click)="expandGraph($event)">Expandir Grafo</button>
+                <button *ngIf="buttonGrafo" mat-menu-item (click)="expandGraph($event)">Expandir Grafo</button>
               </mat-menu>
             </mat-card-title>
           </mat-card-header>
@@ -67,7 +69,7 @@
                               <mat-icon>more_vert</mat-icon>
                             </button>
                             <mat-menu #menu="matMenu" xPosition="before">
-                              <button mat-menu-item>Expandir</button>
+                              <!--button mat-menu-item>Expandir</button-->
                             </mat-menu>
                           </mat-card-title>
                         </mat-card-header>
@@ -98,6 +100,7 @@
                                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                 </table>
+
                               <!--canvas baseChart
                                           [data]="doughnutChartData"
                                           [labels]="doughnutChartLabels"
@@ -126,11 +129,12 @@
                           [model]="modelComparador"
                           [expand]="false">
                          </app-diagram-editor-comparator>
-                         <div style="display: inline-table; margin-top: 30px;">
+                   <button *ngIf="buttonGrafo" class="btn btn-info" (click)="expandGraph($event)" style="margin-top: 6px;">Expandir Grafo</button>
+                         <!--div style="display: inline-table; margin-top: 30px;">
                          <div *ngFor="let l of listaNodos" class="listaNodos" >
                             <p class= "Nodo">{{l}}</p>
                          </div>
-                        </div>
+                        </div-->
                         </div>
 
                           </mat-card-content>
@@ -149,8 +153,8 @@
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu" xPosition="before">
-                  <button mat-menu-item>Guardar</button>
-                  <button mat-menu-item>Expandir</button>
+                  <!--button mat-menu-item>Guardar</button>
+                  <button mat-menu-item>Expandir</button-->
                 </mat-menu>
               </mat-card-title>
             </mat-card-header>
@@ -174,8 +178,10 @@
                 <app-diagram-editor
                  [model]="model3"
                  (nodeSelected)="showDetails($event)"
-                 (modelChanged)="onModelChanged($event)">
+                 (modelChanged)="onModelChanged($event)"
+                 [expand]="false">
                 </app-diagram-editor>
+                <button *ngIf="buttonGrafo" class="btn btn-info" (click)="expandGraph_alumno($event)" style="margin-top: 6px;">Expandir Grafo</button>
                 <!--orm *ngIf="node" #form="ngForm" (ngSubmit)="onCommitDetails()">
                   Node Details:
                   <div><label>Key: </label>{{node.key}}</div>
@@ -193,9 +199,21 @@
   </mat-grid-list>
   <div *ngIf ="img_comparar" class="img_comparador">
     <button class="btn btn-primary" (click)="changeVolver($event)">Volver a la ventana Principal</button>
-    <app-diagram-editor-comparator
+    <app-diagram-editor-comparator *ngIf="comparador"
     [model]="modelComparador"
     [expand]="true">
    </app-diagram-editor-comparator>
+   <app-diagram-editor *ngIf="editorprofesor"
+     [model]="model"
+     (nodeSelected)="showDetails($event)"
+     (modelChanged)="onModelChanged($event)"
+     [expand]="true">
+    </app-diagram-editor>
+    <app-diagram-editor *ngIf="editorAlumno"
+    [model]="model3"
+    (nodeSelected)="showDetails($event)"
+    (modelChanged)="onModelChanged($event)"
+    [expand]="true">
+   </app-diagram-editor>
   </div>
 </div>

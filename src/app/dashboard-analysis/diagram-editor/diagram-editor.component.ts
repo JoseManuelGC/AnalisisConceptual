@@ -9,7 +9,7 @@ import * as go from 'gojs';
 export class DiagramEditorComponent implements OnInit {
   private diagram: go.Diagram = new go.Diagram();
   private palette: go.Palette = new go.Palette();
-
+  @Input() public expand: Boolean;
   @ViewChild('diagramDiv')
   private diagramRef: ElementRef;
 
