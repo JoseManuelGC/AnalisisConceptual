@@ -11,18 +11,28 @@ import { Ng2FileInputService } from 'ng2-file-input';
 import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
 import { NgForm } from '@angular/forms';
 import * as _ from 'lodash';
+import * as jsPDF from 'jspdf';
+import { DiagramEditorComponentComparator } from './diagram-editor-comparator/diagram-editor-comparator.component';
+import { DiagramEditorComponent } from './diagram-profesor/diagram-editor.component';
+import { DiagramEditorAlumnoComponent} from './diagram-alumno/diagram-alumno.component';
 @Component({
   selector: 'dashboard-analysis',
   templateUrl: './dashboard-analysis.component.html',
   styleUrls: ['./dashboard-analysis.component.css']
 })
 export class DashboardAnalysisComponent {
+  @ViewChild(DiagramEditorComponentComparator) diagramModelComparador: DiagramEditorComponentComparator;
+  @ViewChild(DiagramEditorComponent) diagramModelProfesor: DiagramEditorComponent;
+  @ViewChild(DiagramEditorAlumnoComponent) diagramModelAlumno: DiagramEditorAlumnoComponent;
+
   public  buttonGrafo: Boolean = false;
   public img_comparar: Boolean = false;
   public comparador: Boolean = false;
   public editorprofesor: Boolean = false;
   public editorAlumno: Boolean = false;
   imageShown: boolean;
+  public nombreArchivoProfesor;
+  public nombreArchivoAlumno;
   public ELEMENT_DATA: any[] = [
     {def: '# Nodos Globales', valor_pro: 0, valor_alu: 0},
     {def: '# Enlaces Globales', valor_pro: 0, valor_alu: 0},
@@ -178,6 +188,7 @@ public barChartData:any[] = [
     
     let fileInput: any = document.getElementById("img");
     let files = fileInput.files[0];
+    this.nombreArchivoAlumno = files.name;
     if (files){
       let imgPromise = this.getFileBlob(files);
       imgPromise.then(blob => {
@@ -358,6 +369,7 @@ public barChartData:any[] = [
   importGraph($event){
     let fileInput: any = document.getElementById("img_2");
     let files = fileInput.files[0];
+    this.nombreArchivoProfesor = files.name;
     if (files){
       let imgPromise = this.getFileBlob(files);
       imgPromise.then(blob => {
@@ -545,6 +557,64 @@ public barChartData:any[] = [
     this.comparador = false;
     this.editorAlumno = false;
     this.editorprofesor = false;
+  }
+  downloadPDF(){
+    const imageDiagramComparador = this.diagramModelComparador.imageDiagram();
+    const imageDiagramProfesor = this.diagramModelProfesor.imageDiagram();
+    const imageDiagramAlumno = this.diagramModelAlumno.imageDiagram();
+    const doc = new jsPDF;
+
+    let imgUCLM = document.getElementById('imgUCLM');
+    let imgESI = document.getElementById('imgESI');
+    doc.addImage(imgUCLM, 'PNG', 10, 10);
+    doc.addImage(imgESI, 'PNG', 150, 10);
+    doc.text('Análisis de Mapas Conceptuales', 37,20);
+    doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
+    doc.text('Grafo 1 ---> ' + this.nombreArchivoProfesor.split('.')[0],30, 50);
+    doc.addImage(imageDiagramProfesor, 'image', 10, 60);
+    doc.text('Grafo 2 ---> ' + this.nombreArchivoAlumno.split('.')[0],30, 180);
+    doc.addImage(imageDiagramAlumno, 'image', 10, 190);
+    doc.setFontSize(10);
+    doc.setFontType("italic");
+    doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
+
+    doc.setFontType("normal");
+   // Segunda Pagina
+    doc.addPage();
+    doc.setFontSize(15);
+    doc.addImage(imgUCLM, 'PNG', 10, 10);
+    doc.addImage(imgESI, 'PNG', 150, 10);
+    doc.text('Análisis de Métricas Y Grafo comparador', 60,20);
+    doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
+    doc.text('Tabla comparativa de métricas',10,50);
+    doc.text('-----------------------------------------',10,55);
+
+    doc.setFontSize(11);
+    doc.text('Def. Métrica                            Valor Profesor                             Valor Alumno', 10,65);
+    let numFila = 75;
+    _.forEach(this.ELEMENT_DATA, element => {
+      doc.text('' + element.def + ' ' ,10, numFila);
+      doc.text('                                   ' + element.valor_pro, 30, numFila);
+      doc.text('                                                             ' + element.valor_alu, 60, numFila);
+      numFila += 5;
+    });
+
+    doc.setFontSize(15);
+    doc.text('Grafo comparativo',10,135);
+    doc.text('--------------------------',10,140);
+
+    doc.addImage(imageDiagramComparador, 'image', 10, 150);
+    if ( this.ELEMENT_DATA.find(t => t.def === '# Enlaces No Comunes').valor_alu > 0){
+      doc.setDrawColor(255, 0, 0);
+      doc.line(200,269,186,269)
+      doc.setFontSize(10);
+      doc.text('Enlace no común con el grafo experto', 120, 270);
+    }
+    
+    doc.setFontSize(10);
+    doc.setFontType("italic");
+    doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
+    doc.save('Métricas.pdf');
   }
     
  }

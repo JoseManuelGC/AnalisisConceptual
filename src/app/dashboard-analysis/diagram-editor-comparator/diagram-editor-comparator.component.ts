@@ -19,6 +19,7 @@ export class DiagramEditorComponentComparator implements OnInit {
   @Output()
   nodeSelected = new EventEmitter<go.Node|null>();
 
+
   @Output()
   modelChanged = new EventEmitter<go.ChangedEvent>();
 
@@ -65,5 +66,13 @@ export class DiagramEditorComponentComparator implements OnInit {
 
   ngOnInit() {
     this.diagram.div = this.diagramRef.nativeElement;
+  }
+
+  imageDiagram(){
+    return this.diagram.makeImage(
+      {
+        size: new go.Size(700,1400)
+      }
+    );
   }
 }

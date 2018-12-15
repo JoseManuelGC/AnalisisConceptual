@@ -11,7 +11,8 @@ import { BackComponent } from './back/back.component';
 import { DashboardAnalysisComponent } from './dashboard-analysis/dashboard-analysis.component';
 import { Ng2FileInputModule } from 'ng2-file-input';
 import { ChartsModule } from 'ng2-charts';
-import { DiagramEditorComponent } from './dashboard-analysis/diagram-editor/diagram-editor.component';
+import { DiagramEditorComponent } from './dashboard-analysis/diagram-profesor/diagram-editor.component';
+import { DiagramEditorAlumnoComponent } from './dashboard-analysis/diagram-alumno/diagram-alumno.component';
 import { DiagramEditorComponentComparator } from './dashboard-analysis/diagram-editor-comparator/diagram-editor-comparator.component';
 import { FormsModule } from '@angular/forms';
 import {FileUploadModule, MessageService} from 'primeng/primeng';
@@ -21,6 +22,7 @@ import {FileUploadModule, MessageService} from 'primeng/primeng';
     BackComponent,
     DashboardAnalysisComponent,
     DiagramEditorComponent,
+    DiagramEditorAlumnoComponent,
     DiagramEditorComponentComparator
     
   ],

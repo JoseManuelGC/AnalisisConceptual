@@ -1,5 +1,17 @@
 <div class="grid-container">
-  <h1 class="mat-h1">Tabla de Trabajo</h1>
+  <h1 class="mat-h1">Análisis de Mapas Conceptuales</h1>
+<img src="assets/logoUCLM.png" alt="image" style="width: 60px;
+height: 60px;
+float: right;
+margin-top: -61px;
+" id="imgUCLM">
+<img src="assets/logoEsi.jpg" alt="image" style="width: 200px;
+height: 60px;
+float: right;
+margin-top: -61px;
+margin-right: 100px;
+" id="imgESI">
+
   <mat-grid-list *ngIf="!img_comparar" cols="12" rowHeight="350px">
     <mat-grid-tile *ngFor="let card of cardsDashboard" [colspan]="card.cols" [rowspan]="card.rows">
       <mat-card *ngIf="card.title === 'Modelo Profesor'" class="dashboard-card">
@@ -74,8 +86,8 @@
                           </mat-card-title>
                         </mat-card-header>
                         <mat-card-content *ngIf="card.title === 'Métricas'" class="dashboard-card-content">
-                          <div class="metricas" style="display: block">
-                              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                          <div class="metricas" style="display: block;">
+                              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
 
                                   <!--- Note that these columns can be defined in any order.
                                         The actual rendered columns are set as a property on the row definition" -->
@@ -130,7 +142,8 @@
                           [expand]="false">
                          </app-diagram-editor-comparator>
                    <button *ngIf="buttonGrafo" class="btn btn-info" (click)="expandGraph($event)" style="margin-top: 6px;">Expandir Grafo</button>
-                         <!--div style="display: inline-table; margin-top: 30px;">
+                   <button *ngIf="buttonGrafo" class ="btn btn-success" (click)="downloadPDF()" style="margin-top: 6px;margin-left: 41px;">Descargar PDF</button>    
+                   <!--div style="display: inline-table; margin-top: 30px;">
                          <div *ngFor="let l of listaNodos" class="listaNodos" >
                             <p class= "Nodo">{{l}}</p>
                          </div>
@@ -175,12 +188,12 @@
             <button class="btn btn-success"><a href="http://diseniador.josemanuelgcgn.com/" target="_blank"  style="color:white;">Ir al Diseñador</a></button>
          
           <div>
-                <app-diagram-editor
+                <app-diagram-alumno
                  [model]="model3"
                  (nodeSelected)="showDetails($event)"
                  (modelChanged)="onModelChanged($event)"
                  [expand]="false">
-                </app-diagram-editor>
+                </app-diagram-alumno>
                 <button *ngIf="buttonGrafo" class="btn btn-info" (click)="expandGraph_alumno($event)" style="margin-top: 6px;">Expandir Grafo</button>
                 <!--orm *ngIf="node" #form="ngForm" (ngSubmit)="onCommitDetails()">
                   Node Details:
@@ -209,11 +222,11 @@
      (modelChanged)="onModelChanged($event)"
      [expand]="true">
     </app-diagram-editor>
-    <app-diagram-editor *ngIf="editorAlumno"
+    <app-diagram-alumno *ngIf="editorAlumno"
     [model]="model3"
     (nodeSelected)="showDetails($event)"
     (modelChanged)="onModelChanged($event)"
     [expand]="true">
-   </app-diagram-editor>
+   </app-diagram-alumno>
   </div>
 </div>
