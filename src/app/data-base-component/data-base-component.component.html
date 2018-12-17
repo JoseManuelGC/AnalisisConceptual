@@ -1,0 +1,21 @@
+<div class="database" [@enterAnimation]>
+<div class="asignaturas">
+  <h2 class="tituloAsignatura">Asignatura Interacción Persona Ordenador</h2>
+  <div class="profesores">
+    <h3>Mapas de Profesores</h3>
+    <div *ngFor="let item of profesores" style="margin-left: 6%;">
+    <p >{{item.name}} ----> </p>
+    <button type="input" class="btn btn-danger botonesCargar" (click)="cargarMapaExperto(item)">Cargar mapa como Experto</button>
+    <button type="input" class="btn btn-success botonesCargar2" (click)="cargarMapaAlumno(item)">Cargar mapa como Alumno</button>
+  </div>
+  </div>
+  <div class="alumnos" >
+    <h3>Mapas de Alumnos</h3>
+    <div *ngFor="let item of alumnos" style="margin-left: 6%;">
+    <p > {{item.name}} ----> </p>
+    <button type="input" class="btn btn-danger botonesCargar" (click)="cargarMapaExperto(item)">Cargar mapa como Experto</button>
+    <button type="input" class="btn btn-success botonesCargar2" (click)="cargarMapaAlumno(item)">Cargar mapa como Alumno</button>
+  </div>
+  </div>
+</div>
+</div>

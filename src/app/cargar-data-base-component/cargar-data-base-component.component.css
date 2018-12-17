@@ -1,0 +1,17 @@
+.database{
+    position: absolute;
+    top: 0px;
+    width: 865px;
+    left: 0px;
+    background-color: #c4efff;
+    z-index: 2;
+    margin-top: 4%;
+    height: 92%;
+    overflow: auto;
+}
+.form-group{
+    margin-left: 6%;
+    width: 45%;
+    margin-top: 5%;
+
+}

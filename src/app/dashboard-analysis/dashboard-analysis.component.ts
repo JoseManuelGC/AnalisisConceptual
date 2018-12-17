@@ -3,7 +3,7 @@ import {split} from 'ts-node';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, count } from 'rxjs/operators';
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import * as go from 'gojs';
 import {xml} from 'angular-xml';
 import { NgxXml2jsonService } from 'ngx-xml2json';
@@ -15,12 +15,24 @@ import * as jsPDF from 'jspdf';
 import { DiagramEditorComponentComparator } from './diagram-editor-comparator/diagram-editor-comparator.component';
 import { DiagramEditorComponent } from './diagram-profesor/diagram-editor.component';
 import { DiagramEditorAlumnoComponent} from './diagram-alumno/diagram-alumno.component';
+
+import { trigger, transition, style, animate } from '@angular/animations';
 @Component({
   selector: 'dashboard-analysis',
   templateUrl: './dashboard-analysis.component.html',
-  styleUrls: ['./dashboard-analysis.component.css']
+  styleUrls: ['./dashboard-analysis.component.css'],
+  animations: [
+    trigger(
+      'enterAnimation', [
+        transition(':leave', [
+          style({transform: 'translateX(0%)', opacity: 1}),
+          animate('400ms', style({transform: 'translateX(-100%)', opacity: 0}))
+        ])
+      ]
+    )
+  ],
 })
-export class DashboardAnalysisComponent {
+export class DashboardAnalysisComponent implements OnInit  {
   @ViewChild(DiagramEditorComponentComparator) diagramModelComparador: DiagramEditorComponentComparator;
   @ViewChild(DiagramEditorComponent) diagramModelProfesor: DiagramEditorComponent;
   @ViewChild(DiagramEditorAlumnoComponent) diagramModelAlumno: DiagramEditorAlumnoComponent;
@@ -30,9 +42,11 @@ export class DashboardAnalysisComponent {
   public comparador: Boolean = false;
   public editorprofesor: Boolean = false;
   public editorAlumno: Boolean = false;
+  public visibleCargarComponent: Boolean = false;
   imageShown: boolean;
   public nombreArchivoProfesor;
   public nombreArchivoAlumno;
+  public visibleMenuComponent:Boolean = false;
   public ELEMENT_DATA: any[] = [
     {def: '# Nodos Globales', valor_pro: 0, valor_alu: 0},
     {def: '# Enlaces Globales', valor_pro: 0, valor_alu: 0},
@@ -76,6 +90,8 @@ public barChartData:any[] = [
 
   constructor(private ngxXml2jsonService: NgxXml2jsonService, private ng2FileInputService: Ng2FileInputService) {
 
+  }
+  ngOnInit() {
   }
   public chartClickedGrafica(e:any):void {
     console.log(e);
@@ -188,7 +204,7 @@ public barChartData:any[] = [
     
     let fileInput: any = document.getElementById("img");
     let files = fileInput.files[0];
-    this.nombreArchivoAlumno = files.name;
+    this.nombreArchivoAlumno = files.name.split('.')[0];
     if (files){
       let imgPromise = this.getFileBlob(files);
       imgPromise.then(blob => {
@@ -296,6 +312,71 @@ public barChartData:any[] = [
     });*/
 
   }
+  asignarMapaDataBaseExperto(mapa){
+    let json: any;
+    let blob = mapa.grafo;
+    const map = decodeURIComponent(atob(blob.split(',')[1]).split('').map(function (c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    const parser = new DOMParser();
+    const fin = JSON.parse(map);
+    /*const xml = parser.parseFromString(map, 'application/xml');
+    json = this.xmlToJson(xml);*/
+    const link = [];
+    const values = [];
+  
+    _.forEach(fin.nodeDataArray, node => {
+      values.push(node);
+    });
+    _.forEach(fin.linkDataArray, lin => {
+      link.push(lin);
+    });
+    this.model = new go.GraphLinksModel(
+      [
+        
+      ],
+      [
+        
+      ]);
+
+        this.model.linkDataArray = link;
+        this.model.nodeDataArray = values;
+        this.nombreArchivoProfesor = mapa.name;
+        this.visibleMenuComponent = false;
+
+  }
+  asignarMapaDataBaseAlumno(mapa){
+    let json: any;
+    let blob = mapa.grafo;
+    const map = decodeURIComponent(atob(blob.split(',')[1]).split('').map(function (c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    const parser = new DOMParser();
+    const fin = JSON.parse(map);
+    /*const xml = parser.parseFromString(map, 'application/xml');
+    json = this.xmlToJson(xml);*/
+    const link = [];
+    const values = [];
+  
+    _.forEach(fin.nodeDataArray, node => {
+      values.push(node);
+    });
+    _.forEach(fin.linkDataArray, lin => {
+      link.push(lin);
+    });
+    this.model3 = new go.GraphLinksModel(
+      [
+        
+      ],
+      [
+        
+      ]);
+
+        this.model3.linkDataArray = link;
+        this.model3.nodeDataArray = values;
+        this.nombreArchivoAlumno = mapa.name;
+        this.visibleMenuComponent = false;
+  }
   private onDataSuccess(data: any) {
     if (data) {
       // Parse content to object
@@ -369,7 +450,7 @@ public barChartData:any[] = [
   importGraph($event){
     let fileInput: any = document.getElementById("img_2");
     let files = fileInput.files[0];
-    this.nombreArchivoProfesor = files.name;
+    this.nombreArchivoProfesor = files.name.split('.')[0];
     if (files){
       let imgPromise = this.getFileBlob(files);
       imgPromise.then(blob => {
@@ -570,9 +651,9 @@ public barChartData:any[] = [
     doc.addImage(imgESI, 'PNG', 150, 10);
     doc.text('Análisis de Mapas Conceptuales', 37,20);
     doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
-    doc.text('Grafo 1 ---> ' + this.nombreArchivoProfesor.split('.')[0],30, 50);
+    doc.text('Grafo 1 ---> ' + this.nombreArchivoProfesor,30, 50);
     doc.addImage(imageDiagramProfesor, 'image', 10, 60);
-    doc.text('Grafo 2 ---> ' + this.nombreArchivoAlumno.split('.')[0],30, 180);
+    doc.text('Grafo 2 ---> ' + this.nombreArchivoAlumno,30, 180);
     doc.addImage(imageDiagramAlumno, 'image', 10, 190);
     doc.setFontSize(10);
     doc.setFontType("italic");
@@ -614,7 +695,14 @@ public barChartData:any[] = [
     doc.setFontSize(10);
     doc.setFontType("italic");
     doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
-    doc.save('Métricas.pdf');
+    doc.save('Métricas-' +this.nombreArchivoProfesor + '-' +this.nombreArchivoAlumno +'.pdf');
   }
-    
+  visibleMenu(){
+    this.visibleMenuComponent = !this.visibleMenuComponent;
+    this.visibleCargarComponent = false;
+  }
+  visibleCargarMenu(){
+    this.visibleCargarComponent = !this.visibleCargarComponent;
+    this.visibleMenuComponent = false;
+  }
  }

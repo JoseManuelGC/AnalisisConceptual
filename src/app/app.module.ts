@@ -16,6 +16,10 @@ import { DiagramEditorAlumnoComponent } from './dashboard-analysis/diagram-alumn
 import { DiagramEditorComponentComparator } from './dashboard-analysis/diagram-editor-comparator/diagram-editor-comparator.component';
 import { FormsModule } from '@angular/forms';
 import {FileUploadModule, MessageService} from 'primeng/primeng';
+import { DataBaseComponentComponent } from './data-base-component/data-base-component.component';
+import { AngularFireModule} from 'angularfire2';
+import { AngularFireDatabaseModule} from  'angularfire2/database';
+import { CargarDataBaseComponentComponent } from './cargar-data-base-component/cargar-data-base-component.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +27,9 @@ import {FileUploadModule, MessageService} from 'primeng/primeng';
     DashboardAnalysisComponent,
     DiagramEditorComponent,
     DiagramEditorAlumnoComponent,
-    DiagramEditorComponentComparator
+    DiagramEditorComponentComparator,
+    DataBaseComponentComponent,
+    CargarDataBaseComponentComponent
     
   ],
   imports: [
@@ -43,7 +49,9 @@ import {FileUploadModule, MessageService} from 'primeng/primeng';
     MatTableModule,
     Ng2FileInputModule.forRoot(),
     ChartsModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule
   ],
   providers: [],
   bootstrap: [AppComponent]

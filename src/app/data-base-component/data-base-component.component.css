@@ -1,0 +1,30 @@
+.database{
+    position: absolute;
+    top: 0px;
+    width: 865px;
+    left: 0px;
+    background-color: #c4efff;
+    z-index: 2;
+    margin-top: 4%;
+    height: 92%;
+    overflow: auto;
+}
+.alumnos{
+    margin-left: 11%;
+}
+.profesores{
+    margin-left: 11%;
+}
+.tituloAsignatura{
+    margin-top: 4%;
+    margin-left: 2%;
+}
+.botonesCargar{
+    margin-top: -12%;
+    margin-left: 25%;
+}
+.botonesCargar2{
+    margin-top: -18%;
+    margin-left: 61%;
+
+}

@@ -1,0 +1,15 @@
+<div class="database" [@enterAnimation]>
+  <h2 style="margin-top: 2%;margin-left: 2%;"> Datos del Mapa Conceptual a Cargar.</h2>
+          <div class="form-group">
+            <label for="NameGraph">Nombre del Mapa Conceptual</label>
+            <input type="NameGraph" class="form-control" id="NameGraph" #box (keyup)="nameGraph(box.value)">
+          </div>
+          <div class="form-group">
+              <input type="file" accept=".json" class="btn btn-success import" id="img_3" name="img_3" (change)="importGraph($event)">
+    
+          </div>
+          <div class="checkbox form-group">
+            <label><input type="checkbox" (click)="isAlumno($event)">  ¿Es Tipo Alumno?</label>
+          </div>
+          <button class="btn btn-default form-group" (click)="add()">Enviar</button>
+</div>

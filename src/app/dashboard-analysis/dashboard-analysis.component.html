@@ -1,4 +1,6 @@
 <div class="grid-container">
+  <button type="input" class="btn btn-success" (click)="visibleMenu()">Menu</button>
+  <button type="input" class="btn btn-success" (click)="visibleCargarMenu()" style="margin-left: 2%;">Cargar Mapa Conceptual en la Base de Datos</button>
   <h1 class="mat-h1">Análisis de Mapas Conceptuales</h1>
 <img src="assets/logoUCLM.png" alt="image" style="width: 60px;
 height: 60px;
@@ -229,4 +231,9 @@ margin-right: 100px;
     [expand]="true">
    </app-diagram-alumno>
   </div>
+  <app-data-base-component *ngIf="visibleMenuComponent" [@enterAnimation]
+  (onMapaExperto)="asignarMapaDataBaseExperto($event)"
+  (onMapaAlumno)="asignarMapaDataBaseAlumno($event)"
+  ></app-data-base-component>
+<app-cargar-data-base-component *ngIf="visibleCargarComponent" [@enterAnimation]></app-cargar-data-base-component>
 </div>
