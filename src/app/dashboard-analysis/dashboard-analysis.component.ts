@@ -47,6 +47,8 @@ export class DashboardAnalysisComponent implements OnInit  {
   public nombreArchivoProfesor;
   public nombreArchivoAlumno;
   public visibleMenuComponent:Boolean = false;
+  public signInClave:Boolean = false;
+  public visibleSignin: Boolean = true;
   public ELEMENT_DATA: any[] = [
     {def: '# Nodos Globales', valor_pro: 0, valor_alu: 0},
     {def: '# Enlaces Globales', valor_pro: 0, valor_alu: 0},
@@ -698,11 +700,30 @@ public barChartData:any[] = [
     doc.save('Métricas-' +this.nombreArchivoProfesor + '-' +this.nombreArchivoAlumno +'.pdf');
   }
   visibleMenu(){
-    this.visibleMenuComponent = !this.visibleMenuComponent;
-    this.visibleCargarComponent = false;
+    if(this.signInClave){
+      this.visibleMenuComponent = !this.visibleMenuComponent;
+      this.visibleCargarComponent = false;
+    } else {
+      this.visibleSignin = true;
+    }
+   
   }
   visibleCargarMenu(){
-    this.visibleCargarComponent = !this.visibleCargarComponent;
-    this.visibleMenuComponent = false;
+    if (this.signInClave){
+      this.visibleCargarComponent = !this.visibleCargarComponent;
+      this.visibleMenuComponent = false;
+    } else {
+      this.visibleSignin = true;
+    }
+  }
+  signIn($event){
+    if ($event === true){
+      alert('Inicio de sesión correctamente.');
+      this.signInClave = true;
+      this.visibleSignin = false;
+    } else if ($event === false){
+      alert('Error en el inicio de sesión.');
+      this.visibleSignin = false;
+    }
   }
  }

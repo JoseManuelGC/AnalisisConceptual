@@ -546,6 +546,30 @@ Konstantin Lebedev, Demidov Vladimir.
  * SUCH DAMAGE.
  */
 
+@firebase/database@0.3.7
+Apache-2.0
+Apache-2.0
+
+@firebase/util@0.2.3
+Apache-2.0
+Apache-2.0
+
+@firebase/logger@0.1.2
+Apache-2.0
+Apache-2.0
+
+@firebase/app@0.3.5
+Apache-2.0
+Apache-2.0
+
+firebase@5.7.0
+Apache-2.0
+Apache-2.0
+
+@firebase/polyfill@0.3.3
+Apache-2.0
+Apache-2.0
+
 gojs@1.8.31
 SEE LICENSE IN license.html
 SEE LICENSE IN license.html
@@ -601,5 +625,13 @@ licenses; we recommend you read them, as their terms may differ from the
 terms above.
 
 jspdf@1.4.1
+MIT
+MIT
+
+@angular/fire@5.1.1
+MIT
+MIT
+
+angularfire2@5.1.1
 MIT
 MIT

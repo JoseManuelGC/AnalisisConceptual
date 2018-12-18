@@ -20,6 +20,7 @@ import { DataBaseComponentComponent } from './data-base-component/data-base-comp
 import { AngularFireModule} from 'angularfire2';
 import { AngularFireDatabaseModule} from  'angularfire2/database';
 import { CargarDataBaseComponentComponent } from './cargar-data-base-component/cargar-data-base-component.component';
+import { SignInComponentComponent } from './sign-in-component/sign-in-component.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +30,8 @@ import { CargarDataBaseComponentComponent } from './cargar-data-base-component/c
     DiagramEditorAlumnoComponent,
     DiagramEditorComponentComparator,
     DataBaseComponentComponent,
-    CargarDataBaseComponentComponent
+    CargarDataBaseComponentComponent,
+    SignInComponentComponent
     
   ],
   imports: [

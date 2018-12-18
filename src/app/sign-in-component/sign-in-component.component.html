@@ -1,0 +1,13 @@
+<div class="sign-in">
+    <h2 style="margin-top: 2%;margin-left: 15%;"> Iniciar Sesión</h2>
+    <div class="form-group" style="margin-top:5%;">
+      <label for="NameGraph" style="margin-left: 20%;">Nombre del Usuario</label>
+      <input type="NameGraph" class="form-control" id="NameGraph" #box (keyup)="nombreUsuario(box.value)" style="margin-left: 20%;width: 60%;">
+    </div>
+    <div class="form-group" style="margin-top:5%;">
+        <label for="pwd" style="margin-left: 20%;">Contraseña:</label>
+        <input type="password" class="form-control" id="pwd" #boxpwd style="margin-left: 20%;width: 60%;" (keyup)="contraseniaUsuario(boxpwd.value)">
+      </div>
+    <button class="btn btn-success form-group" (click)="comprobar()" style="margin-left: 20%;">Enviar</button>
+    <button class="btn btn-danger form-group" (click)="cancelar()" style="margin-left: 2%;">Cancelar</button>
+</div>

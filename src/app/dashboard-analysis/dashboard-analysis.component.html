@@ -1,20 +1,21 @@
 <div class="grid-container">
+  <div class="row" [ngClass]="{'noVisibleMenu': visibleSignin}">
   <button type="input" class="btn btn-success" (click)="visibleMenu()">Menu</button>
   <button type="input" class="btn btn-success" (click)="visibleCargarMenu()" style="margin-left: 2%;">Cargar Mapa Conceptual en la Base de Datos</button>
   <h1 class="mat-h1">Análisis de Mapas Conceptuales</h1>
 <img src="assets/logoUCLM.png" alt="image" style="width: 60px;
 height: 60px;
 float: right;
-margin-top: -61px;
+margin-top: -1%;
+margin-left: 1%;
 " id="imgUCLM">
 <img src="assets/logoEsi.jpg" alt="image" style="width: 200px;
 height: 60px;
 float: right;
-margin-top: -61px;
-margin-right: 100px;
+margin-top: -1%;
 " id="imgESI">
-
-  <mat-grid-list *ngIf="!img_comparar" cols="12" rowHeight="350px">
+</div>
+  <mat-grid-list *ngIf="!img_comparar" [ngClass]="{'noVisibleMenu': visibleMenuComponent || visibleCargarComponent || visibleSignin}" cols="12" rowHeight="350px">
     <mat-grid-tile *ngFor="let card of cardsDashboard" [colspan]="card.cols" [rowspan]="card.rows">
       <mat-card *ngIf="card.title === 'Modelo Profesor'" class="dashboard-card">
         <mat-card-header>
@@ -235,5 +236,9 @@ margin-right: 100px;
   (onMapaExperto)="asignarMapaDataBaseExperto($event)"
   (onMapaAlumno)="asignarMapaDataBaseAlumno($event)"
   ></app-data-base-component>
-<app-cargar-data-base-component *ngIf="visibleCargarComponent" [@enterAnimation]></app-cargar-data-base-component>
+<app-cargar-data-base-component *ngIf="visibleCargarComponent" [@enterAnimation]>
+</app-cargar-data-base-component>
+<app-sign-in-component *ngIf="visibleSignin" 
+(onSigin)="signIn($event)"
+></app-sign-in-component>
 </div>
