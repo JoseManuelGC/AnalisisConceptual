@@ -1,5 +1,13 @@
 .grid-container {
-  margin: 20px;
+  /**margin: 20px;**/
+  margin-top: 6px;
+    margin-left: 235px;
+    padding: 15px;
+    -ms-overflow-x: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
+    overflow: hidden;
 }
 
 .dashboard-card {
@@ -58,5 +66,18 @@ table.mat-table {
 }
 .noVisibleMenu{
   opacity: 0.3;
+  pointer-events: none;
+}
+.alertSing{
+  position: absolute;
+  width: 36%;
+  left: 32%;
+  z-index: 2;
+  bottom: 86%;
+}
+.collapsed {
+  margin-left: 100px;
+}
+.app-sidebar-Menu{
   pointer-events: none;
 }

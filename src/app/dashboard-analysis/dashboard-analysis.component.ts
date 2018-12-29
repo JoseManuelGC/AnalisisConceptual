@@ -33,6 +33,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
   ],
 })
 export class DashboardAnalysisComponent implements OnInit  {
+  collapedSideBar: boolean;
   @ViewChild(DiagramEditorComponentComparator) diagramModelComparador: DiagramEditorComponentComparator;
   @ViewChild(DiagramEditorComponent) diagramModelProfesor: DiagramEditorComponent;
   @ViewChild(DiagramEditorAlumnoComponent) diagramModelAlumno: DiagramEditorAlumnoComponent;
@@ -84,6 +85,8 @@ public barChartOptions:any = {
 public barChartLabels:string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
 public barChartType:string = 'bar';
 public barChartLegend:boolean = true;
+public alert:Boolean = false;
+public error:Boolean = false;
 // public model3:any = new go.GraphLinksModel();
 public barChartData:any[] = [
   {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
@@ -276,6 +279,9 @@ public barChartData:any[] = [
         const v = '{ key:' + element.attributes.key+', text:'+ element.attributes.text+', color:'+element.attributes.color+ '}';
         values.push(v);
     });*/
+    if (this.model.linkDataArray.length > 0 && this.model3.linkDataArray.length > 0){
+      this.updateMetrica(null);
+    }
 
   }
 
@@ -312,7 +318,9 @@ public barChartData:any[] = [
         const v = '{ key:' + element.attributes.key+', text:'+ element.attributes.text+', color:'+element.attributes.color+ '}';
         values.push(v);
     });*/
-
+    if (this.model.linkDataArray.length > 0 && this.model3.linkDataArray.length > 0){
+      this.updateMetrica(null);
+    }
   }
   asignarMapaDataBaseExperto(mapa){
     let json: any;
@@ -718,12 +726,42 @@ public barChartData:any[] = [
   }
   signIn($event){
     if ($event === true){
-      alert('Inicio de sesión correctamente.');
       this.signInClave = true;
       this.visibleSignin = false;
+      this.alert = true;
     } else if ($event === false){
-      alert('Error en el inicio de sesión.');
       this.visibleSignin = false;
+      this.error = true;
     }
   }
+  IniciarSesion(){
+    if (this.signInClave === false){
+      this.visibleSignin = true;
+    }
+  }
+  closeAlert(){
+    this.alert = false;
+    this.error = false;
+  }
+  receiveCollapsed($event) {
+    this.collapedSideBar = $event;
+}
+
+  cargarMapaAnalisis($event){
+    if(this.model.linkDataArray.length === 0){
+      this.asignarMapaDataBaseExperto($event);
+      this.model3.linkDataArray = [];
+      this.model3.nodeDataArray =  [];
+    } else if(this.model3.linkDataArray.length === 0){
+      this.asignarMapaDataBaseAlumno($event);
+    } else if (this.model.linkDataArray.length > 0){
+      this.asignarMapaDataBaseExperto($event);
+      this.model3.linkDataArray = [];
+      this.model3.nodeDataArray =  [];
+    } 
+
+    if (this.model.linkDataArray.length > 0 && this.model3.linkDataArray.length > 0){
+      this.updateMetrica($event);
+    }
+  } 
  }

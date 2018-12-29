@@ -8,12 +8,14 @@ import * as _ from 'lodash';
 })
 export class SignInComponentComponent implements OnInit {
 
-  private usuario;
-  private contrasenia;
+  public usuario;
+  public contrasenia;
 
-  private usuariosBD = [{}];
+  private usuariosBD = [];
+
   @Output() onSigin = new EventEmitter<any>();
   constructor(db: AngularFireDatabase) { 
+    const self = this;
     db.list('/usuarios').valueChanges().subscribe(res => {
       _.forEach(res, r => {
         const item:any = r;
@@ -22,7 +24,7 @@ export class SignInComponentComponent implements OnInit {
             userName: item.name,
             pwdName: item.clave
           }
-          this.usuariosBD.push(user);
+          self.usuariosBD.push(user);
       })
     });
   }
@@ -51,4 +53,5 @@ export class SignInComponentComponent implements OnInit {
   cancelar(){
     this.onSigin.emit(false);
   }
+ 
 }

@@ -21,6 +21,10 @@ import { AngularFireModule} from 'angularfire2';
 import { AngularFireDatabaseModule} from  'angularfire2/database';
 import { CargarDataBaseComponentComponent } from './cargar-data-base-component/cargar-data-base-component.component';
 import { SignInComponentComponent } from './sign-in-component/sign-in-component.component';
+
+import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { SidebarComponent } from './sidebar/sidebar.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +35,8 @@ import { SignInComponentComponent } from './sign-in-component/sign-in-component.
     DiagramEditorComponentComparator,
     DataBaseComponentComponent,
     CargarDataBaseComponentComponent,
-    SignInComponentComponent
+    SignInComponentComponent,
+    SidebarComponent
     
   ],
   imports: [
@@ -52,6 +57,7 @@ import { SignInComponentComponent } from './sign-in-component/sign-in-component.
     Ng2FileInputModule.forRoot(),
     ChartsModule,
     FormsModule,
+    NgbAlertModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule
   ],

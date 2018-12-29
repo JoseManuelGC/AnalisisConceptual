@@ -26,6 +26,8 @@ export class CargarDataBaseComponentComponent implements OnInit {
   public alumno;
   public archivo;
   public maps$: AngularFireList<any>;
+  public alert:Boolean = false;
+  public error: Boolean = false;
   constructor(db: AngularFireDatabase) { 
     this.maps$ = db.list('/mapas');
   }
@@ -42,7 +44,7 @@ export class CargarDataBaseComponentComponent implements OnInit {
         this.archivo = blob;
       });
     } else {
-      alert('Introduce un archivo correcto');
+      this.error = true;
     }
   }
 
@@ -82,8 +84,13 @@ export class CargarDataBaseComponentComponent implements OnInit {
         grafo : this.archivo,
         name : this.nombre
       });
+      this.alert = true;
      } else{
-       alert('Rellene todos los campos del formulario');
+      this.error = true;
      }
+  }
+  closeAlert(){
+    this.alert = false;
+    this.error = false;
   }
 }

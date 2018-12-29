@@ -1,0 +1,28 @@
+<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
+    <div class="list-group">
+           
+        <a class="list-group-item" (click)="isCollapsed()">
+             <i class="fa fa-user" aria-hidden="true"></i>&nbsp;
+            <span>Mapas de Expertos</span>
+        </a>
+       <div *ngIf="isCollapsedProfesor" class="list-group-item">
+           <ul class="submenu row" *ngFor="let p of profesores">
+               <li class="list-group-item" (click)="cargarMapa($event, p)">{{p.name}}</li><i class="fa fa-trash delete" aria-hidden="true" (click)="delete(p)"></i>
+           </ul>
+       </div>
+        <a class="list-group-item" (click)="isCollapsedAlumno()">
+                <i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;
+            <span>Mapas de Alumnos</span>
+        </a>
+        <div *ngIf="isCollapsedAlumnos" class="list-group-item">
+            <ul class="submenu row" *ngFor="let a of alumnos">
+                <li class="list-group-item" (click)="cargarMapa($event, a)">{{a.name}}</li><i class="fa fa-trash delete" aria-hidden="true" (click)="delete(a)"></i>
+            </ul>
+        </div>
+    </div>
+    
+    <!--div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
+        <i class="fa fa-fw fa-angle-double-left"></i>&nbsp;
+        <span>Cerrar Menu</span>
+    </div-->
+</nav>

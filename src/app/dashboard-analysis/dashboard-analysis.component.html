@@ -1,6 +1,9 @@
-<div class="grid-container">
+<app-sidebar (collapsedEvent)="receiveCollapsed($event)" [ngClass]="{'app-sidebar-Menu': visibleSignin, 'app-sidebar-Menu':!signInClave}"
+(onMapa)="cargarMapaAnalisis($event)"
+></app-sidebar>
+<div class="grid-container" [ngClass]="{collapsed: collapedSideBar}">
   <div class="row" [ngClass]="{'noVisibleMenu': visibleSignin}">
-  <button type="input" class="btn btn-success" (click)="visibleMenu()">Menu</button>
+    <button *ngIf="!signInClave" type="input" class="btn btn-success" (click)="IniciarSesion()" style="margin-left: 2%;">Iniciar Sesión</button>
   <button type="input" class="btn btn-success" (click)="visibleCargarMenu()" style="margin-left: 2%;">Cargar Mapa Conceptual en la Base de Datos</button>
   <h1 class="mat-h1">Análisis de Mapas Conceptuales</h1>
 <img src="assets/logoUCLM.png" alt="image" style="width: 60px;
@@ -232,13 +235,12 @@ margin-top: -1%;
     [expand]="true">
    </app-diagram-alumno>
   </div>
-  <app-data-base-component *ngIf="visibleMenuComponent" [@enterAnimation]
-  (onMapaExperto)="asignarMapaDataBaseExperto($event)"
-  (onMapaAlumno)="asignarMapaDataBaseAlumno($event)"
-  ></app-data-base-component>
 <app-cargar-data-base-component *ngIf="visibleCargarComponent" [@enterAnimation]>
 </app-cargar-data-base-component>
-<app-sign-in-component *ngIf="visibleSignin" 
+<app-sign-in-component class="row" *ngIf="visibleSignin" 
 (onSigin)="signIn($event)"
 ></app-sign-in-component>
+
+<ngb-alert *ngIf="alert" class="alertSing" type=success (close)="closeAlert()">Inicio de sesión correctamente.</ngb-alert>
+<ngb-alert *ngIf="error" class="alertSing" type=danger (close)="closeAlert()">Error en el inicio de sesión.</ngb-alert>
 </div>

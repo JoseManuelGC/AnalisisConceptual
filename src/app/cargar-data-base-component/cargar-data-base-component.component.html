@@ -12,4 +12,6 @@
             <label><input type="checkbox" (click)="isAlumno($event)">  ¿Es Tipo Alumno?</label>
           </div>
           <button class="btn btn-default form-group" (click)="add()">Enviar</button>
+          <ngb-alert *ngIf="alert" class="alertSing" type=success (close)="closeAlert()">Grafo cargado correctamente.</ngb-alert>
+          <ngb-alert *ngIf="error" class="alertSing" type=danger (close)="closeAlert()">No se ha podido cargar el grafo, inténtelo más tarde.</ngb-alert>
 </div>
