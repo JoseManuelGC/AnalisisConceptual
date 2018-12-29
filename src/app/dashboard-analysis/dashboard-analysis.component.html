@@ -1,4 +1,4 @@
-<app-sidebar (collapsedEvent)="receiveCollapsed($event)" [ngClass]="{'app-sidebar-Menu': visibleSignin, 'app-sidebar-Menu':!signInClave}"
+<app-sidebar (collapsedEvent)="receiveCollapsed($event)" [ngClass]="{'app-sidebar-Menu': visibleSignin || !signInClave}"
 (onMapa)="cargarMapaAnalisis($event)"
 ></app-sidebar>
 <div class="grid-container" [ngClass]="{collapsed: collapedSideBar}">
