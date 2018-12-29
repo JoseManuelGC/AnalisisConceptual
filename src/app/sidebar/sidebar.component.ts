@@ -16,12 +16,13 @@ export class SidebarComponent implements OnInit {
     public alumnos = [];
     @Output() collapsedEvent = new EventEmitter<boolean>();
 
-
+    public resultados;
     public maps$;
     constructor(db: AngularFireDatabase) { 
         const self = this;
         this.maps$ = db.list('/mapas');
         db.list('/mapas').valueChanges().subscribe(res => {
+            self.resultados = res;
             self.alumnos = [];
             self.profesores = [];
           _.forEach(res, r => {
@@ -54,6 +55,6 @@ export class SidebarComponent implements OnInit {
     }
     delete(mapa){
         debugger;
-        this.maps$.object('/mapas/' + mapa).remove();
+        this.maps$.remove(mapa.name);
     }
 }

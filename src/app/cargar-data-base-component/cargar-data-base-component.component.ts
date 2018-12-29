@@ -79,7 +79,7 @@ export class CargarDataBaseComponentComponent implements OnInit {
   }
   add(){
      if(this.nombre && this.archivo){
-      this.maps$.push({
+      this.maps$.update(this.nombre, {
         alumno : this.alumno ? this.alumno : false,
         grafo : this.archivo,
         name : this.nombre
