@@ -54,13 +54,15 @@ export class DashboardAnalysisComponent implements OnInit  {
     {def: '# Nodos Globales', valor_pro: 0, valor_alu: 0},
     {def: '# Enlaces Globales', valor_pro: 0, valor_alu: 0},
     {def: 'Densidad', valor_pro: 0, valor_alu: 0},
-    {def: 'Diámetro', valor_pro: 0, valor_alu: 0},
     {def: 'Nodo Principal', valor_pro: 0, valor_alu: 0},
-    {def: 'Grado de Enl. Nod. Pric.', valor_pro: 0, valor_alu: 0},
+    {def: 'Grado Centralidad N. Pri.', valor_pro: 0, valor_alu: 0},
+    {def: 'Grado medio de la Red', valor_pro: 0, valor_alu: 0},
+    {def: '# Nodos sueltos', valor_pro: 0, valor_alu: 0},
+    {def: 'Red dispersa', valor_pro: 'No', valor_alu: 'No'},
     {def: '# Nodos Comunes', valor_pro: '', valor_alu: 0},
     {def: '# Nodos No Comunes', valor_pro: '', valor_alu: 0},
     {def: '# Enlaces Comunes', valor_pro: '', valor_alu: 0},
-    {def: '# Enlaces No Comunes', valor_pro: '', valor_alu: 0}
+    {def: '# Enlaces No Comunes', valor_pro: '', valor_alu: 0},
   ];
   displayedColumns: string[] = ['def', 'valor_pro', 'valor_alu'];
   dataSource = this.ELEMENT_DATA;
@@ -478,6 +480,8 @@ public barChartData:any[] = [
       this.densidad();
       this.diametro();
       this.nodoPrincipal();
+      this.gradoMedioRed();
+      this.nodosSueltos();
       this.n_nodosComunes();
       this.n_nodosNoComunes();
       this.graphComparador();
@@ -513,8 +517,6 @@ public barChartData:any[] = [
   }
   diametro(){
     // Recorre todas las conexiones para ver como de alejados estan dos nodos
-    this.ELEMENT_DATA.find(t => t.def === 'Diámetro').valor_pro = 'NTS';
-    this.ELEMENT_DATA.find(t => t.def === 'Diámetro').valor_alu = 'NTS';
   }
   nodoPrincipal(){
   const countFrom: any = _.groupBy(this.model.linkDataArray, 'from');
@@ -534,7 +536,7 @@ public barChartData:any[] = [
    }
  });
   this.ELEMENT_DATA.find(t => t.def === 'Nodo Principal').valor_pro = textModel;
-  this.ELEMENT_DATA.find(t => t.def === 'Grado de Enl. Nod. Pric.').valor_pro = count;
+  this.ELEMENT_DATA.find(t => t.def === 'Grado Centralidad N. Pri.').valor_pro = count;
 
   const countFromAlum: any = _.groupBy(this.model3.linkDataArray, 'from');
   const modelNodeAlum: any = this.model3.nodeDataArray;
@@ -553,7 +555,45 @@ public barChartData:any[] = [
    }
  });
   this.ELEMENT_DATA.find(t => t.def === 'Nodo Principal').valor_alu = textModelAlum;
-  this.ELEMENT_DATA.find(t => t.def === 'Grado de Enl. Nod. Pric.').valor_alu = countAlum;
+  this.ELEMENT_DATA.find(t => t.def === 'Grado Centralidad N. Pri.').valor_alu = countAlum;
+  }
+  gradoMedioRed(){
+    const valorPro = (2 * this.model.linkDataArray.length) / this.model.nodeDataArray.length; 
+    const valorAlu = (2 * this.model3.linkDataArray.length) / this.model3.nodeDataArray.length; 
+    this.ELEMENT_DATA.find(t => t.def === 'Grado medio de la Red').valor_pro = valorPro;
+    this.ELEMENT_DATA.find(t => t.def === 'Grado medio de la Red').valor_alu = valorAlu;
+  }
+  nodosSueltos(){
+    const sueltoPro: Boolean = true;
+    const link: any = this.model.linkDataArray;
+    let sumaSueltoPro = 0;
+    for(let i=0; i< this.model.nodeDataArray.length; i++){
+      const nodo:any = this.model.nodeDataArray[i];
+      const key = nodo.key;
+     if(!link.find(t => t.to === key || t.from === key)){
+       sumaSueltoPro +=1;
+     }
+    }
+    this.ELEMENT_DATA.find(t => t.def === '# Nodos sueltos').valor_pro = sumaSueltoPro;
+
+    if (sumaSueltoPro > 0){
+    this.ELEMENT_DATA.find(t => t.def === 'Red dispersa').valor_pro = 'Si';
+    }
+
+    const sueltoAlu: Boolean = true;
+    const linkAlu: any = this.model3.linkDataArray;
+    let sumaSueltoAlu = 0;
+    for(let i=0; i< this.model3.nodeDataArray.length; i++){
+      const nodo:any = this.model3.nodeDataArray[i];
+      const key = nodo.key;
+     if(!linkAlu.find(t => t.to === key || t.from === key)){
+       sumaSueltoAlu +=1;
+     }
+    }
+    this.ELEMENT_DATA.find(t => t.def === '# Nodos sueltos').valor_alu = sumaSueltoAlu;
+    if (sumaSueltoAlu > 0){
+      this.ELEMENT_DATA.find(t => t.def === 'Red dispersa').valor_alu = 'Si';
+      }
   }
   n_nodosComunes(){
 
@@ -675,7 +715,7 @@ public barChartData:any[] = [
     doc.setFontSize(15);
     doc.addImage(imgUCLM, 'PNG', 10, 10);
     doc.addImage(imgESI, 'PNG', 150, 10);
-    doc.text('Análisis de Métricas Y Grafo comparador', 60,20);
+    doc.text('Análisis de Métricas Y Grafo comparador', 40,20);
     doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
     doc.text('Tabla comparativa de métricas',10,50);
     doc.text('-----------------------------------------',10,55);
@@ -691,8 +731,8 @@ public barChartData:any[] = [
     });
 
     doc.setFontSize(15);
-    doc.text('Grafo comparativo',10,135);
-    doc.text('--------------------------',10,140);
+    doc.text('Grafo comparativo',10,140);
+    doc.text('--------------------------',10,145);
 
     doc.addImage(imageDiagramComparador, 'image', 10, 150);
     if ( this.ELEMENT_DATA.find(t => t.def === '# Enlaces No Comunes').valor_alu > 0){
