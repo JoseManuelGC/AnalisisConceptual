@@ -24,6 +24,7 @@ import { SignInComponentComponent } from './sign-in-component/sign-in-component.
 
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { TableListadoComponent } from './dashboard-analysis/table-listado/table-listado.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     DataBaseComponentComponent,
     CargarDataBaseComponentComponent,
     SignInComponentComponent,
-    SidebarComponent
+    SidebarComponent,
+    TableListadoComponent
     
   ],
   imports: [

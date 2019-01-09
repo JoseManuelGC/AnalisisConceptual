@@ -15,3 +15,12 @@
     margin-top: 5%;
 
 }
+.icon_close{
+    margin-left: 28%;
+    margin-top: 3%;
+    font-size: 20px;
+    cursor: pointer;
+}
+.close_header{
+    display: flex;
+}

@@ -1,5 +1,9 @@
 <div class="diagramsPanel" #content>
     <div #diagramDiv [ngClass]="{'diagramDiv': !expand, 'diagramDiv_Expand': expand}" style="pointer-events: none;"></div>
   </div>
+  <div *ngIf="expand" class="border_leyenda">
+    <div class="line_red"></div><span class="span_leyenda">Enlace no común</span>
+    <div class="line_blue"></div><span class="span_leyenda">Enlace común</span>
+  </div>
   
                   

@@ -1,0 +1,27 @@
+<div class="listado">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+  
+    <!-- Definición de la Métrica -->
+    <ng-container matColumnDef="text">
+      <th mat-header-cell *matHeaderCellDef > Descripción del Nodo </th>
+      <td mat-cell *matCellDef="let element" [ngClass]="{'comun': element.comun === 'Si', 'noComun': element.comun === 'No'}"> {{element.text}} </td>
+    </ng-container>
+  
+    <!-- Valor del Profesor -->
+    <ng-container matColumnDef="key">
+      <th mat-header-cell *matHeaderCellDef> Clave interna del Nodo</th>
+      <td mat-cell *matCellDef="let element" [ngClass]="{'comun': element.comun === 'Si', 'noComun': element.comun === 'No'}"> {{element.key}} </td>
+    </ng-container>
+    <!-- Valor del Alumno -->
+    <ng-container matColumnDef="comun">
+      <th mat-header-cell *matHeaderCellDef> Nodo Común </th>
+      <td mat-cell *matCellDef="let element" [ngClass]="{'comun': element.comun === 'Si', 'noComun': element.comun === 'No'}"> {{element.comun}} </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

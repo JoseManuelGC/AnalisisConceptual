@@ -1,0 +1,10 @@
+.listado{
+    display: grid;
+    margin-top: 1%;
+}
+.comun{
+    background-color: lightgreen;
+}
+.noComun{
+    background-color: red;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { trigger, transition, style, animate } from '@angular/animations';
 @Component({
@@ -28,6 +28,7 @@ export class CargarDataBaseComponentComponent implements OnInit {
   public maps$: AngularFireList<any>;
   public alert:Boolean = false;
   public error: Boolean = false;
+  @Output() onCloseLoad = new EventEmitter<any>();
   constructor(db: AngularFireDatabase) { 
     this.maps$ = db.list('/mapas');
   }
@@ -92,5 +93,8 @@ export class CargarDataBaseComponentComponent implements OnInit {
   closeAlert(){
     this.alert = false;
     this.error = false;
+  }
+  close($event){
+    this.onCloseLoad.emit();
   }
 }

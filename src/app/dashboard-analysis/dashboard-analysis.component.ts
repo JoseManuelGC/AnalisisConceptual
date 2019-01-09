@@ -43,6 +43,7 @@ export class DashboardAnalysisComponent implements OnInit  {
   public comparador: Boolean = false;
   public editorprofesor: Boolean = false;
   public editorAlumno: Boolean = false;
+  public tablaListado: Boolean = false;
   public visibleCargarComponent: Boolean = false;
   imageShown: boolean;
   public nombreArchivoProfesor;
@@ -615,23 +616,47 @@ public barChartData:any[] = [
     linkAlumno = this.model3.linkDataArray;
     const self = this;
     let listNod: any = [];
-
+    let listNodeFinally: any = [];
     
     _.forEach(valueProfesor, nod => {
+      const node = {text: nod.text, key: nod.key, comun: 'No'};
       nod.color = 'lightgreen';
-      listNod.push(nod.text);
+      listNod.push(node);
       valueComparador.push(nod);
+      listNodeFinally.push(node);
       
     });
+
+    _.forEach(valueAlumno, nod => {
+      if (!listNod.find( obj => obj.text === nod.text)){
+        const node = {text: nod.text, key: nod.key, comun: 'No'};
+        valueComparador.push(nod);
+        listNodeFinally.push(node);
+      } else {
+        if (!listNodeFinally.find( obj => obj.text === nod.text)){
+          const node = {text: nod.text, key: nod.key, comun: 'Si'};
+          listNodeFinally.push(node);
+        } else {
+          const n = listNodeFinally.find( obj => obj.text === nod.text);
+          n.comun = 'Si';
+        }
+      }
+    })
     _.forEach(linkAlumno, c =>{
       if(linkProfesor.find(obj => obj.from === c.from && obj.to === c.to)){
-        c.color="ligthgreen";
+        c.color="blue";
         linkComparador.push(c);
       } 
     });
     this.ELEMENT_DATA.find(t => t.def === '# Enlaces Comunes').valor_alu = linkComparador.length;
     _.forEach(linkProfesor, c =>{
       if(!linkComparador.find(obj => obj.from === c.from && obj.to === c.to)){
+        c.color="red";
+        linkComparador.push(c);
+      }
+    });
+    _.forEach(linkAlumno, c => {
+       if(!linkComparador.find(obj => (obj.from === c.from && obj.to === c.to) || (obj.from === c.to && obj.to === c.from))){
         c.color="red";
         linkComparador.push(c);
       }
@@ -647,7 +672,7 @@ public barChartData:any[] = [
       ]);
         this.modelComparador.nodeDataArray = valueComparador;
         this.modelComparador.linkDataArray = linkComparador;
-      this.listaNodos = listNod;
+      this.listaNodos = listNodeFinally;
       
   }
   expandGraph($event){
@@ -656,6 +681,7 @@ public barChartData:any[] = [
       this.comparador = true;
       this.editorAlumno = false;
       this.editorprofesor = false;
+      this.tablaListado = false;
     } else {
       alert('Introduce los grafos para comparar.')
     }
@@ -667,6 +693,7 @@ public barChartData:any[] = [
       this.editorAlumno = true;
       this.editorprofesor = false;
       this.comparador = false;
+      this.tablaListado = false;
     } else {
       alert('Introduce los grafos para comparar.')
     }
@@ -678,6 +705,7 @@ public barChartData:any[] = [
       this.editorprofesor = true;
       this.editorAlumno = false;
       this.comparador = false;
+      this.tablaListado = false;
     } else {
       alert('Introduce los grafos para comparar.')
     }
@@ -688,6 +716,7 @@ public barChartData:any[] = [
     this.comparador = false;
     this.editorAlumno = false;
     this.editorprofesor = false;
+    this.tablaListado = false;
   }
   downloadPDF(){
     const imageDiagramComparador = this.diagramModelComparador.imageDiagram();
@@ -804,4 +833,14 @@ public barChartData:any[] = [
       this.updateMetrica($event);
     }
   } 
+  closeLoad($event){
+    this.visibleCargarComponent = false;
+  }
+  viewTableListado($event){
+    this.img_comparar = true;
+    this.comparador = false;
+    this.editorAlumno = false;
+    this.editorprofesor = false;
+    this.tablaListado = true;
+  }
  }

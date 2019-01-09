@@ -1,7 +1,7 @@
 <app-sidebar (collapsedEvent)="receiveCollapsed($event)" [ngClass]="{'app-sidebar-Menu': visibleSignin || !signInClave}"
 (onMapa)="cargarMapaAnalisis($event)"
 ></app-sidebar>
-<div class="grid-container" [ngClass]="{collapsed: collapedSideBar}">
+<div class="grid-container" [ngClass]="{'collapsed': collapedSideBar}">
   <div class="row" [ngClass]="{'noVisibleMenu': visibleSignin}">
     <button *ngIf="!signInClave" type="input" class="btn btn-success" (click)="IniciarSesion()" style="margin-left: 2%;">Iniciar Sesión</button>
   <button type="input" class="btn btn-success" (click)="visibleCargarMenu()" style="margin-left: 2%;">Cargar Mapa Conceptual en la Base de Datos</button>
@@ -147,15 +147,16 @@ margin-top: -1%;
                           [model]="modelComparador"
                           [expand]="false">
                          </app-diagram-editor-comparator>
-                   <button *ngIf="buttonGrafo" class="btn btn-info" (click)="expandGraph($event)" style="margin-top: 6px;">Expandir Grafo</button>
-                   <button *ngIf="buttonGrafo" class ="btn btn-success" (click)="downloadPDF()" style="margin-top: 6px;margin-left: 41px;">Descargar PDF</button>    
-                   <!--div style="display: inline-table; margin-top: 30px;">
-                         <div *ngFor="let l of listaNodos" class="listaNodos" >
-                            <p class= "Nodo">{{l}}</p>
-                         </div>
-                        </div-->
+                   <button *ngIf="buttonGrafo" class="btn btn-info" (click)="expandGraph($event)" style="margin-top: 6px;">Expandir Grafo</button> 
+                   <button *ngIf="buttonGrafo" class="btn btn-info" (click)="viewTableListado($event)" style="margin-top: 6px; margin-left: 41px;">Listado de Nodos</button> 
+                   <button *ngIf="buttonGrafo" class ="btn btn-success" (click)="downloadPDF()" style="margin-top: 6px;margin-left: 41px;">Descargar PDF</button>  
+                  
                         </div>
-
+                        <!--div style="display: inline-table; margin-top: 30px;">
+                            <div *ngFor="let l of listaNodos"  >
+                               <p class= "Nodo">{{l.text}}</p>  <p class= "Nodo">{{l.comun}}</p>
+                            </div>
+                           </div-->
                           </mat-card-content>
                       </mat-card>
                     </mat-grid-tile>
@@ -234,8 +235,10 @@ margin-top: -1%;
     (modelChanged)="onModelChanged($event)"
     [expand]="true">
    </app-diagram-alumno>
+   <app-table-listado *ngIf="tablaListado"
+   [modelTable]="listaNodos"></app-table-listado>
   </div>
-<app-cargar-data-base-component *ngIf="visibleCargarComponent" [@enterAnimation]>
+<app-cargar-data-base-component *ngIf="visibleCargarComponent" [@enterAnimation] (onCloseLoad)="closeLoad($event)">
 </app-cargar-data-base-component>
 <app-sign-in-component class="row" *ngIf="visibleSignin" 
 (onSigin)="signIn($event)"

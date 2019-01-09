@@ -16,3 +16,26 @@
     width: 80%;
     height: calc(100vh - 191px);
   }
+  .border_leyenda{
+    border: 1px solid black;
+    height: 40px;
+    width: 25%;
+    display: inline-block;
+  }
+  .line_red{
+    border: 1px solid red;
+    margin-top: 4%;
+    width: 5%;
+    display: inline-block;
+  }
+  .line_blue{
+    border: 2px solid blue;
+    margin-top: 4%;
+    margin-left: 4%;
+    width: 5%;
+    display: inline-block;
+  }
+  .span_leyenda{
+    width: 95%;
+    margin-left: 2%;
+  }
