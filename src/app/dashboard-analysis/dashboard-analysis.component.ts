@@ -766,14 +766,69 @@ public barChartData:any[] = [
     doc.addImage(imageDiagramComparador, 'image', 10, 150);
     if ( this.ELEMENT_DATA.find(t => t.def === '# Enlaces No Comunes').valor_alu > 0){
       doc.setDrawColor(255, 0, 0);
-      doc.line(200,269,186,269)
+      doc.line(100,269,60,269)
       doc.setFontSize(10);
-      doc.text('Enlace no común con el grafo experto', 120, 270);
+      doc.text('Enlace no común.', 10, 270);
+    }
+    if ( this.ELEMENT_DATA.find(t => t.def === '# Enlaces Comunes').valor_alu > 0){
+      doc.setDrawColor(9, 92, 238);
+      doc.line(100,274,60,274)
+      doc.setFontSize(10);
+      doc.text('Enlace común.', 10, 275);
     }
     
     doc.setFontSize(10);
     doc.setFontType("italic");
     doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
+    doc.setFontType("normal");
+    // Segunda Pagina
+     doc.addPage();
+     doc.setFontSize(15);
+     doc.addImage(imgUCLM, 'PNG', 10, 10);
+     doc.addImage(imgESI, 'PNG', 150, 10);
+     doc.text('Análisis de Métricas Y Grafo comparador', 40,20);
+     doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
+     doc.text('Tabla Listado de Nodos Comunes y No Comunes',10,50);
+     doc.text('-------------------------------------------------------------------',10,55);
+ 
+     doc.setFontSize(11);
+     doc.text('Descripción del Nodo                                  Clave interna del Nodo                      Nodo común', 10,65);
+     let numFila_1 = 75;
+     _.forEach(this.listaNodos, element => {
+       doc.text('' + element.text + ' ' ,10, numFila_1);
+       doc.text('                                                           ' + element.key, 30, numFila_1);
+       doc.text('                                                                                     ' + element.comun, 60, numFila_1);
+       numFila_1 += 5;
+       if(numFila_1 > 270){
+          numFila_1 = 75
+          doc.setFontSize(10);
+          doc.setFontType("italic");
+          doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
+          doc.setFontType("normal");
+          doc.addPage();
+          doc.setFontSize(15);
+          doc.addImage(imgUCLM, 'PNG', 10, 10);
+          doc.addImage(imgESI, 'PNG', 150, 10);
+          doc.text('Análisis de Métricas Y Grafo comparador', 40,20);
+          doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
+          doc.text('Tabla Listado de Nodos Comunes y No Comunes',10,50);
+          doc.text('-------------------------------------------------------------------',10,55);
+      
+          doc.setFontSize(11);
+          doc.text('Descripción del Nodo                                  Clave interna del Nodo                      Nodo común', 10,65);     
+          doc.setFontSize(10);
+          doc.setFontType("italic");
+          doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
+          doc.setFontType("normal");
+        }
+     });
+
+     doc.setFontSize(10);
+     doc.setFontType("italic");
+     doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
+     doc.setFontType("normal");
+
+
     doc.save('Métricas-' +this.nombreArchivoProfesor + '-' +this.nombreArchivoAlumno +'.pdf');
   }
   visibleMenu(){

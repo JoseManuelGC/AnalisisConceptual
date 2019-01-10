@@ -1,23 +1,29 @@
 <app-sidebar (collapsedEvent)="receiveCollapsed($event)" [ngClass]="{'app-sidebar-Menu': visibleSignin || !signInClave}"
 (onMapa)="cargarMapaAnalisis($event)"
 ></app-sidebar>
-<div class="grid-container" [ngClass]="{'collapsed': collapedSideBar}">
-  <div class="row" [ngClass]="{'noVisibleMenu': visibleSignin}">
-    <button *ngIf="!signInClave" type="input" class="btn btn-success" (click)="IniciarSesion()" style="margin-left: 2%;">Iniciar Sesión</button>
-  <button type="input" class="btn btn-success" (click)="visibleCargarMenu()" style="margin-left: 2%;">Cargar Mapa Conceptual en la Base de Datos</button>
-  <h1 class="mat-h1">Análisis de Mapas Conceptuales</h1>
+<div class="row header_title" [ngClass]="{'noVisibleMenu': visibleSignin}">
 <img src="assets/logoUCLM.png" alt="image" style="width: 60px;
 height: 60px;
 float: right;
-margin-top: -1%;
+margin-top: 0.5%;
 margin-left: 1%;
 " id="imgUCLM">
 <img src="assets/logoEsi.jpg" alt="image" style="width: 200px;
 height: 60px;
 float: right;
-margin-top: -1%;
+margin-top: 0.5%;
+margin-left: 1%;
 " id="imgESI">
+
+<h1 class="mat-h1">ANALIZADOR DE MAPAS CONCEPTUALES</h1>
 </div>
+<div class="grid-container" [ngClass]="{'collapsed': collapedSideBar}">
+    <div class="row menu" [ngClass]="{'noVisibleMenu': visibleSignin}">
+       
+        <button *ngIf="!signInClave" class="button_menu" type="input" (click)="IniciarSesion()" style="margin-left: 2%;"> <i class="fa fa-sign-in"></i> Iniciar Sesión</button>
+      <button type="input" class="button_menu" (click)="visibleCargarMenu()" style="margin-left: 2%;"><i class="fa fa-cloud-upload"></i> Cargar Mapa Conceptual en la Base de Datos</button>
+      <button type="input" class="button_menu" style="margin-left: 2%;"><a href="http://diseniador.josemanuelgcgn.com/" target="_blank" style="color: white;"><i class="fa fa-external-link-square"></i> Ir al Diseñador</a></button>
+      </div>
   <mat-grid-list *ngIf="!img_comparar" [ngClass]="{'noVisibleMenu': visibleMenuComponent || visibleCargarComponent || visibleSignin}" cols="12" rowHeight="350px">
     <mat-grid-tile *ngFor="let card of cardsDashboard" [colspan]="card.cols" [rowspan]="card.rows">
       <mat-card *ngIf="card.title === 'Modelo Profesor'" class="dashboard-card">
@@ -37,11 +43,10 @@ margin-top: -1%;
           <!--ng2-file-input class="input" (onAction)="onAction($event)" ></ng2-file-input-->
           <div class="row">
       <div class="col-md-2 col-lg-3">
-      <input type="file" accept=".json" class="btn btn-info import" id="img_2" name="img_2" (change)="importGraph($event)">
+      <input type="file" accept=".json" class="btn import" id="img_2" name="img_2" (change)="importGraph($event)">
     </div>
   </div>
-          <button class="btn btn-success"><a href="http://diseniador.josemanuelgcgn.com/" target="_blank" style="color:white;">Ir al Diseñador</a></button>
-          <div>
+    <div>
     <app-diagram-editor
      [model]="model"
      (nodeSelected)="showDetails($event)"
@@ -190,10 +195,8 @@ margin-top: -1%;
               <button type="submit" class="btn btn-primary">Subir Archivo</button>
             </form-->
             <div class="col-md-2 col-lg-3">
-              <input type="file" accept=".json" class="btn btn-info import" id="img" name="img" (change)="addActivity($event)">
+              <input type="file" accept=".json" class="btn import" id="img" name="img" (change)="addActivity($event)">
             </div>
-            <button class="btn btn-success"><a href="http://diseniador.josemanuelgcgn.com/" target="_blank"  style="color:white;">Ir al Diseñador</a></button>
-         
           <div>
                 <app-diagram-alumno
                  [model]="model3"
@@ -217,7 +220,7 @@ margin-top: -1%;
           </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
-  <div *ngIf ="img_comparar" class="img_comparador">
+  <div *ngIf ="img_comparar" class="img_comparador" style="margin-top: 2%;">
     <button class="btn btn-primary" (click)="changeVolver($event)">Volver a la ventana Principal</button>
     <app-diagram-editor-comparator *ngIf="comparador"
     [model]="modelComparador"

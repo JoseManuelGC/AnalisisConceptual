@@ -95,10 +95,20 @@ export class DiagramEditorAlumnoComponent implements OnInit {
     // this.palette.div = this.paletteRef.nativeElement;
   }
   imageDiagram(){
-    return this.diagram.makeImage(
-      {
-        size: new go.Size(700,1400)
-      }
-    );
+    let diagram:any;
+    if (this.diagram.model.nodeDataArray.length > 2) {
+      diagram = this.diagram.makeImage(
+        {
+          size: new go.Size(700,1400)
+        }
+      );
+    } else {
+      diagram = this.diagram.makeImage(
+        {
+          size: new go.Size(300,600)
+        }
+      );
+    }
+    return diagram;
   }
 }

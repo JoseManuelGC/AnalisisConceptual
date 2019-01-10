@@ -8,6 +8,7 @@
     overflow-y: scroll;
     position: relative;
     overflow: hidden;
+    top: 101px;
 }
 
 .dashboard-card {
@@ -41,7 +42,7 @@ h1 {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 250%;
   margin-top: 0%;
-  margin-left: 1%;
+  margin-left: 12%;
 }
 
 .grafico{
@@ -85,4 +86,32 @@ table.mat-table {
   overflow: auto;
   display: block;
   max-height: 545px;
+}
+.header_title{
+  height: 82px;
+  background-color: #e8e8ef;
+  z-index: 3;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  margin-left: 0px;
+}
+.mat-h1{
+  text-align: center;
+  margin-top: 1%;
+}
+.menu{
+  margin-top: -1%;
+  background-color: #6d6d6f;
+  height: 47px;
+  z-index: 3;
+  position: fixed;
+  top: 101px;
+  width: 100%;
+
+}
+.button_menu{
+  cursor: pointer;
+  background-color: #6d6d6f;
+  color: white;
 }

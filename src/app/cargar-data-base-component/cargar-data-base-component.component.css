@@ -1,11 +1,11 @@
 .database{
     position: absolute;
-    top: 0px;
+    top: -23px;
     width: 865px;
-    left: 0px;
-    background-color: #c4efff;
+    left: 0px;  
+    background-color: #e6e6e6;
     z-index: 2;
-    margin-top: 4%;
+    margin-top: 2.7%;
     height: 92%;
     overflow: auto;
 }

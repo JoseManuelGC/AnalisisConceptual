@@ -8,13 +8,14 @@
             <input type="NameGraph" class="form-control" id="NameGraph" #box (keyup)="nameGraph(box.value)">
           </div>
           <div class="form-group">
-              <input type="file" accept=".json" class="btn btn-success import" id="img_3" name="img_3" (change)="importGraph($event)">
+              <input type="file" accept=".json" class="btn import" id="img_3" name="img_3" (change)="importGraph($event)">
     
           </div>
           <div class="checkbox form-group">
             <label><input type="checkbox" (click)="isAlumno($event)">  ¿Es Tipo Alumno?</label>
           </div>
-          <button class="btn btn-default form-group" (click)="add()">Enviar</button>
+          <button class="btn btn-default form-group" (click)="add()"> 
+              <i class="fa fa-cloud-upload"></i> Enviar</button>
           <ngb-alert *ngIf="alert" class="alertSing" type=success (close)="closeAlert()">Grafo cargado correctamente.</ngb-alert>
           <ngb-alert *ngIf="error" class="alertSing" type=danger (close)="closeAlert()">No se ha podido cargar el grafo, inténtelo más tarde.</ngb-alert>
 </div>
