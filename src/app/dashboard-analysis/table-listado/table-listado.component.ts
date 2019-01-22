@@ -7,10 +7,12 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class TableListadoComponent implements OnInit {
 
-  displayedColumns: string[] = ['text', 'key', 'comun'];
+  displayedColumnsNodos: string[] = ['text', 'comun'];
+  displayedColumnsEnlaces: string[] = ['from', 'dir', 'to', 'comun'];
   dataSource = [];
   
   @Input() public modelTable: any;
+  @Input() public nodos: Boolean;
   constructor() { }
 
   ngOnInit() {

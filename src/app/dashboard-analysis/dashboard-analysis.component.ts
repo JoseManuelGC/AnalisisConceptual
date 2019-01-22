@@ -44,6 +44,7 @@ export class DashboardAnalysisComponent implements OnInit  {
   public editorprofesor: Boolean = false;
   public editorAlumno: Boolean = false;
   public tablaListado: Boolean = false;
+  public tablaListadoEnlaces: Boolean = false;
   public visibleCargarComponent: Boolean = false;
   imageShown: boolean;
   public nombreArchivoProfesor;
@@ -90,6 +91,7 @@ public barChartType:string = 'bar';
 public barChartLegend:boolean = true;
 public alert:Boolean = false;
 public error:Boolean = false;
+public listEnlaces: any = [];
 // public model3:any = new go.GraphLinksModel();
 public barChartData:any[] = [
   {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
@@ -484,8 +486,8 @@ public barChartData:any[] = [
       this.gradoMedioRed();
       this.nodosSueltos();
       this.n_nodosComunes();
-      this.n_nodosNoComunes();
       this.graphComparador();
+      this.n_nodosNoComunes();
       this.buttonGrafo = true;
     } else {
       alert('Introduce los grafos para comparar.')
@@ -600,9 +602,6 @@ public barChartData:any[] = [
 
     this.ELEMENT_DATA.find(t => t.def === '# Nodos Comunes').valor_alu = this.model.nodeDataArray.length;
   }
-  n_nodosNoComunes(){
-    this.ELEMENT_DATA.find(t => t.def === '# Nodos No Comunes').valor_alu = 0;
-  }
   graphComparador(){
     let valueComparador: any = [];
     let linkComparador: any = [];
@@ -672,8 +671,30 @@ public barChartData:any[] = [
       ]);
         this.modelComparador.nodeDataArray = valueComparador;
         this.modelComparador.linkDataArray = linkComparador;
+      this.listaEnlaces(linkComparador, valueComparador);
       this.listaNodos = listNodeFinally;
       
+  }
+  listaEnlaces(links, nodos){
+    const list: any = [];
+    _.forEach(links, l => {
+      const from = nodos.find(t => t.key === l.from);
+      const to = nodos.find(t =>  t.key === l.to);
+      if (from && to){
+        const value = {from : from.text, dir: '------------------>', to: to.text, comun: l.color === 'red' ? 'No' : 'Si'};
+        list.push(value);
+      }
+    });
+    this.listEnlaces = list;
+  }
+  n_nodosNoComunes(){
+    let nodos_noComunes = 0;
+    _.forEach(this.listaNodos, elem =>{
+      if (elem.comun === 'No'){
+        nodos_noComunes  = nodos_noComunes + 1;
+      }
+    })
+    this.ELEMENT_DATA.find(t => t.def === '# Nodos No Comunes').valor_alu = nodos_noComunes;
   }
   expandGraph($event){
     if (this.model.nodeDataArray.length > 0 && this.model3.nodeDataArray.length > 0) {
@@ -682,6 +703,7 @@ public barChartData:any[] = [
       this.editorAlumno = false;
       this.editorprofesor = false;
       this.tablaListado = false;
+      this.tablaListadoEnlaces = false;
     } else {
       alert('Introduce los grafos para comparar.')
     }
@@ -694,6 +716,7 @@ public barChartData:any[] = [
       this.editorprofesor = false;
       this.comparador = false;
       this.tablaListado = false;
+      this.tablaListadoEnlaces = false;
     } else {
       alert('Introduce los grafos para comparar.')
     }
@@ -706,6 +729,7 @@ public barChartData:any[] = [
       this.editorAlumno = false;
       this.comparador = false;
       this.tablaListado = false;
+      this.tablaListadoEnlaces = false;
     } else {
       alert('Introduce los grafos para comparar.')
     }
@@ -717,6 +741,7 @@ public barChartData:any[] = [
     this.editorAlumno = false;
     this.editorprofesor = false;
     this.tablaListado = false;
+    this.tablaListadoEnlaces = false;
   }
   downloadPDF(){
     const imageDiagramComparador = this.diagramModelComparador.imageDiagram();
@@ -731,9 +756,9 @@ public barChartData:any[] = [
     doc.text('Análisis de Mapas Conceptuales', 37,20);
     doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
     doc.text('Grafo 1 ---> ' + this.nombreArchivoProfesor,30, 50);
-    doc.addImage(imageDiagramProfesor, 'image', 10, 60);
-    doc.text('Grafo 2 ---> ' + this.nombreArchivoAlumno,30, 180);
-    doc.addImage(imageDiagramAlumno, 'image', 10, 190);
+    doc.addImage(imageDiagramProfesor, 'image', 10, 60, 190,150);
+    doc.text('Grafo 2 ---> ' + this.nombreArchivoAlumno,30, 180,);
+    doc.addImage(imageDiagramAlumno, 'image', 10, 190, 190,150);
     doc.setFontSize(10);
     doc.setFontType("italic");
     doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
@@ -763,7 +788,7 @@ public barChartData:any[] = [
     doc.text('Grafo comparativo',10,140);
     doc.text('--------------------------',10,145);
 
-    doc.addImage(imageDiagramComparador, 'image', 10, 150);
+    doc.addImage(imageDiagramComparador, 'image', 10, 150, 190, 150);
     if ( this.ELEMENT_DATA.find(t => t.def === '# Enlaces No Comunes').valor_alu > 0){
       doc.setDrawColor(255, 0, 0);
       doc.line(100,269,60,269)
@@ -792,12 +817,11 @@ public barChartData:any[] = [
      doc.text('-------------------------------------------------------------------',10,55);
  
      doc.setFontSize(11);
-     doc.text('Descripción del Nodo                                  Clave interna del Nodo                      Nodo común', 10,65);
+     doc.text('Descripción del Nodo                                                                                Nodo común', 10,65);
      let numFila_1 = 75;
      _.forEach(this.listaNodos, element => {
        doc.text('' + element.text + ' ' ,10, numFila_1);
-       doc.text('                                                           ' + element.key, 30, numFila_1);
-       doc.text('                                                                                     ' + element.comun, 60, numFila_1);
+       doc.text('                                                                                     ' + element.comun, 50, numFila_1);
        numFila_1 += 5;
        if(numFila_1 > 270){
           numFila_1 = 75
@@ -815,13 +839,55 @@ public barChartData:any[] = [
           doc.text('-------------------------------------------------------------------',10,55);
       
           doc.setFontSize(11);
-          doc.text('Descripción del Nodo                                  Clave interna del Nodo                      Nodo común', 10,65);     
+          doc.text('Descripción del Nodo                                                     Nodo común', 10,65);     
           doc.setFontSize(10);
           doc.setFontType("italic");
           doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
           doc.setFontType("normal");
         }
      });
+      // Segunda Pagina
+      doc.addPage();
+      doc.setFontSize(15);
+      doc.addImage(imgUCLM, 'PNG', 10, 10);
+      doc.addImage(imgESI, 'PNG', 150, 10);
+      doc.text('Análisis de Métricas Y Grafo comparador', 40,20);
+      doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
+      doc.text('Tabla Listado de Enlaces Comunes y No Comunes',10,50);
+      doc.text('-------------------------------------------------------------------',10,55);
+
+      doc.setFontSize(11);
+      doc.text('Descripción del Nodo Inicial         Dir. Enlace                Descripción del Nodo Final         Enlace común', 10,65);
+      let numFila_2 = 75;
+      _.forEach(this.listEnlaces, element => {
+        doc.text('' + element.from + ' ' ,10, numFila_2);
+        doc.text('                                        ' + element.dir, 25, numFila_2);
+        doc.text('                                           ' + element.to, 60, numFila_2);
+        doc.text('                                                                             ' + element.comun, 100, numFila_2);
+        numFila_2 += 5;
+        if(numFila_2 > 270){
+          numFila_2 = 75
+          doc.setFontSize(10);
+          doc.setFontType("italic");
+          doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
+          doc.setFontType("normal");
+          doc.addPage();
+          doc.setFontSize(15);
+          doc.addImage(imgUCLM, 'PNG', 10, 10);
+          doc.addImage(imgESI, 'PNG', 150, 10);
+          doc.text('Análisis de Métricas Y Grafo comparador', 40,20);
+          doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
+          doc.text('Tabla Listado de Enlaces Comunes y No Comunes',10,50);
+          doc.text('-------------------------------------------------------------------',10,55);
+      
+          doc.setFontSize(11);
+          doc.text('Descripción del Nodo Inicial         Dir. Enlace                Descripción del Nodo Final         Enlace común', 10,65);
+      doc.setFontSize(10);
+          doc.setFontType("italic");
+          doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
+          doc.setFontType("normal");
+        }
+      });
 
      doc.setFontSize(10);
      doc.setFontType("italic");
@@ -897,5 +963,13 @@ public barChartData:any[] = [
     this.editorAlumno = false;
     this.editorprofesor = false;
     this.tablaListado = true;
+  }
+  viewTableListadoEnlaces($event){
+    this.img_comparar = true;
+    this.comparador = false;
+    this.editorAlumno = false;
+    this.editorprofesor = false;
+    this.tablaListado = false;
+    this.tablaListadoEnlaces = true;
   }
  }

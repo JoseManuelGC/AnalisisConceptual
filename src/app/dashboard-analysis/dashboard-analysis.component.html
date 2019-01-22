@@ -154,6 +154,7 @@ margin-left: 1%;
                          </app-diagram-editor-comparator>
                    <button *ngIf="buttonGrafo" class="btn btn-info" (click)="expandGraph($event)" style="margin-top: 6px;">Expandir Grafo</button> 
                    <button *ngIf="buttonGrafo" class="btn btn-info" (click)="viewTableListado($event)" style="margin-top: 6px; margin-left: 41px;">Listado de Nodos</button> 
+                   <button *ngIf="buttonGrafo" class="btn btn-info" (click)="viewTableListadoEnlaces($event)" style="margin-top: 6px; margin-left: 41px;">Listado de Enlaces</button> 
                    <button *ngIf="buttonGrafo" class ="btn btn-success" (click)="downloadPDF()" style="margin-top: 6px;margin-left: 41px;">Descargar PDF</button>  
                   
                         </div>
@@ -239,7 +240,9 @@ margin-left: 1%;
     [expand]="true">
    </app-diagram-alumno>
    <app-table-listado *ngIf="tablaListado"
-   [modelTable]="listaNodos"></app-table-listado>
+   [modelTable]="listaNodos" [nodos]="true"></app-table-listado>
+   <app-table-listado *ngIf="tablaListadoEnlaces"
+   [modelTable]="listEnlaces" [nodos]="false"></app-table-listado>
   </div>
 <app-cargar-data-base-component *ngIf="visibleCargarComponent" [@enterAnimation] (onCloseLoad)="closeLoad($event)">
 </app-cargar-data-base-component>
