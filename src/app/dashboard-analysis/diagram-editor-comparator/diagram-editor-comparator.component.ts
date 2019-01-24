@@ -19,19 +19,28 @@ export class DiagramEditorComponentComparator implements OnInit {
   @Output()
   nodeSelected = new EventEmitter<go.Node|null>();
 
-
+  public nodeSele: any;
   @Output()
   modelChanged = new EventEmitter<go.ChangedEvent>();
 
+  displayedColumnsNodos: string[] = ['metrica', 'valor'];
+  dataSource = [];
   constructor() {
     const $ = go.GraphObject.make;
     this.diagram = new go.Diagram();
     this.diagram.initialContentAlignment = go.Spot.Center;
     this.diagram.allowDrop = true;  // necessary for dragging from Palette
     this.diagram.undoManager.isEnabled = true;
+    this.diagram.commandHandler.deletesConnectedLinks = false;
+    this.diagram.commandHandler.diagram.allowDelete = false;
     this.diagram.addDiagramListener("ChangedSelection",
         e => {
           const node = e.diagram.selection.first();
+          this.nodeSele = node instanceof go.Node ? node : null;
+          this.dataSource = [{metrica: 'Texto Nodo', valor: this.nodeSele.Yd.text},
+                              {metrica: 'Conexiones', valor: this.nodeSele.linksConnected.count},
+                              {metrica: 'Posicón X', valor: this.nodeSele.location.x.toFixed(2)},
+                              {metrica: 'Posición Y', valor: this.nodeSele.location.y.toFixed(2)}]
           this.nodeSelected.emit(node instanceof go.Node ? node : null);
         });
     this.diagram.addModelChangedListener(e => e.isTransactionFinished && this.modelChanged.emit(e));
@@ -43,14 +52,10 @@ export class DiagramEditorComponentComparator implements OnInit {
           {
             fill: "white", strokeWidth: 0,
             portId: "", cursor: "pointer",
-            // allow many kinds of links
-            fromLinkable: true, toLinkable: true,
-            fromLinkableSelfNode: true, toLinkableSelfNode: true,
-            fromLinkableDuplicates: true, toLinkableDuplicates: true
           }, 
           new go.Binding("fill", "color")),
         $(go.TextBlock,
-          { margin: 8, editable: true },
+          { margin: 8, editable: false },
           new go.Binding("text").makeTwoWay())
       );
 

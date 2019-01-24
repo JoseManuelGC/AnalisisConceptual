@@ -39,3 +39,21 @@
     width: 95%;
     margin-left: 2%;
   }
+  .node_selected{   
+    position: fixed;
+    top: 258px;
+    width: 233px;
+    overflow-x: hidden;
+    padding-bottom: 40px;
+    right: 0;
+    color: white;
+  }
+  .mat-header-row{
+    background: beige;
+  }
+  .header_nodo{
+    color: black;
+  }
+  td.mat-cell.cdk-column-metrica.mat-column-metrica.ng-star-inserted {
+    padding-right: 25px;
+}
