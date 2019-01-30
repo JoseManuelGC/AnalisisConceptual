@@ -54,7 +54,6 @@ export class SidebarComponent implements OnInit {
         this.onMapa.emit(grafo);
     }
     delete(mapa){
-        debugger;
         this.maps$.remove(mapa.name);
     }
 }

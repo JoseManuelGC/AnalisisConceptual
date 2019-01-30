@@ -523,40 +523,36 @@ public barChartData:any[] = [
   }
   nodoPrincipal(){
   const countFrom: any = _.groupBy(this.model.linkDataArray, 'from');
+  const countTo: any = _.groupBy(this.model.linkDataArray, 'to');
   const modelNode: any = this.model.nodeDataArray;
   let idPrincipal: any = 0;
   let count: any = 0;
   let textModel: any;
-  _.forEach(countFrom, t=> {
-    if (count < t.length) {
-      count = t.length;
-      idPrincipal = t[0].from;
+ _.forEach(this.model.nodeDataArray, cF => {
+   const nod: any = cF;
+    if(((countFrom[nod.key] ? countFrom[nod.key].length : 0)  +  (countTo[nod.key] ? countTo[nod.key].length : 0)) > count){
+      count = ((countFrom[nod.key] ? countFrom[nod.key].length : 0)  +  (countTo[nod.key] ? countTo[nod.key].length : 0));
+      idPrincipal = nod.key;
+      textModel = nod.text;
     }
-  });
- _.forEach(modelNode, n=>{
-   if (n.key === idPrincipal){
-     textModel = n.text;
-   }
  });
   this.ELEMENT_DATA.find(t => t.def === 'Nodo Principal').valor_pro = textModel;
   this.ELEMENT_DATA.find(t => t.def === 'Grado Centralidad N. Pri.').valor_pro = count;
 
   const countFromAlum: any = _.groupBy(this.model3.linkDataArray, 'from');
+  const countToAlum: any = _.groupBy(this.model3.linkDataArray, 'to');
   const modelNodeAlum: any = this.model3.nodeDataArray;
   let idPrincipalAlum: any = 0;
   let countAlum: any = 0;
   let textModelAlum: any;
-  _.forEach(countFromAlum, t=> {
-    if (countAlum < t.length) {
-      countAlum = t.length;
-      idPrincipalAlum = t[0].from;
-    }
+  _.forEach(this.model3.nodeDataArray, cF => {
+    const nod: any = cF;
+     if(((countFromAlum[nod.key] ? countFromAlum[nod.key].length : 0)  +  (countToAlum[nod.key] ? countToAlum[nod.key].length : 0)) > countAlum){
+      countAlum = ((countFromAlum[nod.key] ? countFromAlum[nod.key].length : 0)  +  (countToAlum[nod.key] ? countToAlum[nod.key].length : 0));
+      idPrincipalAlum = nod.key;
+      textModelAlum = nod.text;
+     }
   });
- _.forEach(modelNodeAlum, n=>{
-   if (n.key === idPrincipalAlum){
-     textModelAlum = n.text;
-   }
- });
   this.ELEMENT_DATA.find(t => t.def === 'Nodo Principal').valor_alu = textModelAlum;
   this.ELEMENT_DATA.find(t => t.def === 'Grado Centralidad N. Pri.').valor_alu = countAlum;
   }
