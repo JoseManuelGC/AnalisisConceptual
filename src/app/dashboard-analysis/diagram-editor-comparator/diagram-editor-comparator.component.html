@@ -22,6 +22,10 @@
           <th mat-header-cell *matHeaderCellDef>   Valor</th>
           <td mat-cell *matCellDef="let element" > {{element.valor}} </td>
         </ng-container>
+         <ng-container matColumnDef="interpretacion">
+          <th mat-header-cell *matHeaderCellDef>   Interpretación</th>
+          <td mat-cell *matCellDef="let element" > {{element.interpretacion}} </td>
+        </ng-container>
     
         <tr mat-header-row *matHeaderRowDef="displayedColumnsNodos"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumnsNodos;"></tr>

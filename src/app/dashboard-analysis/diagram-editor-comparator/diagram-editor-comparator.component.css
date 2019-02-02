@@ -43,7 +43,7 @@
     position: fixed;
     top: 258px;
     width: 233px;
-    overflow-x: hidden;
+    overflow-x: auto;
     padding-bottom: 40px;
     right: 0;
     color: white;

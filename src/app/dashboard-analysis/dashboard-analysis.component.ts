@@ -559,8 +559,8 @@ public barChartData:any[] = [
   gradoMedioRed(){
     const valorPro = (2 * this.model.linkDataArray.length) / this.model.nodeDataArray.length; 
     const valorAlu = (2 * this.model3.linkDataArray.length) / this.model3.nodeDataArray.length; 
-    this.ELEMENT_DATA.find(t => t.def === 'Grado medio de la Red').valor_pro = valorPro;
-    this.ELEMENT_DATA.find(t => t.def === 'Grado medio de la Red').valor_alu = valorAlu;
+    this.ELEMENT_DATA.find(t => t.def === 'Grado medio de la Red').valor_pro = valorPro.toFixed(3);
+    this.ELEMENT_DATA.find(t => t.def === 'Grado medio de la Red').valor_alu = valorAlu.toFixed(3);
   }
   nodosSueltos(){
     const sueltoPro: Boolean = true;

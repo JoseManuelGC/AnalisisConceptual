@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import * as go from 'gojs';
-
+import * as _ from 'lodash';
 @Component({
   selector: 'app-diagram-editor-comparator',
   templateUrl: './diagram-editor-comparator.component.html',
@@ -23,7 +23,7 @@ export class DiagramEditorComponentComparator implements OnInit {
   @Output()
   modelChanged = new EventEmitter<go.ChangedEvent>();
 
-  displayedColumnsNodos: string[] = ['metrica', 'valor'];
+  displayedColumnsNodos: string[] = ['metrica', 'valor', 'interpretacion'];
   dataSource = [];
   constructor() {
     const $ = go.GraphObject.make;
@@ -37,10 +37,15 @@ export class DiagramEditorComponentComparator implements OnInit {
         e => {
           const node = e.diagram.selection.first();
           this.nodeSele = node instanceof go.Node ? node : null;
-          this.dataSource = [{metrica: 'Texto Nodo', valor: this.nodeSele.Yd.text},
-                              {metrica: 'Conexiones', valor: this.nodeSele.linksConnected.count},
-                              {metrica: 'Posicón X', valor: this.nodeSele.location.x.toFixed(2)},
-                              {metrica: 'Posición Y', valor: this.nodeSele.location.y.toFixed(2)}]
+          if (this.nodeSele){
+ this.dataSource = [{metrica: 'Texto Nodo', valor: this.nodeSele.Yd.text, interpretacion: '    Nombre del Nodo'},
+                              {metrica: 'Conexiones', valor: this.nodeSele.linksConnected.count, interpretacion: '    Nº Conexiones'},
+                              {metrica: 'G. Centralidad', valor: this.nodeSele.linksConnected.count, interpretacion: '    Cantidad de caminos que posee un nodo con los demás'},
+                              {metrica: 'Coef. Clustering', valor: this.getClustering(this.nodeSele),interpretacion: '     Cof ∈ [0,1] ninguno de los vecinos está conectado entre sí. Cof > 1 están conectados entre sí.'},
+                              {metrica: 'Posicón X', valor: this.nodeSele.location.x.toFixed(2), interpretacion: '    Posición X del Nodo'},
+                              {metrica: 'Posición Y', valor: this.nodeSele.location.y.toFixed(2), interpretacion: '    Posición Y del Nodo'}];
+          }
+         
           this.nodeSelected.emit(node instanceof go.Node ? node : null);
         });
     this.diagram.addModelChangedListener(e => e.isTransactionFinished && this.modelChanged.emit(e));
@@ -72,7 +77,38 @@ export class DiagramEditorComponentComparator implements OnInit {
   ngOnInit() {
     this.diagram.div = this.diagramRef.nativeElement;
   }
+ getClustering(nodo){
+   const key = nodo.key;
+  const ki = nodo.linksConnected.count;
+  let Li: any = 0;
+  const NodosVeciones: any = [];
+  const diagram: any = this.diagram;
+  let result;
+  _.forEach(diagram.model.linkDataArray, nod => {
+    if(nod.from === key){
+      NodosVeciones.push(nod.to)
+    } else if (nod.to === key){
+      NodosVeciones.push(nod.from);
+    }
+  });
+  _.forEach(NodosVeciones, n => {
+    let count = 0;
+    _.forEach(diagram.model.linkDataArray, t => {
+      if (t.from === n || t.to === n){
+        count = count + 1;
+      }
+    });
+    if (count > 1){
+      Li = Li + count;
+    }
+  });
+  result = (2 * (Li - 1) / (ki * (ki - 1)));
+  if (result === Infinity){
+    result = 0;
+  }
+  return result.toFixed(2);
 
+ }
   imageDiagram(){
     let diagram:any;
     if (this.diagram.model.nodeDataArray.length > 2) {
