@@ -10,6 +10,8 @@ export class SidebarComponent implements OnInit {
     public isCollapsedProfesor = false;
     public isCollapsedAlumnos = false;
     public collapsed: boolean;
+    public alertEliminar: Boolean = false;
+    public mapaEliminar:any;
 
     @Output() onMapa = new EventEmitter<any>();
     public profesores = [];
@@ -54,6 +56,16 @@ export class SidebarComponent implements OnInit {
         this.onMapa.emit(grafo);
     }
     delete(mapa){
-        this.maps$.remove(mapa.name);
+        this.alertEliminar = true;
+        this.mapaEliminar = mapa;
+        // this.maps$.remove(mapa.name);
+    }
+    closeAlert(){
+        this.alertEliminar = false;
+        this.mapaEliminar = null;
+    }
+    changeSuccessMessage(){
+        this.maps$.remove(this.mapaEliminar.name);
+        this.alertEliminar = false;
     }
 }

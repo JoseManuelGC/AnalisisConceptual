@@ -115,3 +115,22 @@ table.mat-table {
   background-color: #6d6d6f;
   color: white;
 }
+.options_export{
+  position: absolute;
+  top: 20%;
+  width: 36%;
+  left: 32%;
+  background-color: #8a9498;
+  z-index: 2;
+  border-radius: 20%;
+}
+.descar{
+  margin-left: 28%;
+  margin-bottom: 5%;
+  margin-top: 2%;
+}
+.canc{
+  margin-left: 38%;
+  margin-bottom: 5%;
+  margin-top: 2%;
+}

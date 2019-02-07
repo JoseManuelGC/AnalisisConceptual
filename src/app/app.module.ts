@@ -25,7 +25,8 @@ import { SignInComponentComponent } from './sign-in-component/sign-in-component.
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { TableListadoComponent } from './dashboard-analysis/table-listado/table-listado.component';
-
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ExportPDFServiceService } from './../assets/service/export-pdfservice.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +57,7 @@ import { TableListadoComponent } from './dashboard-analysis/table-listado/table-
     MatMenuModule,
     FileUploadModule,
     MatTableModule,
+    TooltipModule.forRoot(),
     Ng2FileInputModule.forRoot(),
     ChartsModule,
     FormsModule,
@@ -63,7 +65,7 @@ import { TableListadoComponent } from './dashboard-analysis/table-listado/table-
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule
   ],
-  providers: [],
+  providers: [ ExportPDFServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -41,12 +41,13 @@
   }
   .node_selected{   
     position: fixed;
-    top: 258px;
-    width: 233px;
+    top: 139px;
+    width: 16%;
     overflow-x: auto;
     padding-bottom: 40px;
     right: 0;
     color: white;
+    right: 14px;
   }
   .mat-header-row{
     background: beige;
@@ -56,4 +57,8 @@
   }
   td.mat-cell.cdk-column-metrica.mat-column-metrica.ng-star-inserted {
     padding-right: 25px;
+}
+table.mat-table {
+  width: 100%;
+  overflow: auto;
 }

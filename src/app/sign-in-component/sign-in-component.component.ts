@@ -39,8 +39,9 @@ export class SignInComponentComponent implements OnInit {
     this.contrasenia = contrasenia;
   }
 
-  comprobar(){
-    const self = this;
+  comprobar($event, text){
+    if ($event.key === "Enter" || text === 'enviar') {
+      const self = this;
     let sign: Boolean = false;
     _.forEach(this.usuariosBD, user => {
       const item: any = user;
@@ -49,6 +50,8 @@ export class SignInComponentComponent implements OnInit {
         }
     });
     this.onSigin.emit(sign);
+    }
+    
   }
   cancelar(){
     this.onSigin.emit(false);

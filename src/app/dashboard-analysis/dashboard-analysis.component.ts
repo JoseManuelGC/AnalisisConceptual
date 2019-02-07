@@ -15,6 +15,7 @@ import * as jsPDF from 'jspdf';
 import { DiagramEditorComponentComparator } from './diagram-editor-comparator/diagram-editor-comparator.component';
 import { DiagramEditorComponent } from './diagram-profesor/diagram-editor.component';
 import { DiagramEditorAlumnoComponent} from './diagram-alumno/diagram-alumno.component';
+import { ExportPDFServiceService } from './../../assets/service/export-pdfservice.service';
 
 import { trigger, transition, style, animate } from '@angular/animations';
 @Component({
@@ -53,18 +54,18 @@ export class DashboardAnalysisComponent implements OnInit  {
   public signInClave:Boolean = false;
   public visibleSignin: Boolean = true;
   public ELEMENT_DATA: any[] = [
-    {def: '# Nodos Globales', valor_pro: 0, valor_alu: 0},
-    {def: '# Enlaces Globales', valor_pro: 0, valor_alu: 0},
-    {def: 'Densidad', valor_pro: 0, valor_alu: 0},
-    {def: 'Nodo Principal', valor_pro: 0, valor_alu: 0},
-    {def: 'Grado Centralidad N. Pri.', valor_pro: 0, valor_alu: 0},
-    {def: 'Grado medio de la Red', valor_pro: 0, valor_alu: 0},
-    {def: '# Nodos sueltos', valor_pro: 0, valor_alu: 0},
-    {def: 'Red dispersa', valor_pro: 'No', valor_alu: 'No'},
-    {def: '# Nodos Comunes', valor_pro: '', valor_alu: 0},
-    {def: '# Nodos No Comunes', valor_pro: '', valor_alu: 0},
-    {def: '# Enlaces Comunes', valor_pro: '', valor_alu: 0},
-    {def: '# Enlaces No Comunes', valor_pro: '', valor_alu: 0},
+    {def: '# Nodos Globales', valor_pro: 0, valor_alu: 0, interpretacion: ''},
+    {def: '# Enlaces Globales', valor_pro: 0, valor_alu: 0, interpretacion: ''},
+    {def: 'Densidad', valor_pro: 0, valor_alu: 0, interpretacion: ''},
+    {def: 'Nodo Principal', valor_pro: 0, valor_alu: 0, interpretacion: ''},
+    {def: 'Grado Centralidad N. Pri.', valor_pro: 0, valor_alu: 0, interpretacion: ''},
+    {def: 'Grado medio de la Red', valor_pro: 0, valor_alu: 0, interpretacion: ''},
+    {def: '# Nodos sueltos', valor_pro: 0, valor_alu: 0, interpretacion: ''},
+    {def: 'Red dispersa', valor_pro: 'No', valor_alu: 'No', interpretacion: ''},
+    {def: '# Nodos Comunes', valor_pro: '', valor_alu: 0, interpretacion: ''},
+    {def: '# Nodos No Comunes', valor_pro: '', valor_alu: 0, interpretacion: ''},
+    {def: '# Enlaces Comunes', valor_pro: '', valor_alu: 0, interpretacion: ''},
+    {def: '# Enlaces No Comunes', valor_pro: '', valor_alu: 0, interpretacion: ''},
   ];
   displayedColumns: string[] = ['def', 'valor_pro', 'valor_alu'];
   dataSource = this.ELEMENT_DATA;
@@ -92,13 +93,20 @@ public barChartLegend:boolean = true;
 public alert:Boolean = false;
 public error:Boolean = false;
 public listEnlaces: any = [];
+public exportPDF_Options: Boolean = false;
+public grafoAlumno: Boolean = false;
+public grafoExperto: Boolean = false;
+public grafoComparador: Boolean = false;
+public listNodoOptions:Boolean = false;
+public listEnlacesOptions:Boolean = false;
+public metricasGrafo: Boolean = false;
 // public model3:any = new go.GraphLinksModel();
 public barChartData:any[] = [
   {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
   {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
 ];
 
-  constructor(private ngxXml2jsonService: NgxXml2jsonService, private ng2FileInputService: Ng2FileInputService) {
+  constructor(private ngxXml2jsonService: NgxXml2jsonService, private ng2FileInputService: Ng2FileInputService, private exportPDF: ExportPDFServiceService) {
 
   }
   ngOnInit() {
@@ -478,6 +486,7 @@ public barChartData:any[] = [
 
   updateMetrica($event){
     if (this.model.nodeDataArray.length > 0 && this.model3.nodeDataArray.length > 0) {
+      this.setInterpretacion();
       this.n_nodosGlobales();
       this.n_linkGlobales();
       this.densidad();
@@ -492,6 +501,21 @@ public barChartData:any[] = [
     } else {
       alert('Introduce los grafos para comparar.')
     }
+  }
+  setInterpretacion(){
+    this.ELEMENT_DATA.find(t => t.def === '# Nodos Globales').interpretacion = 'Cantidad de nodos que tiene el grafo.';
+    this.ELEMENT_DATA.find(t => t.def === '# Enlaces Globales').interpretacion = 'Cantidad de caminos que tiene el grafo.';
+    this.ELEMENT_DATA.find(t => t.def === 'Densidad').interpretacion = 'Si el porcentaje es más cercano a 100%, indica que tiene una alta densidad y es un grafo muy conexo. Si el porcentaje es más cercano a 0% indica que tiene una baja densidad y es muy poco conexo.';
+    this.ELEMENT_DATA.find(t => t.def === 'Nodo Principal').interpretacion = 'Nodo con mayor número de caminos.';
+    this.ELEMENT_DATA.find(t => t.def === 'Grado Centralidad N. Pri.').interpretacion = 'Cantidad de caminos que están conectados al nodo principal.';
+    this.ELEMENT_DATA.find(t => t.def === 'Grado medio de la Red').interpretacion = 'Número de vecinos (caminos a otros nodos) medio que tiene un grado. Indica cual es la media de caminos que tiene un nodo, de manera que se puede saber su popularidad.';
+    this.ELEMENT_DATA.find(t => t.def === '# Nodos sueltos').interpretacion = 'Nodos que no tienen ningún camino con el resto.';
+    this.ELEMENT_DATA.find(t => t.def === 'Red dispersa').interpretacion = 'Si la métrica indica que es dispersa, SI, la red es más densa y existen nodos a los que no se puede llegar por ningún camino. Si la red No es dispersa, cualquier nodo tiene un camino para llegar a él.';
+    this.ELEMENT_DATA.find(t => t.def === '# Nodos Comunes').interpretacion = 'Cantidad de nodos que comparten ambos grafos.';
+    this.ELEMENT_DATA.find(t => t.def === '# Nodos No Comunes').interpretacion = 'Cantidad de nodos que no comparten ambos grafos.';
+    this.ELEMENT_DATA.find(t => t.def === '# Enlaces Comunes').interpretacion = 'Cantidad de caminos que comparten ambos grafos.';
+    this.ELEMENT_DATA.find(t => t.def === '# Enlaces No Comunes').interpretacion = 'Cantidad de caminos que no comparten ambos grafos.';
+
   }
   n_nodosGlobales(){
     this.ELEMENT_DATA.find(t => t.def === '# Nodos Globales').valor_pro = this.model.nodeDataArray.length;
@@ -692,6 +716,7 @@ public barChartData:any[] = [
     })
     this.ELEMENT_DATA.find(t => t.def === '# Nodos No Comunes').valor_alu = nodos_noComunes;
   }
+
   expandGraph($event){
     if (this.model.nodeDataArray.length > 0 && this.model3.nodeDataArray.length > 0) {
       this.img_comparar = true;
@@ -739,159 +764,34 @@ public barChartData:any[] = [
     this.tablaListado = false;
     this.tablaListadoEnlaces = false;
   }
+  checkGrafoExperto($event){
+   this.grafoExperto =  $event.currentTarget.checked;
+  }
+  checkGrafoAlumno($event){
+    this.grafoAlumno=  $event.currentTarget.checked;
+   }
+   checkGrafoComparador($event){
+    this.grafoComparador =  $event.currentTarget.checked;
+   }
+   checkListNodo($event){
+    this.listNodoOptions =  $event.currentTarget.checked;
+   }
+   checkListEnlaces($event){
+    this.listEnlacesOptions =  $event.currentTarget.checked;
+   }
+   checkMetricasGrafos($event){
+     this.metricasGrafo = $event.currentTarget.checked;
+   }
   downloadPDF(){
-    const imageDiagramComparador = this.diagramModelComparador.imageDiagram();
-    const imageDiagramProfesor = this.diagramModelProfesor.imageDiagram();
-    const imageDiagramAlumno = this.diagramModelAlumno.imageDiagram();
-    const doc = new jsPDF;
-
-    let imgUCLM = document.getElementById('imgUCLM');
-    let imgESI = document.getElementById('imgESI');
-    doc.addImage(imgUCLM, 'PNG', 10, 10);
-    doc.addImage(imgESI, 'PNG', 150, 10);
-    doc.text('Análisis de Mapas Conceptuales', 37,20);
-    doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
-    doc.text('Grafo 1 ---> ' + this.nombreArchivoProfesor,30, 50);
-    doc.addImage(imageDiagramProfesor, 'image', 10, 60, 190,150);
-    doc.text('Grafo 2 ---> ' + this.nombreArchivoAlumno,30, 180,);
-    doc.addImage(imageDiagramAlumno, 'image', 10, 190, 190,150);
-    doc.setFontSize(10);
-    doc.setFontType("italic");
-    doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
-
-    doc.setFontType("normal");
-   // Segunda Pagina
-    doc.addPage();
-    doc.setFontSize(15);
-    doc.addImage(imgUCLM, 'PNG', 10, 10);
-    doc.addImage(imgESI, 'PNG', 150, 10);
-    doc.text('Análisis de Métricas Y Grafo comparador', 40,20);
-    doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
-    doc.text('Tabla comparativa de métricas',10,50);
-    doc.text('-----------------------------------------',10,55);
-
-    doc.setFontSize(11);
-    doc.text('Def. Métrica                            Valor Profesor                             Valor Alumno', 10,65);
-    let numFila = 75;
-    _.forEach(this.ELEMENT_DATA, element => {
-      doc.text('' + element.def + ' ' ,10, numFila);
-      doc.text('                                   ' + element.valor_pro, 30, numFila);
-      doc.text('                                                             ' + element.valor_alu, 60, numFila);
-      numFila += 5;
-    });
-
-    doc.setFontSize(15);
-    doc.text('Grafo comparativo',10,140);
-    doc.text('--------------------------',10,145);
-
-    doc.addImage(imageDiagramComparador, 'image', 10, 150, 190, 150);
-    if ( this.ELEMENT_DATA.find(t => t.def === '# Enlaces No Comunes').valor_alu > 0){
-      doc.setDrawColor(255, 0, 0);
-      doc.line(100,269,60,269)
-      doc.setFontSize(10);
-      doc.text('Enlace no común.', 10, 270);
-    }
-    if ( this.ELEMENT_DATA.find(t => t.def === '# Enlaces Comunes').valor_alu > 0){
-      doc.setDrawColor(9, 92, 238);
-      doc.line(100,274,60,274)
-      doc.setFontSize(10);
-      doc.text('Enlace común.', 10, 275);
-    }
-    
-    doc.setFontSize(10);
-    doc.setFontType("italic");
-    doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
-    doc.setFontType("normal");
-    // Segunda Pagina
-     doc.addPage();
-     doc.setFontSize(15);
-     doc.addImage(imgUCLM, 'PNG', 10, 10);
-     doc.addImage(imgESI, 'PNG', 150, 10);
-     doc.text('Análisis de Métricas Y Grafo comparador', 40,20);
-     doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
-     doc.text('Tabla Listado de Nodos Comunes y No Comunes',10,50);
-     doc.text('-------------------------------------------------------------------',10,55);
+    this.exportPDF_Options = true;
+     }
+  downloadPDFOptions(){
+    const options = {grafoExperto:  this.grafoExperto, grafoAlumno: this.grafoAlumno, grafoComparador: this.grafoComparador, listaNodos: this.listNodoOptions, listaEnlaces: this.listEnlacesOptions, metricasGrafo: this.metricasGrafo};
+   this.exportPDF_Options =  this.exportPDF.exportPDF(this.diagramModelComparador,this.diagramModelProfesor,this.diagramModelAlumno, this.nombreArchivoProfesor,this.nombreArchivoAlumno, this.ELEMENT_DATA, this.listaNodos,this.listEnlaces, options);
  
-     doc.setFontSize(11);
-     doc.text('Descripción del Nodo                                                                                Nodo común', 10,65);
-     let numFila_1 = 75;
-     _.forEach(this.listaNodos, element => {
-       doc.text('' + element.text + ' ' ,10, numFila_1);
-       doc.text('                                                                                     ' + element.comun, 50, numFila_1);
-       numFila_1 += 5;
-       if(numFila_1 > 270){
-          numFila_1 = 75
-          doc.setFontSize(10);
-          doc.setFontType("italic");
-          doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
-          doc.setFontType("normal");
-          doc.addPage();
-          doc.setFontSize(15);
-          doc.addImage(imgUCLM, 'PNG', 10, 10);
-          doc.addImage(imgESI, 'PNG', 150, 10);
-          doc.text('Análisis de Métricas Y Grafo comparador', 40,20);
-          doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
-          doc.text('Tabla Listado de Nodos Comunes y No Comunes',10,50);
-          doc.text('-------------------------------------------------------------------',10,55);
-      
-          doc.setFontSize(11);
-          doc.text('Descripción del Nodo                                                     Nodo común', 10,65);     
-          doc.setFontSize(10);
-          doc.setFontType("italic");
-          doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
-          doc.setFontType("normal");
-        }
-     });
-      // Segunda Pagina
-      doc.addPage();
-      doc.setFontSize(15);
-      doc.addImage(imgUCLM, 'PNG', 10, 10);
-      doc.addImage(imgESI, 'PNG', 150, 10);
-      doc.text('Análisis de Métricas Y Grafo comparador', 40,20);
-      doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
-      doc.text('Tabla Listado de Enlaces Comunes y No Comunes',10,50);
-      doc.text('-------------------------------------------------------------------',10,55);
-
-      doc.setFontSize(11);
-      doc.text('Descripción del Nodo Inicial         Dir. Enlace                Descripción del Nodo Final         Enlace común', 10,65);
-      let numFila_2 = 75;
-      _.forEach(this.listEnlaces, element => {
-        doc.text('' + element.from + ' ' ,10, numFila_2);
-        doc.text('                                        ' + element.dir, 25, numFila_2);
-        doc.text('                                           ' + element.to, 60, numFila_2);
-        doc.text('                                                                             ' + element.comun, 100, numFila_2);
-        numFila_2 += 5;
-        if(numFila_2 > 270){
-          numFila_2 = 75
-          doc.setFontSize(10);
-          doc.setFontType("italic");
-          doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
-          doc.setFontType("normal");
-          doc.addPage();
-          doc.setFontSize(15);
-          doc.addImage(imgUCLM, 'PNG', 10, 10);
-          doc.addImage(imgESI, 'PNG', 150, 10);
-          doc.text('Análisis de Métricas Y Grafo comparador', 40,20);
-          doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
-          doc.text('Tabla Listado de Enlaces Comunes y No Comunes',10,50);
-          doc.text('-------------------------------------------------------------------',10,55);
-      
-          doc.setFontSize(11);
-          doc.text('Descripción del Nodo Inicial         Dir. Enlace                Descripción del Nodo Final         Enlace común', 10,65);
-      doc.setFontSize(10);
-          doc.setFontType("italic");
-          doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
-          doc.setFontType("normal");
-        }
-      });
-
-     doc.setFontSize(10);
-     doc.setFontType("italic");
-     doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
-     doc.setFontType("normal");
-
-
-    doc.save('Métricas-' +this.nombreArchivoProfesor + '-' +this.nombreArchivoAlumno +'.pdf');
+  }
+  cancelar(){
+    this.exportPDF_Options = false;
   }
   visibleMenu(){
     if(this.signInClave){

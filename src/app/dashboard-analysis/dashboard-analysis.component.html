@@ -1,7 +1,7 @@
-<app-sidebar (collapsedEvent)="receiveCollapsed($event)" [ngClass]="{'app-sidebar-Menu': visibleSignin || !signInClave}"
+<app-sidebar (collapsedEvent)="receiveCollapsed($event)" [ngClass]="{'app-sidebar-Menu': visibleSignin || !signInClave || exportPDF_Options}"
 (onMapa)="cargarMapaAnalisis($event)"
 ></app-sidebar>
-<div class="row header_title" [ngClass]="{'noVisibleMenu': visibleSignin}">
+<div class="row header_title" [ngClass]="{'noVisibleMenu': visibleSignin || exportPDF_Options}">
 <img src="assets/logoUCLM.png" alt="image" style="width: 60px;
 height: 60px;
 float: right;
@@ -18,13 +18,13 @@ margin-left: 1%;
 <h1 class="mat-h1">ANALIZADOR DE MAPAS CONCEPTUALES</h1>
 </div>
 <div class="grid-container" [ngClass]="{'collapsed': collapedSideBar}">
-    <div class="row menu" [ngClass]="{'noVisibleMenu': visibleSignin}">
+    <div class="row menu" [ngClass]="{'noVisibleMenu': visibleSignin || exportPDF_Options}">
        
         <button *ngIf="!signInClave" class="button_menu" type="input" (click)="IniciarSesion()" style="margin-left: 2%;"> <i class="fa fa-sign-in"></i> Iniciar Sesión</button>
       <button type="input" class="button_menu" (click)="visibleCargarMenu()" style="margin-left: 2%;"><i class="fa fa-cloud-upload"></i> Cargar Mapa Conceptual en la Base de Datos</button>
       <button type="input" class="button_menu" style="margin-left: 2%;"><a href="http://diseniador.josemanuelgcgn.com/" target="_blank" style="color: white;"><i class="fa fa-external-link-square"></i> Ir al Diseñador</a></button>
       </div>
-  <mat-grid-list *ngIf="!img_comparar" [ngClass]="{'noVisibleMenu': visibleMenuComponent || visibleCargarComponent || visibleSignin}" cols="12" rowHeight="350px">
+  <mat-grid-list *ngIf="!img_comparar" [ngClass]="{'noVisibleMenu': visibleMenuComponent || visibleCargarComponent || visibleSignin || exportPDF_Options}" cols="12" rowHeight="350px">
     <mat-grid-tile *ngFor="let card of cardsDashboard" [colspan]="card.cols" [rowspan]="card.rows">
       <mat-card *ngIf="card.title === 'Modelo Profesor'" class="dashboard-card">
         <mat-card-header>
@@ -34,13 +34,10 @@ margin-left: 1%;
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu" xPosition="before">
-              <!--button mat-menu-item >Guardar</button>
-              <button mat-menu-item>Expandir</button-->
             </mat-menu>
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
-          <!--ng2-file-input class="input" (onAction)="onAction($event)" ></ng2-file-input-->
           <div class="row">
       <div class="col-md-2 col-lg-3">
       <input type="file" accept=".json" class="btn import" id="img_2" name="img_2" (change)="importGraph($event)">
@@ -54,16 +51,6 @@ margin-left: 1%;
      [expand]="false">
     </app-diagram-editor>
     <button *ngIf="buttonGrafo" class="btn btn-info" (click)="expandGraph_profesor($event)" style="margin-top: 6px;">Expandir Grafo</button>
-    <!--form *ngIf="node" #form="ngForm" (ngSubmit)="onCommitDetails()">
-      Node Details:
-      <div><label>Key: </label>{{node.key}}</div>
-      <div><label>Text: </label><input [(ngModel)]="data.text" name="text"></div>
-      <div><label>Color: </label><input [(ngModel)]="data.color" name="color"></div>
-      <div><label>Location: </label>{{node.location.x.toFixed(2)}}, {{node.location.y.toFixed(2)}}</div>
-      <div><label># Links: </label>{{node.linksConnected.count}}</div>
-      <button type="submit">Commit Details</button>
-      <button (click)="onCancelChanges()">Cancel Changes</button>
-    </form-->
   </div>
         </mat-card-content>
       </mat-card>
@@ -106,7 +93,11 @@ margin-left: 1%;
                                   <!-- Definición de la Métrica -->
                                   <ng-container matColumnDef="def">
                                     <th mat-header-cell *matHeaderCellDef> Def. Métrica </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.def}} </td>
+                                    <td mat-cell *matCellDef="let element"> <i class="fa fa-question-circle" aria-hidden="true" [tooltip]="tooltipInter" placement="right"></i> {{element.def}}
+                                      <ng-template #tooltipInter>
+                                        <p>{{element.interpretacion}}</p>
+                                      </ng-template>
+                                    </td>
                                   </ng-container>
                                 
                                   <!-- Valor del Profesor -->
@@ -123,28 +114,7 @@ margin-left: 1%;
                                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                 </table>
-
-                              <!--canvas baseChart
-                                          [data]="doughnutChartData"
-                                          [labels]="doughnutChartLabels"
-                                          [chartType]="doughnutChartType"
-                                          (chartHover)="chartHovered($event)"
-                                          (chartClick)="chartClicked($event)"></canvas-->
                             </div>
-                            
-                            <!--div class="grafico">
-                              <div style="display: block">
-                                <canvas baseChart
-                                        [datasets]="barChartData"
-                                        [labels]="barChartLabels"
-                                        [options]="barChartOptions"
-                                        [legend]="barChartLegend"
-                                        [chartType]="barChartType"
-                                        (chartHover)="chartHoveredGrafica($event)"
-                                        (chartClick)="chartClickedGrafica($event)"></canvas>
-                              </div>
-                              <button (click)="randomize()">Actualizar</button>
-                            </div-->
                         </mat-card-content>
                         <mat-card-content *ngIf="card.title === 'Gráficos comparativa'" class="dashboard-card-content">
                          <div>
@@ -158,11 +128,6 @@ margin-left: 1%;
                    <button *ngIf="buttonGrafo" class ="btn btn-success" (click)="downloadPDF()" style="margin-top: 6px;margin-left: 41px;">Descargar PDF</button>  
                   
                         </div>
-                        <!--div style="display: inline-table; margin-top: 30px;">
-                            <div *ngFor="let l of listaNodos"  >
-                               <p class= "Nodo">{{l.text}}</p>  <p class= "Nodo">{{l.comun}}</p>
-                            </div>
-                           </div-->
                           </mat-card-content>
                       </mat-card>
                     </mat-grid-tile>
@@ -179,22 +144,10 @@ margin-left: 1%;
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu" xPosition="before">
-                  <!--button mat-menu-item>Guardar</button>
-                  <button mat-menu-item>Expandir</button-->
                 </mat-menu>
               </mat-card-title>
             </mat-card-header>
             <mat-card-content class="dashboard-card-content">
-              
-              <!--div ng-app="httpApp" ng-controller="httpController">
-                  <ng2-file-input class="input" (onAction)="onAction($event)" ></ng2-file-input>
-              </div-->
-              <!--form #formulario="ngForm" (ngSubmit)="addActivity(formulario)" autocomplete="off">
-              <div class="form-group">
-                <input type="file" class="form-control" id="img" name="img">
-              </div>
-              <button type="submit" class="btn btn-primary">Subir Archivo</button>
-            </form-->
             <div class="col-md-2 col-lg-3">
               <input type="file" accept=".json" class="btn import" id="img" name="img" (change)="addActivity($event)">
             </div>
@@ -206,16 +159,6 @@ margin-left: 1%;
                  [expand]="false">
                 </app-diagram-alumno>
                 <button *ngIf="buttonGrafo" class="btn btn-info" (click)="expandGraph_alumno($event)" style="margin-top: 6px;">Expandir Grafo</button>
-                <!--orm *ngIf="node" #form="ngForm" (ngSubmit)="onCommitDetails()">
-                  Node Details:
-                  <div><label>Key: </label>{{node.key}}</div>
-                  <div><label>Text: </label><input [(ngModel)]="data.text" name="text"></div>
-                  <div><label>Color: </label><input [(ngModel)]="data.color" name="color"></div>
-                  <div><label>Location: </label>{{node.location.x.toFixed(2)}}, {{node.location.y.toFixed(2)}}</div>
-                  <div><label># Links: </label>{{node.linksConnected.count}}</div>
-                  <button type="submit">Commit Details</button>
-                  <button (click)="onCancelChanges()">Cancel Changes</button>
-                </form-->
               </div>
             </mat-card-content>
           </mat-card>
@@ -249,6 +192,19 @@ margin-left: 1%;
 <app-sign-in-component class="row" *ngIf="visibleSignin" 
 (onSigin)="signIn($event)"
 ></app-sign-in-component>
+<div *ngIf="exportPDF_Options" class="options_export">
+    <h2 style="margin-top: 2%;margin-left: 15%;"> Opciones de Descarga:</h2>
+    <label style="margin-left: 3%"><input type="checkbox" id="cbox1" value="first_checkbox" (change)="checkGrafoExperto($event)"> ¿Añadir Grafo Experto?</label><br>
+    <input type="checkbox" id="cbox2" value="second_checkbox" style="margin-left: 3%" (change)="checkGrafoAlumno($event)"> <label for="cbox2">¿Añadir Grafo Alumno?</label><br>
+    <label style="margin-left: 3%"><input type="checkbox" id="cbox1" value="first_checkbox" (change)="checkGrafoComparador($event)"> ¿Añadir Grafo Comparador?</label><br>
+    <input type="checkbox" id="cbox2" value="second_checkbox" style="margin-left: 3%" (change)="checkListNodo($event)"> <label for="cbox2">¿Añadir lista de nodos comunes o no comunes?</label><br>
+    <label style="margin-left: 3%"><input type="checkbox" id="cbox1" value="first_checkbox" (change)="checkListEnlaces($event)"> ¿Añadir lista de enlaces comunes o no comunes?</label><br>
+    <input type="checkbox" id="cbox2" value="second_checkbox" style="margin-left: 3%" (change)="checkMetricasGrafos($event)"> <label for="cbox2">¿Añadir métricas de los grafos?</label><br>
+  <button class ="btn descar" (click)="downloadPDFOptions()"><i class="fa fa-download" aria-hidden="true"></i> Descargar</button>  
+  <button class="btn canc" (click)="cancelar()" style="margin-left: 16%;"><i class="fa fa-times-circle-o" style="color: red"></i> Cancelar</button>
+</div>
+
+
 
 <ngb-alert *ngIf="alert" class="alertSing" type=success (close)="closeAlert()">Inicio de sesión correctamente.</ngb-alert>
 <ngb-alert *ngIf="error" class="alertSing" type=danger (close)="closeAlert()">Error en el inicio de sesión.</ngb-alert>

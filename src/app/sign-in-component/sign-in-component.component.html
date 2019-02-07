@@ -6,9 +6,9 @@
     </div>
     <div class="form-group" style="margin-top:5%;">
         <label for="pwd" style="margin-left: 20%;">Contraseña:</label>
-        <input type="password" class="form-control" id="pwd" #boxpwd style="margin-left: 20%;width: 60%;" (keyup)="contraseniaUsuario(boxpwd.value)">
+        <input type="password" class="form-control" id="pwd" #boxpwd style="margin-left: 20%;width: 60%;" (keyup)="contraseniaUsuario(boxpwd.value)" (keydown)="comprobar($event, '')">
       </div>
-    <button class="btn form-group" (click)="comprobar()" style="margin-left: 20%;"><i class="fa fa-check-circle" style="color: green"></i> Enviar</button>
+    <button class="btn form-group" (click)="comprobar($event, 'enviar')" style="margin-left: 20%;"><i class="fa fa-check-circle" style="color: green"></i> Enviar</button>
     <button class="btn form-group" (click)="cancelar()" style="margin-left: 2%;"><i class="fa fa-times-circle-o" style="color: red"></i> Cancelar</button>
 
 </div>

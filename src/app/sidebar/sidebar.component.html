@@ -26,3 +26,9 @@
         <span>Cerrar Menu</span>
     </div-->
 </nav>
+<div *ngIf="alertEliminar" class="alertEliminar">
+    <ngb-alert class="alertSing" type=alert (close)="closeAlert()">¿Desea Eliminar el Registro?</ngb-alert>
+<p>
+  <button class="btn btn-danger" (click)="changeSuccessMessage()">Eliminar</button>
+</p>
+</div>

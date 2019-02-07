@@ -23,7 +23,7 @@ export class DiagramEditorComponentComparator implements OnInit {
   @Output()
   modelChanged = new EventEmitter<go.ChangedEvent>();
 
-  displayedColumnsNodos: string[] = ['metrica', 'valor', 'interpretacion'];
+  displayedColumnsNodos: string[] = ['metrica', 'valor'];
   dataSource = [];
   constructor() {
     const $ = go.GraphObject.make;
@@ -41,9 +41,7 @@ export class DiagramEditorComponentComparator implements OnInit {
  this.dataSource = [{metrica: 'Texto Nodo', valor: this.nodeSele.Yd.text, interpretacion: '    Nombre del Nodo'},
                               {metrica: 'Conexiones', valor: this.nodeSele.linksConnected.count, interpretacion: '    Nº Conexiones'},
                               {metrica: 'G. Centralidad', valor: this.nodeSele.linksConnected.count, interpretacion: '    Cantidad de caminos que posee un nodo con los demás'},
-                              {metrica: 'Coef. Clustering', valor: this.getClustering(this.nodeSele),interpretacion: '     Cof ∈ [0,1] ninguno de los vecinos está conectado entre sí. Cof > 1 están conectados entre sí.'},
-                              {metrica: 'Posicón X', valor: this.nodeSele.location.x.toFixed(2), interpretacion: '    Posición X del Nodo'},
-                              {metrica: 'Posición Y', valor: this.nodeSele.location.y.toFixed(2), interpretacion: '    Posición Y del Nodo'}];
+                              {metrica: 'Coef. Clustering', valor: this.getClustering(this.nodeSele),interpretacion: '     Cof ∈ [0,1] no existen ningun camino que conecte los vecinos. Cof > 1 existe algún camino que conecta a los vecinos.'}];
           }
          
           this.nodeSelected.emit(node instanceof go.Node ? node : null);

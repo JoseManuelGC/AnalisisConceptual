@@ -212,3 +212,12 @@ $topnav-background-color: #222;
 .delete{
     cursor: pointer;
 }
+.alertEliminar{
+    position: fixed;
+    z-index: 1000;
+    top: 180px;
+    left: 236px;
+    width: 206px;
+    background: #e0f1f3;
+    text-align: center;
+}
