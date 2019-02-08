@@ -11,30 +11,45 @@ export class ExportPDFServiceService {
     const imageDiagramProfesor = diagramModelProfesor.imageDiagram();
     const imageDiagramAlumno = diagramModelAlumno.imageDiagram();
     const doc = new jsPDF;
-
     let imgUCLM = document.getElementById('imgUCLM');
     let imgESI = document.getElementById('imgESI');
+    
+    if (options.grafoExperto){
+      
     doc.addImage(imgUCLM, 'PNG', 10, 10);
     doc.addImage(imgESI, 'PNG', 150, 10);
     doc.text('Análisis de Mapas Conceptuales', 37,20);
-    if (options.grafoExperto){
       doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
       doc.text('Grafo 1 ---> ' + nombreArchivoProfesor,30, 50);
-      doc.addImage(imageDiagramProfesor, 'image', 10, 60, 190,150);
-     // doc.addImage(imageDiagramProfesor, 'image', 10, 60, 190,150, null , 'NONE', -90);
+     // doc.addImage(imageDiagramProfesor, 'image', 10, 60, 190,150);
+     doc.addImage(imageDiagramProfesor, 'image', 50,-30,-100,100, null, 'NONE', -90);
+     doc.setFontSize(10);
+     doc.setFontType("italic");
+     doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
     }
     if (options.grafoAlumno){
-      doc.text('Grafo 2 ---> ' + nombreArchivoAlumno,30, 180,);
-      doc.addImage(imageDiagramAlumno, 'image', 10, 190, 190,150);
+    doc.setFontType("normal");
+      if (options.grafoExperto){
+        doc.addPage();
+      }
+      doc.setFontSize(15);
+      doc.addImage(imgUCLM, 'PNG', 10, 10);
+      doc.addImage(imgESI, 'PNG', 150, 10);
+      doc.text('Análisis de Mapas Conceptuales', 37,20);
+        doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
+        doc.text('Grafo 2 ---> ' + nombreArchivoAlumno,30, 50);
+      doc.addImage(imageDiagramAlumno, 'image', 50,-30,-100,100, null, 'NONE', -90);
+      doc.setFontSize(10);
+      doc.setFontType("italic");
+      doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
     }
-    doc.setFontSize(10);
-    doc.setFontType("italic");
-    doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
+   // Segunda Pagina
+    if (options.metricasGrafo){
 
     doc.setFontType("normal");
-   // Segunda Pagina
-    doc.addPage();
-    if (options.metricasGrafo){
+    if (options.grafoExperto || options.grafoAlumno){
+      doc.addPage();
+    }
       doc.setFontSize(15);
       doc.addImage(imgUCLM, 'PNG', 10, 10);
       doc.addImage(imgESI, 'PNG', 150, 10);
@@ -52,12 +67,26 @@ export class ExportPDFServiceService {
         doc.text('                                                             ' + element.valor_alu, 60, numFila);
         numFila += 5;
       });
+
+    doc.setFontSize(10);
+    doc.setFontType("italic");
+    doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
+    doc.setFontType("normal");
     }
-    doc.setFontSize(15);
     if(options.grafoComparador){
-        doc.text('Grafo comparativo',10,140);
-        doc.text('--------------------------',10,145);
-        doc.addImage(imageDiagramComparador, 'image', 10, 150, 190, 150);
+
+      doc.setFontSize(15);
+      if (options.grafoExperto || options.grafoAlumno || options.metricasGrafo){
+        doc.addPage();
+      }
+    doc.setFontType("normal");
+    doc.setFontSize(15);
+      doc.addImage(imgUCLM, 'PNG', 10, 10);
+      doc.addImage(imgESI, 'PNG', 150, 10);
+      doc.text('Análisis de Métricas Y Grafo comparador', 40,20);
+      doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
+        doc.text('Grafo comparativo --->',30,50);
+        doc.addImage(imageDiagramComparador, 'image', 50,-30,-100,100, null, 'NONE', -90);
         if ( ELEMENT_DATA.find(t => t.def === '# Enlaces No Comunes').valor_alu > 0){
           doc.setDrawColor(255, 0, 0);
           doc.line(100,269,60,269)
@@ -70,16 +99,18 @@ export class ExportPDFServiceService {
           doc.setFontSize(10);
           doc.text('Enlace común.', 10, 275);
         }    
-    }
-   
+
     doc.setFontSize(10);
     doc.setFontType("italic");
     doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
     doc.setFontType("normal");
+    }
     
      if (options.listaNodos){
        // Segunda Pagina
-     doc.addPage();
+       if (options.grafoExperto || options.grafoAlumno || options.grafoComparador || options.metricasGrafo){
+        doc.addPage();
+      }
      doc.setFontSize(15);
      doc.addImage(imgUCLM, 'PNG', 10, 10);
      doc.addImage(imgESI, 'PNG', 150, 10);
@@ -121,12 +152,17 @@ export class ExportPDFServiceService {
            doc.setFontType("normal");
          }
       });
+      doc.setFontType("italic");
+           doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
+           doc.setFontType("normal");
      }
   
       
       if (options.listaEnlaces){
         // Segunda Pagina
-      doc.addPage();
+        if (options.grafoExperto || options.grafoAlumno || options.grafoComparador || options.metricasGrafo || options.listaNodos){
+          doc.addPage();
+        }
       doc.setFontSize(15);
       doc.addImage(imgUCLM, 'PNG', 10, 10);
       doc.addImage(imgESI, 'PNG', 150, 10);
@@ -166,14 +202,13 @@ export class ExportPDFServiceService {
             doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
             doc.setFontType("normal");
           }
-        });
-      }
+      });
+      doc.setFontSize(10);
+      doc.setFontType("italic");
+      doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
+      doc.setFontType("normal");
+     }
      
-
-     doc.setFontSize(10);
-     doc.setFontType("italic");
-     doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
-     doc.setFontType("normal");
 
 
     doc.save('Métricas-' +nombreArchivoProfesor + '-' +nombreArchivoAlumno +'.pdf');

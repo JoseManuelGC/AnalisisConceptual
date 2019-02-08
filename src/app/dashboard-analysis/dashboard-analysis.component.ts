@@ -788,7 +788,12 @@ public barChartData:any[] = [
   downloadPDFOptions(){
     const options = {grafoExperto:  this.grafoExperto, grafoAlumno: this.grafoAlumno, grafoComparador: this.grafoComparador, listaNodos: this.listNodoOptions, listaEnlaces: this.listEnlacesOptions, metricasGrafo: this.metricasGrafo};
    this.exportPDF_Options =  this.exportPDF.exportPDF(this.diagramModelComparador,this.diagramModelProfesor,this.diagramModelAlumno, this.nombreArchivoProfesor,this.nombreArchivoAlumno, this.ELEMENT_DATA, this.listaNodos,this.listEnlaces, options);
- 
+    this.grafoExperto = false;
+    this.grafoAlumno = false;
+    this.grafoComparador = false;
+    this.listNodoOptions = false
+    this.listEnlacesOptions = false;
+    this.metricasGrafo = false;
   }
   cancelar(){
     this.exportPDF_Options = false;

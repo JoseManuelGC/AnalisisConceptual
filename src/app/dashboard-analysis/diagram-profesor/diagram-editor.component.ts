@@ -96,19 +96,12 @@ export class DiagramEditorComponent implements OnInit {
   }
   imageDiagram(){
     let diagram:any;
-    if (this.diagram.model.nodeDataArray.length > 2) {
+
       diagram = this.diagram.makeImage(
         {
-          size: new go.Size(700,1400)
+          size: new go.Size(700,400)
         }
       );
-    } else {
-      diagram = this.diagram.makeImage(
-        {
-          size: new go.Size(300,600)
-        }
-      );
-    }
     return diagram
   }
 }
