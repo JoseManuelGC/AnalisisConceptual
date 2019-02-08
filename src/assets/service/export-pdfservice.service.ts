@@ -121,14 +121,22 @@ export class ExportPDFServiceService {
       doc.text('-------------------------------------------------------------------',10,55);
   
       doc.setFontSize(11);
-      doc.text('Descripción del Nodo                                                                                Nodo común', 10,65);
+      doc.text('Nodo Común                                                                                      Nodo no común', 10,65);
       let numFila_1 = 75;
+      let numFila_3 = 75
       _.forEach(listaNodos, element => {
-        doc.text('' + element.text + ' ' ,10, numFila_1);
-        doc.text('                                                                                     ' + element.comun, 50, numFila_1);
-        numFila_1 += 5;
-        if(numFila_1 > 270){
+        if (element.comun === 'Si') {
+          doc.text('' + element.text + ' ' ,10, numFila_1);
+          numFila_1 += 5;
+        }
+        if (element.comun === 'No'){
+          doc.text('                                                                                     ' + element.text, 40, numFila_3);
+          numFila_3 += 5;
+        }
+      
+        if(numFila_1 > 270 || numFila_3 > 270){
            numFila_1 = 75
+           numFila_3 = 75
            doc.setFontSize(10);
            doc.setFontType("italic");
            doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
@@ -144,7 +152,7 @@ export class ExportPDFServiceService {
              doc.text('-------------------------------------------------------------------',10,55);
          
              doc.setFontSize(11);
-             doc.text('Descripción del Nodo                                                     Nodo común', 10,65);     
+             doc.text('Nodo común                                                    Nodo no común', 10,65);     
              doc.setFontSize(10);
           
            doc.setFontType("italic");
@@ -168,13 +176,14 @@ export class ExportPDFServiceService {
       doc.addImage(imgESI, 'PNG', 150, 10);
       doc.text('Análisis de Métricas Y Grafo comparador', 40,20);
       doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
-        doc.text('Tabla Listado de Enlaces Comunes y No Comunes',10,50);
+        doc.text('Tabla Listado de Enlaces Comunes',10,50);
         doc.text('-------------------------------------------------------------------',10,55);
   
         doc.setFontSize(11);
         doc.text('Descripción del Nodo Inicial         Dir. Enlace                Descripción del Nodo Final         Enlace común', 10,65);
         let numFila_2 = 75;
         _.forEach(listEnlaces, element => {
+         if (element.comun === 'Si'){
           doc.text('' + element.from + ' ' ,10, numFila_2);
           doc.text('                                        ' + element.dir, 25, numFila_2);
           doc.text('                                           ' + element.to, 60, numFila_2);
@@ -202,7 +211,58 @@ export class ExportPDFServiceService {
             doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
             doc.setFontType("normal");
           }
+         }
       });
+      if(numFila_2 > 270){
+        doc.setFontSize(15);
+        doc.addImage(imgUCLM, 'PNG', 10, 10);
+        doc.addImage(imgESI, 'PNG', 150, 10);
+        doc.text('Análisis de Métricas Y Grafo comparador', 40,20);
+        doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
+       numFila_2 = 75;  
+      } else {
+        doc.setFontSize(15);
+        numFila_2 += 10;
+      }
+      doc.text('Tabla Listado de Enlaces No Comunes',10,numFila_2 );
+      numFila_2 += 5;
+      doc.text('-------------------------------------------------------------------',10,numFila_2);
+      numFila_2 += 10;
+      doc.setFontSize(11);
+      doc.text('Descripción del Nodo Inicial         Dir. Enlace                Descripción del Nodo Final         Enlace común', 10,numFila_2);
+      numFila_2 += 10;
+      _.forEach(listEnlaces, element => {
+        if (element.comun === 'No'){
+          doc.text('' + element.from + ' ' ,10, numFila_2);
+          doc.text('                                        ' + element.dir, 25, numFila_2);
+          doc.text('                                           ' + element.to, 60, numFila_2);
+          doc.text('                                                                             ' + element.comun, 100, numFila_2);
+          numFila_2 += 5;
+          if(numFila_2 > 270){
+            numFila_2 = 75
+            doc.setFontSize(10);
+            doc.setFontType("italic");
+            doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
+            doc.setFontType("normal");
+            doc.addPage();
+            doc.setFontSize(15);
+            doc.addImage(imgUCLM, 'PNG', 10, 10);
+            doc.addImage(imgESI, 'PNG', 150, 10);
+            doc.text('Análisis de Métricas Y Grafo comparador', 40,20);
+            doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
+            doc.text('Tabla Listado de Enlaces Comunes y No Comunes',10,50);
+            doc.text('-------------------------------------------------------------------',10,55);
+        
+            doc.setFontSize(11);
+            doc.text('Descripción del Nodo Inicial         Dir. Enlace                Descripción del Nodo Final         Enlace común', 10,65);
+        doc.setFontSize(10);
+            doc.setFontType("italic");
+            doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
+            doc.setFontType("normal");
+          }
+        }
+       
+    });
       doc.setFontSize(10);
       doc.setFontType("italic");
       doc.text('Autor: José Manuel García-Calvillo García-Navas',100,285);
