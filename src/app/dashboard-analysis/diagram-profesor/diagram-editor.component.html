@@ -1,4 +1,29 @@
 <div class="diagramsPanel">
     <!--div #paletteDiv class="paletteDiv"></div-->
-    <div #diagramDiv [ngClass]="{'diagramDiv': !expand, 'diagramDiv_Expand': expand}"  style="pointer-events: none;"></div>
+    <div #diagramDiv [ngClass]="{'diagramDiv': !expand, 'diagramDiv_Expand': expand}"></div>
+  </div>
+  <div *ngIf="nodeSele && expand" class="node_selected">
+    <h2 class="header_nodo"> Métricas de Nodo </h2>
+    <div class="listado">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
+    
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+      
+        <!-- Definición del Nodo -->
+        <ng-container matColumnDef="metrica">
+          <th mat-header-cell *matHeaderCellDef > Desc. Métrica</th>
+          <td mat-cell *matCellDef="let element" ><i class="fa fa-question-circle" aria-hidden="true" [tooltip]="tooltipInter" placement="auto"></i> {{element.metrica}} <ng-template #tooltipInter>
+            <p>{{element.interpretacion}}</p>
+          </ng-template></td>
+          
+        </ng-container>
+        <ng-container matColumnDef="valor">
+          <th mat-header-cell *matHeaderCellDef>   Valor</th>
+          <td mat-cell *matCellDef="let element" > {{element.valor}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsNodos"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsNodos;"></tr>
+      </table>
+    </div>
   </div>

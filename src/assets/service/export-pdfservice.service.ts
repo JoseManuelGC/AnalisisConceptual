@@ -7,9 +7,9 @@ export class ExportPDFServiceService {
   constructor() { }
 
   exportPDF(diagramModelComparador,diagramModelProfesor,diagramModelAlumno,nombreArchivoProfesor,nombreArchivoAlumno, ELEMENT_DATA, listaNodos, listEnlaces, options){
-    const imageDiagramComparador = diagramModelComparador.imageDiagram();
-    const imageDiagramProfesor = diagramModelProfesor.imageDiagram();
-    const imageDiagramAlumno = diagramModelAlumno.imageDiagram();
+    const imageDiagramComparador = diagramModelComparador ? diagramModelComparador.imageDiagram() : null;
+    const imageDiagramProfesor = diagramModelProfesor ? diagramModelProfesor.imageDiagram() : null;
+    const imageDiagramAlumno = diagramModelAlumno ? diagramModelAlumno.imageDiagram(): null;
     const doc = new jsPDF;
     let imgUCLM = document.getElementById('imgUCLM');
     let imgESI = document.getElementById('imgESI');
@@ -17,7 +17,7 @@ export class ExportPDFServiceService {
     if (options.grafoExperto){
       
     doc.addImage(imgUCLM, 'PNG', 10, 10);
-    doc.addImage(imgESI, 'PNG', 150, 10);
+    doc.addImage(imgESI, 'PNG', 150, 10); 
     doc.text('Análisis de Mapas Conceptuales', 37,20);
       doc.text('-----------------------------------------------------------------------------------------------------', 10,35);
       doc.text('Grafo 1 ---> ' + nombreArchivoProfesor,30, 50);

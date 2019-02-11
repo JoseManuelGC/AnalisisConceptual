@@ -166,6 +166,8 @@ margin-left: 1%;
   </mat-grid-list>
   <div *ngIf ="img_comparar" class="img_comparador" style="margin-top: 2%;">
     <button class="btn btn-primary" (click)="changeVolver($event)">Volver a la ventana Principal</button>
+   <button class="btn btn-primary" *ngIf ="comparador" (click)="viewTableListado($event)" style="margin-left: 14%;">Listado de Nodos</button>
+    <button class="btn btn-primary" *ngIf ="comparador" (click)="viewTableListadoEnlaces($event)">Listado de Enlaces </button>
     <app-diagram-editor-comparator *ngIf="comparador"
     [model]="modelComparador"
     [expand]="true">

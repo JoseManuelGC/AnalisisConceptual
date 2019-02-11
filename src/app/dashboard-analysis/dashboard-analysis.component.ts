@@ -504,17 +504,17 @@ public barChartData:any[] = [
   }
   setInterpretacion(){
     this.ELEMENT_DATA.find(t => t.def === '# Nodos Globales').interpretacion = 'Cantidad de nodos que tiene el grafo.';
-    this.ELEMENT_DATA.find(t => t.def === '# Enlaces Globales').interpretacion = 'Cantidad de caminos que tiene el grafo.';
+    this.ELEMENT_DATA.find(t => t.def === '# Enlaces Globales').interpretacion = 'Cantidad de conexiones que tiene el grafo.';
     this.ELEMENT_DATA.find(t => t.def === 'Densidad').interpretacion = 'Si el porcentaje es más cercano a 100%, indica que tiene una alta densidad y es un grafo muy conexo. Si el porcentaje es más cercano a 0% indica que tiene una baja densidad y es muy poco conexo.';
-    this.ELEMENT_DATA.find(t => t.def === 'Nodo Principal').interpretacion = 'Nodo con mayor número de caminos.';
-    this.ELEMENT_DATA.find(t => t.def === 'Grado Centralidad N. Pri.').interpretacion = 'Cantidad de caminos que están conectados al nodo principal.';
-    this.ELEMENT_DATA.find(t => t.def === 'Grado medio de la Red').interpretacion = 'Número de vecinos (caminos a otros nodos) medio que tiene un grado. Indica cual es la media de caminos que tiene un nodo, de manera que se puede saber su popularidad.';
+    this.ELEMENT_DATA.find(t => t.def === 'Nodo Principal').interpretacion = 'Nodo con mayor número de conexiones.';
+    this.ELEMENT_DATA.find(t => t.def === 'Grado Centralidad N. Pri.').interpretacion = 'Cantidad de conexiones que están conectados al nodo principal.';
+    this.ELEMENT_DATA.find(t => t.def === 'Grado medio de la Red').interpretacion = 'Número de vecinos (conexiones a otros nodos) medio que tiene un grado. Indica cual es la media de caminos que tiene un nodo, de manera que se puede saber su popularidad.';
     this.ELEMENT_DATA.find(t => t.def === '# Nodos sueltos').interpretacion = 'Nodos que no tienen ningún camino con el resto.';
     this.ELEMENT_DATA.find(t => t.def === 'Red dispersa').interpretacion = 'Si la métrica indica que es dispersa, SI, la red es más densa y existen nodos a los que no se puede llegar por ningún camino. Si la red No es dispersa, cualquier nodo tiene un camino para llegar a él.';
     this.ELEMENT_DATA.find(t => t.def === '# Nodos Comunes').interpretacion = 'Cantidad de nodos que comparten ambos grafos.';
     this.ELEMENT_DATA.find(t => t.def === '# Nodos No Comunes').interpretacion = 'Cantidad de nodos que no comparten ambos grafos.';
-    this.ELEMENT_DATA.find(t => t.def === '# Enlaces Comunes').interpretacion = 'Cantidad de caminos que comparten ambos grafos.';
-    this.ELEMENT_DATA.find(t => t.def === '# Enlaces No Comunes').interpretacion = 'Cantidad de caminos que no comparten ambos grafos.';
+    this.ELEMENT_DATA.find(t => t.def === '# Enlaces Comunes').interpretacion = 'Cantidad de conexiones que comparten ambos grafos.';
+    this.ELEMENT_DATA.find(t => t.def === '# Enlaces No Comunes').interpretacion = 'Cantidad de conexiones que no comparten ambos grafos.';
 
   }
   n_nodosGlobales(){

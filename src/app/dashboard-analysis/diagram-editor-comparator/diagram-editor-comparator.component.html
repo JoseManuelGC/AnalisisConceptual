@@ -5,7 +5,7 @@
     <div class="line_red"></div><span class="span_leyenda">Enlace no común</span>
     <div class="line_blue"></div><span class="span_leyenda">Enlace común</span>
   </div>
-  <div *ngIf="nodeSele" class="node_selected">
+  <div *ngIf="nodeSele && expand" class="node_selected">
     <h2 class="header_nodo"> Métricas de Nodo </h2>
     <div class="listado">
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
