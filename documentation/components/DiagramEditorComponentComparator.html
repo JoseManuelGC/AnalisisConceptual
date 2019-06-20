@@ -1,0 +1,1048 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>analisis-conceptual documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">analisis-conceptual documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>DiagramEditorComponentComparator</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/dashboard-analysis/diagram-editor-comparator/diagram-editor-comparator.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-diagram-editor-comparator</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./diagram-editor-comparator.component.css</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./diagram-editor-comparator.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#dataSource">dataSource</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#diagram">diagram</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#diagramRef">diagramRef</a>
+                            </li>
+                            <li>
+                                <a href="#displayedColumnsNodos">displayedColumnsNodos</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#nodeSele">nodeSele</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#getClustering">getClustering</a>
+                            </li>
+                            <li>
+                                <a href="#imageDiagram">imageDiagram</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#expand">expand</a>
+                            </li>
+                            <li>
+                                <a href="#model">model</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#modelChanged">modelChanged</a>
+                            </li>
+                            <li>
+                                <a href="#nodeSelected">nodeSelected</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#model">model</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor()</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/dashboard-analysis/diagram-editor-comparator/diagram-editor-comparator.component.ts:27</a></div>
+                            </td>
+                        </tr>
+
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="expand"></a>
+                        <b>expand</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" target="_blank" >Boolean</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/dashboard-analysis/diagram-editor-comparator/diagram-editor-comparator.component.ts:11</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="model"></a>
+                        <b>model</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>go.Model</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/dashboard-analysis/diagram-editor-comparator/diagram-editor-comparator.component.ts:16</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="modelChanged"></a>
+                        <b>modelChanged</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/dashboard-analysis/diagram-editor-comparator/diagram-editor-comparator.component.ts:24</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="nodeSelected"></a>
+                        <b>nodeSelected</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/dashboard-analysis/diagram-editor-comparator/diagram-editor-comparator.component.ts:20</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getClustering"></a>
+                    <span class="name">
+                        <b>
+                            getClustering
+                        </b>
+                        <a href="#getClustering"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getClustering(nodo)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="78"
+                            class="link-to-prism">src/app/dashboard-analysis/diagram-editor-comparator/diagram-editor-comparator.component.ts:78</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>nodo</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="imageDiagram"></a>
+                    <span class="name">
+                        <b>
+                            imageDiagram
+                        </b>
+                        <a href="#imageDiagram"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>imageDiagram()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="110"
+                            class="link-to-prism">src/app/dashboard-analysis/diagram-editor-comparator/diagram-editor-comparator.component.ts:110</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="75"
+                            class="link-to-prism">src/app/dashboard-analysis/diagram-editor-comparator/diagram-editor-comparator.component.ts:75</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="dataSource"></a>
+                        <span class="name">
+                            <b>
+                            dataSource</b>
+                            <a href="#dataSource"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/dashboard-analysis/diagram-editor-comparator/diagram-editor-comparator.component.ts:27</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="diagram"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            diagram</b>
+                            <a href="#diagram"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>go.Diagram</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new go.Diagram()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/app/dashboard-analysis/diagram-editor-comparator/diagram-editor-comparator.component.ts:10</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="diagramRef"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            diagramRef</b>
+                            <a href="#diagramRef"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://angular.io/api/core/ElementRef" target="_blank" >ElementRef</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChild(&#x27;diagramDiv&#x27;)<br />
+                            </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/dashboard-analysis/diagram-editor-comparator/diagram-editor-comparator.component.ts:13</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="displayedColumnsNodos"></a>
+                        <span class="name">
+                            <b>
+                            displayedColumnsNodos</b>
+                            <a href="#displayedColumnsNodos"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>string[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[&#x27;metrica&#x27;, &#x27;valor&#x27;]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/dashboard-analysis/diagram-editor-comparator/diagram-editor-comparator.component.ts:26</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="nodeSele"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            nodeSele</b>
+                            <a href="#nodeSele"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/dashboard-analysis/diagram-editor-comparator/diagram-editor-comparator.component.ts:22</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="model"></a>
+                        <span class="name"><b>model</b><a href="#model"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>model(val)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/dashboard-analysis/diagram-editor-comparator/diagram-editor-comparator.component.ts:17</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>val</td>
+                                                    
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from &#x27;@angular/core&#x27;;
+import * as go from &#x27;gojs&#x27;;
+import * as _ from &#x27;lodash&#x27;;
+@Component({
+  selector: &#x27;app-diagram-editor-comparator&#x27;,
+  templateUrl: &#x27;./diagram-editor-comparator.component.html&#x27;,
+  styleUrls: [&#x27;./diagram-editor-comparator.component.css&#x27;]
+})
+export class DiagramEditorComponentComparator implements OnInit {
+  private diagram: go.Diagram &#x3D; new go.Diagram();
+  @Input() public expand: Boolean;
+  @ViewChild(&#x27;diagramDiv&#x27;)
+  private diagramRef: ElementRef;
+
+  @Input()
+  get model(): go.Model { return this.diagram.model; }
+  set model(val: go.Model) { this.diagram.model &#x3D; val; }
+
+  @Output()
+  nodeSelected &#x3D; new EventEmitter&lt;go.Node|null&gt;();
+
+  public nodeSele: any;
+  @Output()
+  modelChanged &#x3D; new EventEmitter&lt;go.ChangedEvent&gt;();
+
+  displayedColumnsNodos: string[] &#x3D; [&#x27;metrica&#x27;, &#x27;valor&#x27;];
+  dataSource &#x3D; [];
+  constructor() {
+    const $ &#x3D; go.GraphObject.make;
+    this.diagram &#x3D; new go.Diagram();
+    this.diagram.initialContentAlignment &#x3D; go.Spot.Center;
+    this.diagram.allowDrop &#x3D; true;  // necessary for dragging from Palette
+    this.diagram.undoManager.isEnabled &#x3D; true;
+    this.diagram.commandHandler.deletesConnectedLinks &#x3D; false;
+    this.diagram.commandHandler.diagram.allowDelete &#x3D; false;
+    this.diagram.addDiagramListener(&quot;ChangedSelection&quot;,
+        e &#x3D;&gt; {
+          const node &#x3D; e.diagram.selection.first();
+          this.nodeSele &#x3D; node instanceof go.Node ? node : null;
+          if (this.nodeSele){
+ this.dataSource &#x3D; [{metrica: &#x27;Texto Nodo&#x27;, valor: this.nodeSele.Yd.text, interpretacion: &#x27;    Nombre del Nodo&#x27;},
+                              {metrica: &#x27;Conexiones&#x27;, valor: this.nodeSele.linksConnected.count, interpretacion: &#x27;    Nº Conexiones&#x27;},
+                              {metrica: &#x27;G. Centralidad&#x27;, valor: this.nodeSele.linksConnected.count, interpretacion: &#x27;    Cantidad de caminos que posee un nodo con los demás&#x27;},
+                              {metrica: &#x27;Coef. Clustering&#x27;, valor: this.getClustering(this.nodeSele),interpretacion: &#x27;     Cof ∈ [0,1] no existen ningun camino que conecte los vecinos. Cof &gt; 1 existe algún camino que conecta a los vecinos.&#x27;}];
+          }
+         
+          this.nodeSelected.emit(node instanceof go.Node ? node : null);
+        });
+    this.diagram.addModelChangedListener(e &#x3D;&gt; e.isTransactionFinished &amp;&amp; this.modelChanged.emit(e));
+
+    this.diagram.nodeTemplate &#x3D;
+      $(go.Node, &quot;Auto&quot;,
+        new go.Binding(&quot;location&quot;, &quot;loc&quot;, go.Point.parse).makeTwoWay(go.Point.stringify),
+        $(go.Shape,
+          {
+            fill: &quot;white&quot;, strokeWidth: 0,
+            portId: &quot;&quot;, cursor: &quot;pointer&quot;,
+          }, 
+          new go.Binding(&quot;fill&quot;, &quot;color&quot;)),
+        $(go.TextBlock,
+          { margin: 8, editable: false },
+          new go.Binding(&quot;text&quot;).makeTwoWay())
+      );
+
+    this.diagram.linkTemplate &#x3D;
+      $(go.Link,
+        // allow relinking
+        { relinkableFrom: false, relinkableTo: false },
+        $(go.Shape,
+          new go.Binding(&quot;stroke&quot;, &quot;color&quot;)),
+        $(go.Shape, {toArrow: &quot;&quot; })
+      );
+  }
+
+  ngOnInit() {
+    this.diagram.div &#x3D; this.diagramRef.nativeElement;
+  }
+ getClustering(nodo){
+   const key &#x3D; nodo.key;
+  const ki &#x3D; nodo.linksConnected.count;
+  let Li: any &#x3D; 0;
+  const NodosVeciones: any &#x3D; [];
+  const diagram: any &#x3D; this.diagram;
+  let result;
+  _.forEach(diagram.model.linkDataArray, nod &#x3D;&gt; {
+    if(nod.from &#x3D;&#x3D;&#x3D; key){
+      NodosVeciones.push(nod.to)
+    } else if (nod.to &#x3D;&#x3D;&#x3D; key){
+      NodosVeciones.push(nod.from);
+    }
+  });
+  _.forEach(NodosVeciones, n &#x3D;&gt; {
+    let count &#x3D; 0;
+    _.forEach(diagram.model.linkDataArray, t &#x3D;&gt; {
+      if (t.from &#x3D;&#x3D;&#x3D; n || t.to &#x3D;&#x3D;&#x3D; n){
+        count &#x3D; count + 1;
+      }
+    });
+    if (count &gt; 1){
+      Li &#x3D; Li + count;
+    }
+  });
+  result &#x3D; (2 * (Li - 1) / (ki * (ki - 1)));
+  if (result &#x3D;&#x3D;&#x3D; Infinity){
+    result &#x3D; 0;
+  }
+  return result.toFixed(2);
+
+ }
+  imageDiagram(){
+    let diagram:any;
+
+      diagram &#x3D; this.diagram.makeImage(
+        {
+          size: new go.Size(700,400)
+        }
+      );
+    return diagram
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;diagramsPanel&quot; #content&gt;
+    &lt;div #diagramDiv [ngClass]&#x3D;&quot;{&#x27;diagramDiv&#x27;: !expand, &#x27;diagramDiv_Expand&#x27;: expand}&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div *ngIf&#x3D;&quot;expand&quot; class&#x3D;&quot;border_leyenda&quot;&gt;
+    &lt;div class&#x3D;&quot;line_red&quot;&gt;&lt;/div&gt;&lt;span class&#x3D;&quot;span_leyenda&quot;&gt;Enlace no común&lt;/span&gt;
+    &lt;div class&#x3D;&quot;line_blue&quot;&gt;&lt;/div&gt;&lt;span class&#x3D;&quot;span_leyenda&quot;&gt;Enlace común&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div *ngIf&#x3D;&quot;nodeSele &amp;&amp; expand&quot; class&#x3D;&quot;node_selected&quot;&gt;
+    &lt;h2 class&#x3D;&quot;header_nodo&quot;&gt; Métricas de Nodo &lt;/h2&gt;
+    &lt;div class&#x3D;&quot;listado&quot;&gt;
+      &lt;table mat-table [dataSource]&#x3D;&quot;dataSource&quot; class&#x3D;&quot;mat-elevation-z8&quot; &gt;
+    
+        &lt;!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition&quot; --&gt;
+      
+        &lt;!-- Definición del Nodo --&gt;
+        &lt;ng-container matColumnDef&#x3D;&quot;metrica&quot;&gt;
+          &lt;th mat-header-cell *matHeaderCellDef &gt; Desc. Métrica&lt;/th&gt;
+          &lt;td mat-cell *matCellDef&#x3D;&quot;let element&quot; &gt;&lt;i class&#x3D;&quot;fa fa-question-circle&quot; aria-hidden&#x3D;&quot;true&quot; [tooltip]&#x3D;&quot;tooltipInter&quot; placement&#x3D;&quot;auto&quot;&gt;&lt;/i&gt; {{element.metrica}} &lt;ng-template #tooltipInter&gt;
+            &lt;p&gt;{{element.interpretacion}}&lt;/p&gt;
+          &lt;/ng-template&gt;&lt;/td&gt;
+          
+        &lt;/ng-container&gt;
+        &lt;ng-container matColumnDef&#x3D;&quot;valor&quot;&gt;
+          &lt;th mat-header-cell *matHeaderCellDef&gt;   Valor&lt;/th&gt;
+          &lt;td mat-cell *matCellDef&#x3D;&quot;let element&quot; &gt; {{element.valor}} &lt;/td&gt;
+        &lt;/ng-container&gt;
+        &lt;tr mat-header-row *matHeaderRowDef&#x3D;&quot;displayedColumnsNodos&quot;&gt;&lt;/tr&gt;
+        &lt;tr mat-row *matRowDef&#x3D;&quot;let row; columns: displayedColumnsNodos;&quot;&gt;&lt;/tr&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  
+                  </code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./diagram-editor-comparator.component.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.diagramsPanel {
+    width:100%;
+    white-space:nowrap;
+  }
+  
+  .diagramDiv {
+    border: 1px solid black;
+    display: inline-block;
+    vertical-align: top;
+    width: 80%;
+    height: 240px;
+  }
+  .diagramDiv_Expand{
+    display: inline-block;
+    vertical-align: top;
+    width: 80%;
+    height: calc(100vh - 191px);
+  }
+  .border_leyenda{
+    border: 1px solid black;
+    height: 40px;
+    width: 25%;
+    display: inline-block;
+  }
+  .line_red{
+    border: 1px solid red;
+    margin-top: 4%;
+    width: 5%;
+    display: inline-block;
+  }
+  .line_blue{
+    border: 2px solid blue;
+    margin-top: 4%;
+    margin-left: 4%;
+    width: 5%;
+    display: inline-block;
+  }
+  .span_leyenda{
+    width: 95%;
+    margin-left: 2%;
+  }
+  .node_selected{   
+    position: fixed;
+    top: 139px;
+    width: 16%;
+    overflow-x: auto;
+    padding-bottom: 40px;
+    right: 0;
+    color: white;
+    right: 14px;
+  }
+  .mat-header-row{
+    background: beige;
+  }
+  .header_nodo{
+    color: black;
+  }
+  td.mat-cell.cdk-column-metrica.mat-column-metrica.ng-star-inserted {
+    padding-right: 25px;
+}
+table.mat-table {
+  width: 100%;
+  overflow: auto;
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="diagramsPanel" #content>    <div #diagramDiv [ngClass]="{\'diagramDiv\': !expand, \'diagramDiv_Expand\': expand}"></div>  </div>  <div *ngIf="expand" class="border_leyenda">    <div class="line_red"></div><span class="span_leyenda">Enlace no común</span>    <div class="line_blue"></div><span class="span_leyenda">Enlace común</span>  </div>  <div *ngIf="nodeSele && expand" class="node_selected">    <h2 class="header_nodo"> Métricas de Nodo </h2>    <div class="listado">      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" >            <!--- Note that these columns can be defined in any order.              The actual rendered columns are set as a property on the row definition" -->              <!-- Definición del Nodo -->        <ng-container matColumnDef="metrica">          <th mat-header-cell *matHeaderCellDef > Desc. Métrica</th>          <td mat-cell *matCellDef="let element" ><i class="fa fa-question-circle" aria-hidden="true" [tooltip]="tooltipInter" placement="auto"></i> {{element.metrica}} <ng-template #tooltipInter>            <p>{{element.interpretacion}}</p>          </ng-template></td>                  </ng-container>        <ng-container matColumnDef="valor">          <th mat-header-cell *matHeaderCellDef>   Valor</th>          <td mat-cell *matCellDef="let element" > {{element.valor}} </td>        </ng-container>        <tr mat-header-row *matHeaderRowDef="displayedColumnsNodos"></tr>        <tr mat-row *matRowDef="let row; columns: displayedColumnsNodos;"></tr>      </table>    </div>  </div>                    </div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'BackComponent', 'selector': 'back'},{'name': 'CargarDataBaseComponentComponent', 'selector': 'app-cargar-data-base-component'},{'name': 'DashboardAnalysisComponent', 'selector': 'dashboard-analysis'},{'name': 'DataBaseComponentComponent', 'selector': 'app-data-base-component'},{'name': 'DiagramEditorAlumnoComponent', 'selector': 'app-diagram-alumno'},{'name': 'DiagramEditorComponent', 'selector': 'app-diagram-editor'},{'name': 'DiagramEditorComponentComparator', 'selector': 'app-diagram-editor-comparator'},{'name': 'SidebarComponent', 'selector': 'app-sidebar'},{'name': 'SignInComponentComponent', 'selector': 'app-sign-in-component'},{'name': 'TableListadoComponent', 'selector': 'app-table-listado'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'DiagramEditorComponentComparator'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'DiagramEditorComponentComparator.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

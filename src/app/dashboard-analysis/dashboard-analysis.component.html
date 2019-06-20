@@ -26,7 +26,7 @@ margin-left: 1%;
       </div>
   <mat-grid-list *ngIf="!img_comparar" [ngClass]="{'noVisibleMenu': visibleMenuComponent || visibleCargarComponent || visibleSignin || exportPDF_Options}" cols="12" rowHeight="350px">
     <mat-grid-tile *ngFor="let card of cardsDashboard" [colspan]="card.cols" [rowspan]="card.rows">
-      <mat-card *ngIf="card.title === 'Modelo Profesor'" class="dashboard-card">
+      <mat-card *ngIf="card.title === 'Primer Modelo'" class="dashboard-card">
         <mat-card-header>
           <mat-card-title>
             {{card.title}}
@@ -136,7 +136,7 @@ margin-left: 1%;
             
           </mat-card-content>
         </mat-card>
-        <mat-card *ngIf="card.title === 'Modelo Alumno'" class="dashboard-card">
+        <mat-card *ngIf="card.title === 'Segundo Modelo'" class="dashboard-card">
             <mat-card-header>
               <mat-card-title>
                 {{card.title}}
@@ -196,8 +196,8 @@ margin-left: 1%;
 ></app-sign-in-component>
 <div *ngIf="exportPDF_Options" class="options_export">
     <h2 style="margin-top: 2%;margin-left: 15%;"> Opciones de Descarga:</h2>
-    <label style="margin-left: 3%"><input type="checkbox" id="cbox1" value="first_checkbox" (change)="checkGrafoExperto($event)"> ¿Añadir Grafo Experto?</label><br>
-    <input type="checkbox" id="cbox2" value="second_checkbox" style="margin-left: 3%" (change)="checkGrafoAlumno($event)"> <label for="cbox2">¿Añadir Grafo Alumno?</label><br>
+    <label style="margin-left: 3%"><input type="checkbox" id="cbox1" value="first_checkbox" (change)="checkGrafoExperto($event)"> ¿Añadir Primer Modelo?</label><br>
+    <input type="checkbox" id="cbox2" value="second_checkbox" style="margin-left: 3%" (change)="checkGrafoAlumno($event)"> <label for="cbox2">¿Añadir Segundo Modelo?</label><br>
     <label style="margin-left: 3%"><input type="checkbox" id="cbox5" value="first_checkbox" (change)="checkGrafoComparador($event)"> ¿Añadir Grafo Comparador?</label><br>
     <input type="checkbox" id="cbox3" value="second_checkbox" style="margin-left: 3%" (change)="checkListNodo($event)"> <label for="cbox3">¿Añadir lista de nodos comunes o no comunes?</label><br>
     <label style="margin-left: 3%"><input type="checkbox" id="cbox6" value="first_checkbox" (change)="checkListEnlaces($event)"> ¿Añadir lista de enlaces comunes o no comunes?</label><br>

@@ -71,9 +71,9 @@ export class DashboardAnalysisComponent implements OnInit  {
   dataSource = this.ELEMENT_DATA;
   currentProfileImage: any;
   cardsDashboard = [
-    { title: 'Modelo Profesor', cols: 6, rows: 2 },
+    { title: 'Primer Modelo', cols: 6, rows: 2 },
     { title: 'Estadísticas', cols: 6, rows: 4 },
-    { title: 'Modelo Alumno', cols: 6, rows: 2 }
+    { title: 'Segundo Modelo', cols: 6, rows: 2 }
   ];
   cardsEstadisticas = [
     { title: 'Métricas', cols: 2, rows: 2 },
